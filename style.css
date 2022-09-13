@@ -5,3 +5,7 @@ body{
 .navbar{
     z-index: 100;
 }
+
+.m-body{
+    padding: 1rem 2rem;
+}

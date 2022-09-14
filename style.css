@@ -1,6 +1,13 @@
 body{
     font-family: 'Roboto Condensed', sans-serif;
     background-color: rgba(0, 0, 0, 0.75);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer{
+    justify-content: space-between;
 }
 
 .navbar{

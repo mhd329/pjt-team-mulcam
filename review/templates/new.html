@@ -1,0 +1,15 @@
+{% block main_contents %}
+
+<form action="" method="GET">
+  <div class="mb-3">
+    <label for="titleInput" class="form-label">제목</label>
+    <input type="text" class="form-control" id="titleInput" aria-describedby="title">
+    <div id="title" class="form-text">80자 이내로 작성해주세요.</div>
+  </div>
+  <div class="mb-3">
+    <label for="contentInput" class="form-label">내용</label>
+    <input type="text" class="form-control" id="contentInput">
+  </div>
+  <button type="submit" class="btn btn-primary">작성 완료</button>
+</form>
+{% endblock main_contents %}

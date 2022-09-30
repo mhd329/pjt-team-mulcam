@@ -1,12 +1,36 @@
+{% extends 'base.html' %}
+
 {% block main_contents %}
 
-    <div class="mb-3">
-      <label for="titleInput" class="form-label">제목</label>
-      <div>{{ review_data.title }}</div>
-    </div>
-    <div class="mb-3">
-      <label for="contentInput" class="form-label">내용</label>
-      <div>{{ review_data.content }}</div>
-    </div>
+<div class="container">
+  <div class="my-5">
+    <h1 class="text-start px-5">
+      {% if review_data.title %}
+      {{ review_data.title }}
+      {% else %}
+      제목 없음
+      {% endif %}
+    </h1>
+  </div>
+  <div class="mb-3">
+    <label readonly class="form-control text-start p-4 fs-5" style="height: 300px">
+      {% if review_data.content %}
+      {{ review_data.content }}
+      {% else %}
+      내용 없음
+      {% endif %}
+    </label>
+  </div>
+
+  <div class="my-3 text-end">
+    <a class="btn btn-secondary mx-1" href="{% url 'review:edit' review_data.id %}">리뷰 수정</a>
+    <a class="btn btn-secondary mx-1" href="{% url 'review:delete' review_data.id %}">리뷰 삭제</a>
+  </div>
+
+  <!-- <div class="form-floating">
+    <input class="form-control" placeholder="댓글 남기기" id="comment" style="height: 100px"></input>
+    <label for="comment">댓글</label>
+  </div> -->
+</div>
 
 {% endblock main_contents %}

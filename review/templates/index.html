@@ -14,12 +14,13 @@
       </tr>
     </thead>
     <tbody>
+      {% for reviews in review_data %}
       <tr>
-        <td>{{ temp }}</td>
-        <!-- <td>{{ .id }}</td> -->
-        <!-- <td>{{ .content }}</td>
-        <td>{{ .datetime }}</td> -->
+        <td>{{ reviews.id }}</td>
+        <td><a href="{% url 'review:detail' reviews.id %}">{{ reviews.title }}</a></td>
+        <td>{{ reviews.created_at }}</td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
   <a class="btn btn-primary" href="{% url 'review:new' %}" role="button">리뷰 작성하기</a>

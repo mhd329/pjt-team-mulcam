@@ -22,9 +22,14 @@
     </label>
   </div>
 
-  <div class="my-3 text-end">
-    <a class="btn btn-secondary mx-1" href="{% url 'review:edit' review_data.id %}">리뷰 수정</a>
-    <a class="btn btn-secondary mx-1" href="{% url 'review:delete' review_data.id %}">리뷰 삭제</a>
+  <div class="d-flex ms-auto">
+    <div class="my-3">
+      <a class="btn btn-secondary mx-1" href="{% url 'review:index' %}">글 목록</a>
+    </div>
+    <div class="ms-auto my-3">
+      <a class="btn btn-secondary mx-1" href="{% url 'review:edit' review_data.id %}">리뷰 수정</a>
+      <a class="btn btn-secondary mx-1" href="{% url 'review:delete' review_data.id %}">리뷰 삭제</a>
+    </div>
   </div>
 
   <!-- <div class="form-floating">

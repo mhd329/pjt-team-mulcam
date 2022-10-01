@@ -17,3 +17,22 @@
 - 드라이버와 네비게이터 항상 같은 코드를 유지해야 한다.
 - 드라이버인 사람이 add commit push
 - 네비게이터 pull
+
+<br>
+
+---
+
+###### 저장소 복사 하는방법
+
+- 그냥 `clone`
+  - 그냥 클론 한 다음에 기존 `init` 지우고 자신의 `init` 으로 바꾸기
+  - 대신 커밋 내역이 없어진다.
+- `mirror`
+  - `git clone --mirror [받아올 원본 repo 주소]`
+  - 클론하고 그 폴더로 들어가기
+  - `git remote set-url --push origin [내가 새로 만든 저장소 주소]`
+  - `git push --mirror`
+
+---
+
+<br>

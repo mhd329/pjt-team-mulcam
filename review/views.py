@@ -26,15 +26,17 @@ def create(request):
     return redirect("review:index")
 
 
-def detail(request, pk_):
-    review_data = Review.objects.get(pk=pk_)
-    context = {"review_data": review_data}
+def detail(request, pk):
+    review_data = Review.objects.get(id=pk)
+    context = {
+        "review_data": review_data,
+    }
 
     return render(request, "detail.html", context)
 
 
-def edit(request, pk_):
-    review_data = Review.objects.get(pk=pk_)
+def edit(request, pk):
+    review_data = Review.objects.get(id=pk)
     context = {
         "review_data": review_data,
     }
@@ -42,25 +44,33 @@ def edit(request, pk_):
     return render(request, "edit.html", context)
 
 
-def update(request, pk_):
+def update(request, pk):
     title = request.GET.get("title")
     content = request.GET.get("content")
-    review_data = Review.objects.get(pk=pk_)
+    review_data = Review.objects.get(id=pk)
     review_data.title = title
     review_data.content = content
+    # save() 되면 auto_now 로 인해 자동으로 현재 시간으로 갱신됨
     review_data.save()
     context = {
         "review_data": review_data,
     }
 
-    return redirect("review:index")
-    url = "detail/" + str(pk_)
-
-    return render(request, url, context)
+    return render(request, "detail.html", context)
 
 
-def delete(request, pk_):
-    review_data = Review.objects.get(pk=pk_)
+def delete(request, pk):
+    review_data = Review.objects.get(id=pk)
     review_data.delete()
 
     return redirect("review:index")
+
+
+def search_title(request):
+    review_title = request.GET.get("searchTitle")
+    retrieved_review_data = Review.objects.filter(title__icontains=review_title)
+    context = {
+        "retrieved_review_data": retrieved_review_data,
+    }
+
+    return render(request, "search.html", context)

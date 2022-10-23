@@ -1,0 +1,71 @@
+* {
+  font-family: 'NanumSquareNeoBold';
+  scroll-snap-type: y mandatory;
+  scroll-padding: 15rem;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(143, 0, 0);
+}
+
+.index-body {
+  overflow: hidden;
+}
+
+.mcu-intro {
+  background-color: black;
+  border-color: white;
+  border-style: dashed;
+  border-width: 0 5rem;
+}
+
+.snap-item {
+  width: 85%;
+  height: 100%;
+  scroll-snap-align: center;
+}
+
+.item-height {
+  padding: 3rem 0;
+}
+
+.card-hover {
+  transition: all 0.2s linear;
+  background-color: black;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
+}
+
+.hover-animation:hover {
+  animation: pulse;
+  animation-duration: 0.5s;
+}
+
+.nav-hover {
+  border-radius: 1rem;
+}
+
+.nav-hover:hover {
+  background-color: rgb(99, 99, 99);
+  border-radius: 1rem;
+}
+
+/* .custom-shadow {
+  border: none;
+  box-shadow: 0.5rem 1rem 2rem 0.3rem rgb(148, 148, 148);
+} */
+
+.mcu-greetings {
+  animation: fadeInDown;
+  animation-duration: 2s;
+}
+
+/* 
+.mcu-greetings-2 {
+  animation: fadeIn;
+  animation-duration: 3s;
+} */

@@ -21,14 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# 나중에 secrets.json 으로 옮길것임
-#
-SECRET_KEY = "django-insecure-d+4@08(rjs7$ko)3!o32vwl_aew_qnb-va%ka5b%et6gs6v*$t"
+SECRET_KEY = BASE_DIR / "secrets.json"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,6 +36,7 @@ OTHERS = [
     "accounts",
     "articles",
     "imagekit",
+    "storages",
     "django_bootstrap5",
     "django_extensions",
     "django_cleanup.apps.CleanupConfig",
@@ -57,6 +56,7 @@ INSTALLED_APPS = OTHERS + DJANGO_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -170,3 +170,22 @@ DATABASES["default"].update(db_from_env)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# aws s3 연결
+
+DEFAULT_FILE_STORAGE = "config.storages.MediaStorage"
+STATICFILES_STORAGE = "config.storages.StaticStorage"
+
+MEDIAFILES_LOCATION = "media"
+STATICFILES_LOCATION = "static"
+
+from boto.s3.connection import S3Connection
+import os
+
+# s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+
+AWS_STORAGE_BUCKET_NAME = "django-pjt-02"
+
+AWS_S3_REGION_NAME = "ap-northeast-2"
+
+AWS_S3_SIGNATURE_VERSION = "s3v4"

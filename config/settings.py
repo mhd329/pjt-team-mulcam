@@ -25,6 +25,7 @@ SECRET_KEY = BASE_DIR / "secrets.json"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -182,7 +183,6 @@ from boto.s3.connection import S3Connection
 import os
 
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
-
 
 AWS_STORAGE_BUCKET_NAME = "django-pjt-02"
 

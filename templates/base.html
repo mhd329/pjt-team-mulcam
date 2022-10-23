@@ -48,31 +48,30 @@
     </div>
     <div class="container">
       <a class="navbar-brand text-light" href="{% url 'index:intro' %}"><b class="fs-1 p-3">MCU</b></a>
-      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse text-light text-center text-lg-start" id="navbarNav">
+      <div class="collapse navbar-collapse" id="navbarNav">
 
         <ul class="navbar-nav me-auto mx-0">
           <li class="nav-item">
-            <a class="nav-link active p-4 p-lg-2 text-light align-bottom nav-hover" aria-current="page"
+            <a class="nav-link active p-2 text-light align-bottom nav-hover" aria-current="page"
               href="{% url 'articles:reviews' %}">게시판</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'articles:create' %}">글쓰기</a>
+            <a class="nav-link active p-2 text-light nav-hover" href="{% url 'articles:create' %}">글쓰기</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'index:contrib' %}">Contributors</a>
+            <a class="nav-link active p-2 text-light nav-hover" href="{% url 'index:contrib' %}">Contributors</a>
           </li>
-          <li class="nav-item d-none d-sm-none d-md-block">
-            <a class="nav-link active p-4 p-lg-2 nav-hover" aria-current="page" href="https://github.com/"
-              target="_blank">
+          <li class="nav-item">
+            <a class="nav-link active p-2 nav-hover" aria-current="page" href="https://github.com/" target="_blank">
               <img src="{% static 'images/github.png' %}" alt="" style="width: 1.2rem; height: 1.2rem;">
             </a>
           </li>
         </ul>
-        <form class="d-flex p-4 p-lg-0" role="search" method='POST' action="{% url 'articles:search' %}">
+        <form class="d-flex" role="search" method='POST' action="{% url 'articles:search' %}">
           {% csrf_token %}
           <input class="form-control me-2" type="search" placeholder="검색" name='search'>
           <button class="btn btn-outline-light me-2" type="submit" style="width: 5rem;">검색</button>
@@ -80,20 +79,20 @@
         <ul class="navbar-nav">
           {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2"
+            <a class="nav-link active text-light nav-hover mx-0"
               href="{% url 'accounts:detail' request.user.pk %}">프로필</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+            <a class="nav-link active text-light nav-hover mx-0" aria-current="page"
               href="{% url 'accounts:logout' %}">로그아웃</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+            <a class="nav-link active text-light nav-hover mx-0" aria-current="page"
               href="{% url 'accounts:login' %}">로그인</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+            <a class="nav-link active text-light nav-hover mx-0" aria-current="page"
               href="{% url 'accounts:signup' %}">회원가입</a>
           </li>
           {% endif %}

@@ -1,8 +1,8 @@
 const timer = setTimeout(function () {
     window.location = intro;
-}, 14500);
+}, 18000);
 
-let sec = 12;
+let sec = 15;
 
 let s = document.getElementById("s");
 let timer_1 = document.getElementById("timer-1");

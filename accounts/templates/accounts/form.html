@@ -2,9 +2,9 @@
 {% load django_bootstrap5 %}
 {% block body %}
 
-<div class="container w-25 mt-5 mb-5 pb-5">
+<div class="member-interaction container my-5 pb-5">
   {% if request.resolver_match.url_name == "signup" %}
-  <h1>회원 가입</h1>
+  <h1 class="mt-5 text-center">회원 가입</h1>
   <form action="" method="POST" class="form">
     {% csrf_token %}
     <div class="card pt-4 pb-2 px-3 my-3">

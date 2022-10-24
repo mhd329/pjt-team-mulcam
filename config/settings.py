@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = BASE_DIR / "secrets.json"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
@@ -158,7 +159,6 @@ AUTH_USER_MODEL = "accounts.User"
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # 헤로쿠 db 주소
-# 나중에 쓸 설정
 
 import dj_database_url
 
@@ -181,8 +181,7 @@ STATICFILES_LOCATION = "static"
 from boto.s3.connection import S3Connection
 import os
 
-# s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
-
+# # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 AWS_STORAGE_BUCKET_NAME = "django-pjt-02"
 

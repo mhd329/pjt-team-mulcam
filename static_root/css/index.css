@@ -1,0 +1,16 @@
+html {
+  background-color: black;
+}
+
+body {
+  font-family: 'NanumSquareNeo';
+}
+
+div {
+  background-color: black;
+}
+
+.mcu-greetings {
+  animation: fadeInDown;
+  animation-duration: 2s;
+}

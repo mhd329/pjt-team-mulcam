@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-from imagekit.models import ProcessedImageField
+from config.settings import AUTH_USER_MODEL
 from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
@@ -10,9 +10,9 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     movie_name = models.CharField(max_length=30)
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     view = models.PositiveIntegerField(default=0)
     thumbnail = ProcessedImageField(
         upload_to="thumbnail/",
@@ -27,14 +27,12 @@ class Article(models.Model):
         upload_to="images/",
         blank=True,
     )
+    like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
 
 
 class Comment(models.Model):
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-
-
-class Like(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)

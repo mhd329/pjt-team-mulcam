@@ -1,0 +1,61 @@
+html {
+  background-color: black;
+}
+
+body {
+  font-family: 'NanumSquareNeo';
+  animation: fadeIn;
+  animation-duration: 5s;
+}
+
+@media screen and (min-width: 992px) {
+  .mcu-intro {
+    background-color: black;
+    border-color: white;
+    border-style: dashed;
+    border-width: 0 5rem;
+  }
+
+  .go-review {
+    width: 50%;
+  }
+
+  .item-height {
+    padding: 3rem 0;
+  }
+}
+
+
+@media screen and (max-width: 992px) {
+  .mcu-intro {
+    background-color: black;
+  }
+
+  .go-review {
+    width: 100%;
+  }
+
+  .item-height {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .mcu-intro {
+    background-color: black;
+  }
+
+  .go-review {
+    width: 100%;
+  }
+
+  .item-height {
+    padding: 0;
+  }
+}
+
+.snap-item {
+  width: 85%;
+  height: 100%;
+  scroll-snap-align: center;
+}

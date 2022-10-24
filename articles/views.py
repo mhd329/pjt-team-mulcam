@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
-from .models import Article, Comment, Like
+from .models import Article, Comment
 from django.contrib import messages
 from django.db.models import Q
 
@@ -53,71 +53,52 @@ def search(request):
 
 
 def detail(request, pk):
-    if request.user.is_authenticated:
-        user_recommends = request.user.like_set.all()
-        try:
-            flag = user_recommends.get(article_id=pk)
-        except:
-            flag = 0
-        target_article = Article.objects.get(id=pk)
-        like_ = Like.objects.filter(article=target_article)
-        like_length = len(like_)
-        if request.method == "POST":
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.article = target_article
-                comment.user = request.user
-                comment.save()
-                messages.success(request, "작성하였습니다.")
-                return redirect("articles:detail", target_article.pk)
-        else:
-            form = CommentForm()
-        context = {
-            "flag": flag,
-            "article": target_article,
-            "like_length": like_length,
-            "like_": like_,
-            "form": form,
-        }
-
-        response = render(request, "articles/detail.html", context)
-
-        # 조회수
-        # expire_date, now = datetime.now(), datetime.now()
-        # expire_date += timedelta(days=1)
-        # expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
-        # expire_date -= now
-        # max_age = expire_date.total_seconds()
-        # cookie_value = request.COOKIES.get("hitboard", "_")
-        # if not f"_{pk}_" in cookie_value:
-        #     cookie_value += f"{pk}_"
-        #     response.set_cookie(
-        #         "hitboard", value=cookie_value, max_age=max_age, httponly=True
-        #     )
-
-        target_article.view += 1
-        target_article.save()
-        return response
+    target_article = Article.objects.get(id=pk)
+    likes = target_article.like_users.all()
+    like_count = likes.count()
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = target_article
+            comment.user = request.user
+            comment.save()
+            messages.success(request, "작성하였습니다.")
+            return redirect("articles:detail", target_article.pk)
     else:
-        target_article = Article.objects.get(id=pk)
-        like_ = Like.objects.filter(article=target_article)
-        like_length = len(like_)
-        context = {
-            "article": target_article,
-            "like_length": like_length,
-            "like_": like_,
-        }
-        target_article.view += 1
-        target_article.save()
-        return render(request, "articles/detail.html", context)
+        form = CommentForm()
+    context = {
+        "like_count": like_count,
+        "article": target_article,
+        "likes": likes,
+        "form": form,
+    }
+    response = render(request, "articles/detail.html", context)
+    # 조회수 로직 긁어옴
+    # 올바른 작동에 대한 보장이 없기 때문에 일단 보류해두었음
+    # expire_date, now = datetime.now(), datetime.now()
+    # expire_date += timedelta(days=1)
+    # expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    # expire_date -= now
+    # max_age = expire_date.total_seconds()
+    # cookie_value = request.COOKIES.get("hitboard", "_")
+    # if not f"_{pk}_" in cookie_value:
+    #     cookie_value += f"{pk}_"
+    #     response.set_cookie(
+    #         "hitboard", value=cookie_value, max_age=max_age, httponly=True
+    #     )
+    #     target_article.view += 1
+    #     target_article.save()
+    target_article.view += 1
+    target_article.save()
+    return response
 
 
 @login_required
 def update(request, pk):
     user = request.user
-    like_ = Like.objects.all()
     article = Article.objects.get(id=pk)
+    likes = article.like_users.all()
     if request.method == "POST":
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
@@ -127,9 +108,9 @@ def update(request, pk):
     else:
         form = ArticleForm(instance=article)
     context = {
+        "likes": likes,
         "form": form,
         "user": user,
-        "like_": like_,
         "article": article,
     }
     return render(request, "articles/form.html", context)
@@ -153,15 +134,9 @@ def delete(request, pk):
 @login_required
 def comment_update(request, article_pk, comment_pk):
     form = CommentForm()
-    user_recommends = request.user.like_set.all()
-    try:
-        flag = user_recommends.get(article_id=article_pk)
-    except:
-        flag = 0
     user = request.user
     article = Article.objects.get(id=article_pk)
-    like_ = Like.objects.filter(article=article)
-    like_length = len(like_)
+    likes = article.like_users.all()
     target_comment = Comment.objects.get(id=comment_pk)
     if user.pk == target_comment.user.pk:
         if request.method == "POST":
@@ -173,12 +148,11 @@ def comment_update(request, article_pk, comment_pk):
         else:
             comment_form = MiniCommentForm(instance=target_comment)
         context = {
-            "flag": flag,
-            "like_length": like_length,
             "target_comment": target_comment,
-            "article": article,
-            "form": form,
             "comment_form": comment_form,
+            "article": article,
+            "likes": likes,
+            "form": form,
             "user": user,
         }
         return render(request, "articles/detail.html", context)
@@ -189,8 +163,8 @@ def comment_update(request, article_pk, comment_pk):
 
 @login_required
 def comment_delete(request, article_pk, comment_pk):
-    user = request.user
     comment = Comment.objects.get(id=comment_pk)
+    user = request.user
     if user.pk == comment.user.pk:
         comment.delete()
         messages.success(request, "삭제되었습니다.")
@@ -202,22 +176,14 @@ def comment_delete(request, article_pk, comment_pk):
 
 @login_required
 def add_like(request, pk):
-    target_article = Article.objects.get(id=pk)
-    target_user = request.user
-    try:
-        if target_article.like_set.get(user=target_user):
-            like_ = Like.objects.filter(user=target_user, article=target_article)
-            like_.delete()
-            return redirect("articles:detail", target_article.pk)
-        else:
-            like_ = Like.objects.create(article=target_article, user=target_user)
-            like_.save()
-            return redirect("articles:detail", target_article.pk)
-    except:
-        like_ = Like.objects.create(article=target_article, user=target_user)
-        like_.save()
-        messages.warning(request, "추천!")
-        return redirect("articles:detail", target_article.pk)
+    user = request.user
+    article = Article.objects.get(id=pk)
+    if article.like_users.filter(id=user.id).exists():
+        article.like_users.remove(user)
+        return redirect("articles:detail", article.pk)
+    else:
+        article.like_users.add(user)
+    return redirect("articles:detail", article.pk)
 
 
 # 에러 처리

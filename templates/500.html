@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
 <div class="text-center animate__animated animate__bounceIn mt-5">
   <svg style="width: 5rem; height: 5rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
     class="bi bi-wrench-adjustable-circle" viewBox="0 0 16 16">
@@ -20,21 +21,21 @@
 </div>
 <script type="text/javascript">
   const timer = setTimeout(function () {
-    window.location = "{% url 'articles:reviews' %}"
-  }, 4000);
+    window.location = review_url
+}, 4000);
 
-  let sec = 3;
-  let indicator = document.getElementById("indicator");
-  const spinner = document.querySelector("#spinner-div")
-  const x = setInterval(function () {
+let sec = 3;
+let indicator = document.getElementById("indicator");
+const spinner = document.querySelector("#spinner-div")
+const x = setInterval(function () {
     indicator.textContent = sec + "초 후에 게시판으로 돌아갑니다.";
     sec--;
     if (sec < 0) {
-      clearInterval(x);
-      indicator.textContent = "잠시만 더 기다려주세요...";
-      spinner.classList.add("spinner-border", "text-primary")
+        clearInterval(x);
+        indicator.textContent = "잠시만 더 기다려주세요...";
+        spinner.classList.add("spinner-border", "text-primary")
     }
-  }, 1000)
+}, 1000)
 </script>
 
 {% endblock body %}

@@ -1,12 +1,31 @@
 from django import template
 
+
 register = template.Library()
+
+
+@register.filter()
+def filtering(value, arg):
+    user = arg
+    article = value
+    if article.filter(id=user.id).exists():
+        return True
+    else:
+        return False
+
+
+# 20글자 까지만 표시하고 뒤는 ...
+@register.filter()
+def long_slicer(value, arg: str):
+    if len(arg) > 20:
+        value = arg[:20] + "..."
+    return value
 
 
 # 13글자 까지만 표시하고 뒤는 ...
 @register.filter()
 def slicer(value, arg: str):
-    if len(arg) > 12:
+    if len(arg) > 13:
         value = arg[:13] + "..."
     return value
 
@@ -22,7 +41,7 @@ def sub_slicer(value, arg: str):
 # 9글자 까지만 표시하고 뒤는 ...
 @register.filter()
 def mini_slicer(value, arg: str):
-    if len(arg) > 8:
+    if len(arg) > 9:
         value = arg[:9] + "..."
     return value
 

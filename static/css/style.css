@@ -1,8 +1,137 @@
 * {
-  font-family: 'NanumSquareNeoBold';
+  -webkit-text-size-adjust: none;
+  max-width: 100%;
   scroll-snap-type: y mandatory;
   scroll-padding: 15rem;
   scroll-behavior: smooth;
+}
+
+/* 큰사이즈 화면 (모니터) */
+@media screen and (min-width: 993px) {
+  .contrib-btn {
+    width: 25%;
+  }
+
+  .user-data-ymd {
+    display: none;
+  }
+
+  .member-interaction {
+    width: 25%;
+  }
+
+  .searched-review-title {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .searched-members {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 중간사이즈 화면 (태블릿) */
+@media screen and (max-width: 992px) {
+  .contrib-btn {
+    width: 100%;
+  }
+
+  .user-data-ymd {
+    display: none;
+  }
+
+  .searched-review-title {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .member-interaction {
+    width: 50%;
+  }
+
+  .searched-members {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 중간에서 좀 작은 화면 */
+@media screen and (min-width: 769px) {}
+
+/* 작은 화면 */
+@media screen and (max-width: 768px) {}
+
+/* 약간 작은 화면 */
+@media screen and (min-width: 577px) {
+  .big-display {
+    display: block;
+  }
+
+  .msgbox {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 15rem;
+  }
+
+  .small-display {
+    display: none;
+  }
+
+  .utilbox {
+    display: flex;
+  }
+
+  .pw-change {
+    margin: 0 1rem;
+  }
+}
+
+/* 매우 작은 화면 (스마트폰) */
+@media screen and (max-width: 576px) {
+
+  .user-data-ymdfs,
+  .user-view,
+  .review-created-at,
+  .big-display,
+  .msgbox {
+    display: none;
+  }
+
+  .user-data-ymd,
+  .small-display {
+    display: block;
+  }
+
+  .member-interaction,
+  .profile-update-btn,
+  .pw-change,
+  .go-reviews,
+  .user-out {
+    width: 100%;
+  }
+
+  .reviews-box {
+    justify-content: center;
+  }
+
+  .review-body-box {
+    justify-content: center;
+  }
+
+  .profile-update-btn,
+  .pw-change,
+  .go-reviews,
+  .user-out {
+    margin: 0.5rem 0;
+  }
+}
+
+body {
+  font-family: 'NanumSquareNeo';
 }
 
 a {
@@ -12,23 +141,6 @@ a {
 
 .index-body {
   overflow: hidden;
-}
-
-.mcu-intro {
-  background-color: black;
-  border-color: white;
-  border-style: dashed;
-  border-width: 0 5rem;
-}
-
-.snap-item {
-  width: 85%;
-  height: 100%;
-  scroll-snap-align: center;
-}
-
-.item-height {
-  padding: 3rem 0;
 }
 
 .card-hover {
@@ -53,19 +165,3 @@ a {
   background-color: rgb(99, 99, 99);
   border-radius: 1rem;
 }
-
-/* .custom-shadow {
-  border: none;
-  box-shadow: 0.5rem 1rem 2rem 0.3rem rgb(148, 148, 148);
-} */
-
-.mcu-greetings {
-  animation: fadeInDown;
-  animation-duration: 2s;
-}
-
-/* 
-.mcu-greetings-2 {
-  animation: fadeIn;
-  animation-duration: 3s;
-} */

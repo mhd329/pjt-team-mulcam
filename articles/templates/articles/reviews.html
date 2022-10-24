@@ -4,46 +4,63 @@
 
 {% block body %}
 
-<div class="container index-body pt-5">
-  <div class="row">
+<div class="review-body-box container index-body pt-5">
+  <div class="row review-body-box">
     <!-- 리뷰목록 조회 -->
     {% if request.resolver_match.url_name == "reviews" %}
     {% if articles %}
     {% for article in articles %}
-    <div class="col-sm-12 col-md-6 col-xl-4 gx-5">
+    <div class="reviews-box col-sm-12 col-md-6 col-xl-4 gx-5">
       <a href="{% url 'articles:detail' article.pk %}" class="text-black">
         <div class="custom-shadow card p-3 mb-5 bg-body rounded card-hover">
-          {% if article.like_set.all|length != 0 %}
+
+          <!-- 추천 표시 -->
+          {% if article.like_users.count %}
           <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger"
             style="margin: 2.5rem 1rem 0 0;">
-            +{{ article.like_set.all|length }}
+            +{{ article.like_users.all.count }}
             <span class="visually-hidden">추천</span>
           </span>
           {% endif %}
+
+          <!-- 썸네일 -->
           {% if article.thumbnail %}
           <img src="{{ article.thumbnail.url }}">
           {% else %}
           <img src="https://dummyimage.com/1200x960/000000/c4c4c4&text=No+image" class="card-img-top">
           {% endif %}
+
           <div class="card-body">
             <div class="d-flex">
-              <h6 class="text-muted m-0">{{ article.movie_name|sub_slicer:article.movie_name }}</h6>
-              <h6 class="ms-auto">
+
+              <!-- 영화 제목 -->
+              <h6 class="text-muted m-0 movie-title">{{ article.movie_name|sub_slicer:article.movie_name }}</h6>
+
+              <!-- 평점 -->
+              <h6 class="ms-auto movie-grade">
                 {% for i in article.grade|star_range %}
                 <i class="bi bi-star-fill text-warning"></i>
                 {% endfor %}
               </h6>
+
             </div>
+
+            <!-- 작성자 조회수 -->
             <div class="d-flex">
-              <p class="fs-6 text-secondary">{{ article.user.username }}</p>
-              <p class="fs-6 text-secondary ms-auto">조회 {{ article.view }}</p>
+              <p class="fs-6 text-secondary user-view">{{ article.user.username }}</p>
+              <p class="fs-6 text-secondary ms-auto user-view">조회 {{ article.view }}</p>
             </div>
-            <h5 class="card-title">{{ forloop.counter }}. {{ article.title|slicer:article.title }}
-              {% if article.comment_set.all|length != 0 %}
-              <span class="align-top">[{{ article.comment_set.all|length }}]</span>
+
+            <!-- 리뷰 제목 -->
+            <h5 class="card-title review-title">{{ forloop.counter }}. {{ article.title|slicer:article.title }}
+              {% if article.comment_set.all.count %}
+              <span class="align-top">[{{ article.comment_set.all.count }}]</span>
               {% endif %}
             </h5>
-            <p class="mb-0">{{ article.created_at|date:"m.d H:i:s" }}</p>
+
+            <!-- 작성일 시간 -->
+            <p class="mb-0 review-created-at">{{ article.created_at|date:"m.d H:i:s" }}</p>
+
           </div>
         </div>
       </a>
@@ -83,12 +100,21 @@
     <!-- 검색 결과 조회 -->
     {% elif request.resolver_match.url_name == "search" %}
     {% if searched_articles or searched_users %}
-    <div class="col-sm-12 col-md-12 col-xl-6 row gx-3">
-      <h3 class='mt-sm-4 mb-sm-3 mt-lg-4 mb-lg-3 my-xl-3 text-sm-center text-lg-center text-xl-start'>리뷰 검색결과</h3>
+    <div class="reviews-box col-sm-12 col-md-12 col-xl-6 row gx-3">
+      <h3 class="searched-review-title">리뷰 검색결과</h3>
       {% for article in searched_articles %}
       <div class="col-sm-12 col-md-6 col-lg-6">
         <a href="{% url 'articles:detail' article.pk %}" class="text-black">
           <div class="custom-shadow card p-3 mb-3 bg-body rounded card-hover">
+
+            {% if article.like_users.all.count %}
+            <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger"
+              style="margin: 2.5rem 1rem 0 0;">
+              +{{ article.like_users.all.count }}
+              <span class="visually-hidden">추천</span>
+            </span>
+            {% endif %}
+
             {% if article.thumbnail %}
             <img src="{{ article.thumbnail.url }}">
             {% else %}
@@ -103,13 +129,18 @@
                   {% endfor %}
                 </h6>
               </div>
-              <p class="fs-6 text-secondary">{{ article.user.username }} </p>
+              <div class="d-flex">
+                <p class="fs-6 text-secondary user-view">{{ article.user.username }}</p>
+                <p class="fs-6 text-secondary ms-auto user-view">조회 {{ article.view }}</p>
+              </div>
               <h5 class="card-title">{{ forloop.counter }}. {{ article.title|mini_slicer:article.title }}
-                {% if article.comment_set.all|length != 0 %}
-                <span class="align-top">[{{ article.comment_set.all|length }}]</span>
+                {% if article.comment_set.all.count %}
+                <span class="align-top">[{{ article.comment_set.all.count }}]</span>
                 {% endif %}
               </h5>
-              <p class="mb-0">{{ article.created_at|date:"m.d / H:i:s" }} | {{ article.like_set.all|length }}</p>
+              <p class="mb-0 review-created-at">
+                {{ article.created_at|date:"m.d H:i:s" }}
+              </p>
             </div>
           </div>
         </a>
@@ -117,7 +148,7 @@
       {% endfor %}
     </div>
     <div class="col-lg-12 col-xl-6">
-      <h3 class='mt-sm-4 mb-sm-3 mt-lg-4 mb-lg-3 my-xl-3 text-sm-center text-lg-center text-xl-start'>회원 검색결과</h3>
+      <h3 class="searched-members">회원 검색결과</h3>
       <table class="table table-bordered table-hover text-center">
         <thead class="table-dark">
           <tr>
@@ -128,8 +159,15 @@
         <tbody>
           {% for user in searched_users %}
           <tr>
-            <th><a href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a></th>
-            <td>{{ user.date_joined|date:"y년 m월 d일 f:s" }}</td>
+            <th>
+              <a href="{% url 'accounts:detail' user.pk %}">
+                {{ user.username }}
+              </a>
+            </th>
+            <td>
+              <span class="user-data-ymdfs">{{ user.date_joined|date:"y년 m월 d일 f:s" }}</span>
+              <span class="user-data-ymd">{{ user.date_joined|date:"y.m.d" }}</span>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

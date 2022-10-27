@@ -10,6 +10,10 @@ class ArticleForm(forms.ModelForm):
         fields = (
             "title",
             "content",
-            "created_at",
-            "updated_at",
+            "movie_name",
+            "grade",
+            # "created_at",
+            # "updated_at",
+            # "image",
+            # "thumbnail"
         )

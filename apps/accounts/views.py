@@ -33,7 +33,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            redirect("articles:reviews")
+            return redirect("articles:reviews")
     else:
         form = CustomUserCreationForm()
     context = {
@@ -60,3 +60,19 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect("articles:reviews")
+
+@login_required
+def update(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:profile', request.user.pk)
+    
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/update.html', context)

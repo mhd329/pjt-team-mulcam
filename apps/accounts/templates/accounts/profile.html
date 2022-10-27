@@ -22,4 +22,13 @@
   </table>
 </div>
 
+<div class="container">
+  <button class="btn btn-primary" type="button" onclick="location.href='{% url 'accounts:update' %}'">
+    회원정보 수정
+  </button>
+  <button class="btn btn-dark" type="button" onclick="location.href='{% url 'accounts:user_list' %}'">
+      돌아가기
+  </button>
+</div>
+
 {% endblock content %}

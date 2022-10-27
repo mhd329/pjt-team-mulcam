@@ -8,7 +8,23 @@
     <p>{{ article.created_at }}</p>
     <hr>
     <p>{{ article.content }}</p>
+    <p>현재 좋아요 수 : {{ article.like_users.count }}</p>
+    <a href="{% url 'articles:like' article.pk %}" class="btn btn-primary">좋아요!</a>
     <a href="{% url 'articles:update' article.pk %}" class="btn btn-primary">수정하기</a> {% if request.user == article.user %}
     <a href="{% url 'articles:delete' article.pk %}" class="btn btn-primary">삭제하기</a> {% endif %}
+    <div>
+        <h3>댓글</h3>
+        <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+            {% csrf_token %} {% bootstrap_form comment_form %} {% bootstrap_button button_type="submit" content="제출" %}
+        </form>
+    </div>
+    <div>
+        <h3>댓글 목록</h3>
+        {% for comment in article.comment_set.all %}
+        <p>작성자 : {{ comment.user.username }}</p>
+        <p>내용 : {{ comment.content }}</p>
+        <hr> {% endfor %}
+    </div>
 </div>
+
 {% endblock %}

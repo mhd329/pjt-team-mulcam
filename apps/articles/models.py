@@ -15,7 +15,7 @@ class Article(models.Model):
 
     view = models.PositiveIntegerField(default=0)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
+    like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
     # image = ProcessedImageField(
     #     upload_to='images/',
     #     blank=True,
@@ -33,3 +33,9 @@ class Article(models.Model):
     #     options={
     #         "quality": 60,
     #     }),
+
+class Comment(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)                            

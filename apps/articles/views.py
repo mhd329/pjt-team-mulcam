@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from apps.articles.models import Article
-from .forms import ArticleForm
+from apps.articles.models import Article, Comment
+from .forms import ArticleForm, CommentForm
 
 # Create your views here.
 def reviews(request):
@@ -31,7 +31,9 @@ def create(request):
 
 def detail(request, pk):
     article = Article.objects.get(pk=pk)
+    comment_form = CommentForm()
     context = {
+        "comment_form" : comment_form,
         "article": article,
     }
     return render(request, "articles/detail.html", context)
@@ -52,7 +54,30 @@ def update(request, pk):
     else:
         return redirect("articles:detail", article.pk)
 
+@login_required
+def like(request, pk):
+    user = request.user
+    article = Article.objects.get(id=pk)
+    if article.like_users.filter(id=user.id).exists():
+        article.like_users.remove(user)
+        return redirect("articles:detail", article.pk)
+    else:
+        article.like_users.add(user)
+        return redirect("articles:detail", article.pk)
 
 def delete(request, pk):
     Article.objects.get(pk=pk).delete()
     return redirect("articles:reviews")
+
+@login_required
+def comment_create(request, pk):
+    article = Article.objects.get(pk=pk)
+    comment_form = CommentForm(request.POST)
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.article = article
+        comment.user = request.user
+        comment.save()
+    
+    return redirect('articles:detail', article.pk)

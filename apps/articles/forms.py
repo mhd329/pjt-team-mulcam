@@ -1,4 +1,3 @@
-from dataclasses import fields
 from django import forms
 
 from apps.articles.models import Article

@@ -1,32 +1,31 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="col-2">이름</th>
-        <th class="col-3 text-center">내 아이디</th>
-        <th class="col-4 text-center">이메일</th>
-        <th class="col-3 text-center">가입일</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th class="text-center">{{ user.full_name }}</th>
-        <th class="text-center"><a href="{% url 'accounts:profile' user.pk %}">{{ user.username }}</a></th>
-        <td>{{ user.email }}</td>
-        <td>{{ user.date_joined|date:"y년 m월 d일 f:s" }}</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="col-2 text-center">이름</th>
+                <th class="col-3 text-center">내 아이디</th>
+                <th class="col-4 text-center">이메일</th>
+                <th class="col-3 text-center">가입일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="text-center">{{ user.full_name }}</th>
+                <th class="text-center"><a href="{% url 'accounts:profile' user.pk %}">{{ user.username }}</a></th>
+                <td class="text-center">{{ user.email }}</td>
+                <td class="text-center">{{ user.date_joined|date:"y년 m월 d일 f:s" }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="container">
-  <button class="btn btn-primary" type="button" onclick="location.href='{% url 'accounts:update' %}'">
+    <button class="btn btn-primary" type="button" onclick=location.href="{% url 'accounts:update' %}">
     회원정보 수정
   </button>
-  <button class="btn btn-dark" type="button" onclick="location.href='{% url 'accounts:user_list' %}'">
+    <button class="btn btn-dark" type="button" onclick=location.href="{% url 'accounts:user_list' %}">
       돌아가기
   </button>
 </div>

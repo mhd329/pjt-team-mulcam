@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="col-1 text-center">번호</th>
+        <th class="col-2 text-center">아이디</th>
+        <th class="col-9">이메일</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th class="text-center">{{ forloop.counter }}</th>
+        <th class="text-center"><a href="{% url 'accounts:profile' user.pk %}">{{ user.username }}</a></th>
+        <td>{{ user.email }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock content %}

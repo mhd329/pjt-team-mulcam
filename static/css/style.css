@@ -5,3 +5,18 @@
 a {
     text-decoration: none;
 }
+
+.msgbox {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 15rem;
+}
+
+.card-hover {
+    transition: all 0.2s linear;
+}
+
+.card-hover:hover {
+    transform: scale(1.05);
+}

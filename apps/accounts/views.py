@@ -1,11 +1,11 @@
-from multiprocessing import context
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 
 
 # Create your views here.
@@ -61,18 +61,51 @@ def logout(request):
     auth_logout(request)
     return redirect("articles:reviews")
 
+
 @login_required
 def update(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:profile', request.user.pk)
-    
+            return redirect("accounts:profile", request.user.pk)
+
     else:
         form = CustomUserChangeForm(instance=request.user)
-    
+
     context = {
-        'form': form,
+        "form": form,
     }
-    return render(request, 'accounts/update.html', context)
+    return render(request, "accounts/update.html", context)
+
+
+@login_required
+def follow(request, pk):
+    me = request.user
+    user = get_user_model().objects.get(id=pk)
+    if me.followings.filter(id=user.pk).exists():
+        me.followings.remove(user)
+        return redirect("accounts:profile", user.pk)
+    else:
+        if me == user:
+            messages.warning(request, "자신은 팔로우 할 수 없습니다.")
+            return redirect("accounts:profile", user.pk)
+        else:
+            me.followings.add(user)
+            return redirect("accounts:profile", user.pk)
+
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect("accounts:profile")
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/update.html", context)

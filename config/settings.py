@@ -121,20 +121,20 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_DIR = BASE_DIR / "static"
 
 STATICFILES_DIRS = [
-    STATIC_DIR,
+    BASE_DIR / "static",
 ]
 
 STATIC_ROOT = BASE_DIR / "static_root"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -148,11 +148,4 @@ AUTH_USER_MODEL = "accounts.User"
 # 미디어 파일들
 
 MEDIA_URL = "/media/"
-
-MEDIA_DIR = BASE_DIR / "media"
-
-MEDIAFILES_DIRS = [
-    MEDIA_DIR,
-]
-
-MEDIA_ROOT = BASE_DIR / "media_root"
+MEDIA_ROOT = BASE_DIR / "images"

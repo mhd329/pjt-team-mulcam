@@ -16,5 +16,11 @@
         <p> {% if request.user in pick_user.follower.all %}언팔로우 {% else %} 팔로우 {% endif %}</p>
       </a>
       {%endif %}
+
+      <hr>
+      <p>북마크 목록({{pick_user.marker.all.count}})</p>
+      {% for mark in pick_user.marker.all %}
+      <p>{{mark}}</p>
+      {% endfor %}
 </div>
 {% endblock body %}

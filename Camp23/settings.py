@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 ADDED_APPS = [
+    "search",
     "main",
     "reviews",
     "articles",

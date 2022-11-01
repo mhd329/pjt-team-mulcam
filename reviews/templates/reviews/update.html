@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% block body %}
-<h1>회원가입 페이지</h1>
+<h1>리뷰 수정</h1>
 
 <form action="" method="POST">
 
   {% bootstrap_form form %}
   {% csrf_token %}
 
-  <input type="submit" value="회원가입">
+  <input type="submit" value="수정완료">
 
 </form>
 

@@ -1,61 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
 
 <div class="container">
-  <div class="row">
+  <div class="row gx-3">
     <div class="col-7">
-      {{ article.image.url }}
+      <img src="{{ article.image.url }}">
     </div>
     <div class="col-5">
       <table class="table">
         <tbody>
           <!-- 주소 -->
           <tr>
-            <th class="col-2">주소</th>
-            <td class="col-10">{{ address }}</td>
+            <th class="col-3">주소</th>
+            <td class="col-9">{{ article.address }}</td>
           </tr>
           <!-- 업체 연락처 -->
           <tr>
-            <th class="col-2">문의처</th>
-            <td class="col-10">{{ contact }}</td>
+            <th class="col-3">문의처</th>
+            <td class="col-9">{{ article.contact }}</td>
           </tr>
           <!-- 주변 자연 -->
           <tr>
-            <th class="col-2">캠핑장 환경</th>
-            <td class="col-10">{{ geography }}</td>
+            <th class="col-3">캠핑장 환경</th>
+            <td class="col-9">
+              {% for geo in geography %}
+              <span>{{ geo.tags }} </span>
+              {% endfor %}
+            </td>
           </tr>
           <!-- 캠핑장 유형 -->
           <tr>
-            <th class="col-2">캠핑장 유형</th>
-            <td class="col-10">{{ camp_type }}</td>
+            <th class="col-3">캠핑장 유형</th>
+            <td class="col-9">{{ article.camp_type }}</td>
           </tr>
           <!-- 운영 시즌 -->
           <tr>
-            <th class="col-2">운영 기간</th>
-            <td class="col-10">{{ season }}</td>
+            <th class="col-3">운영 기간</th>
+            <td class="col-9">{{ article.season }}</td>
           </tr>
           <!-- 운영일 -->
           <tr>
-            <th class="col-2">운영일</th>
-            <td class="col-10">{{ active_day }}</td>
+            <th class="col-3">운영일</th>
+            <td class="col-9">{{ article.active_day }}</td>
           </tr>
           <!-- 예약 방법 -->
           <tr>
-            <th class="col-2">예약 방법</th>
-            <td class="col-10">{{ reservation }}</td>
+            <th class="col-3">예약 방법</th>
+            <td class="col-9">{{ article.reservation }}</td>
           </tr>
           <!-- 주변 편의시설 -->
           <tr>
-            <th class="col-2">주변 시설</th>
-            <td class="col-10">{{ amenities }}</td>
+            <th class="col-3">주변 시설</th>
+            <td class="col-9">{{ article.amenities }}</td>
           </tr>
         </tbody>
       </table>
 
       <!-- 추천, 북마크 버튼 -->
-      <a href="{% url 'accounts:like' article.pk %}">추천하기</a>
-      <a href="{% url 'accounts:marker' article.pk %}">즐겨찾기</a>
+      <a href="#" class="btn btn-primary">추천하기</a>
+      <a href="#" class="btn btn-primary">즐겨찾기</a>
 
     </div>
   </div>

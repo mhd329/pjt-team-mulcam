@@ -23,16 +23,14 @@ class Article(models.Model):
     active_day = models.CharField(max_length=10)
     reservation = models.CharField(max_length=15)
     amenities = models.CharField(max_length=50)
-    grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     tags = models.BooleanField(null=True)
-    # like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
-    # bookmark_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
 
 class Image(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(
         default="images/default_image.jpeg",
         upload_to="images/",

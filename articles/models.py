@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from Camp23.settings import AUTH_USER_MODEL
 from imagekit.processors import ResizeToFill
@@ -27,15 +26,15 @@ class Article(models.Model):
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     tags = models.BooleanField(null=True)
     # like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
-
+    # bookmark_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
 
-# class Image(models.Model):
-#     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-#     image = models.ImageField(
-#         default="images/default_image.jpeg",
-#         upload_to="images/",
-#         blank=True,
-#     )
+class Image(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    image = models.ImageField(
+        default="images/default_image.jpeg",
+        upload_to="images/",
+        blank=True,
+    )

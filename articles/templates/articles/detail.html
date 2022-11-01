@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      {{ article.image.url }}
+    </div>
+    <div class="col-6">
+      <table class="table">
+        <tbody>
+          <!-- 주소 -->
+          <tr>
+            <th>주소</th>
+            <td>{{ address }}</td>
+          </tr>
+          <!-- 업체 연락처 -->
+          <tr>
+            <th>문의처</th>
+            <td>{{ contact }}</td>
+          </tr>
+          <!-- 주변 자연 -->
+          <tr>
+            <th>캠핑장 환경</th>
+            <td>{{ geography }}</td>
+          </tr>
+          <!-- 캠핑장 유형 -->
+          <tr>
+            <th>캠핑장 유형</th>
+            <td>{{ camp_type }}</td>
+          </tr>
+          <!-- 운영 시즌 -->
+          <tr>
+            <th>운영 기간</th>
+            <td>{{ season }}</td>
+          </tr>
+          <!-- 운영일 -->
+          <tr>
+            <th>운영일</th>
+            <td>{{ active_day }}</td>
+          </tr>
+          <!-- 예약 방법 -->
+          <tr>
+            <th>예약 방법</th>
+            <td>{{ reservation }}</td>
+          </tr>
+          <!-- 주변 편의시설 -->
+          <tr>
+            <th>주변 시설</th>
+            <td>{{ amenities }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

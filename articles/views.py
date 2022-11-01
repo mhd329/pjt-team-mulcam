@@ -1,5 +1,10 @@
 from django.shortcuts import render
+from .models import Article
 
 # Create your views here.
-def camp01(request):
-    return render(request, "articles/camp01.html")
+def detail(request, pk):
+    article = Article.objects.get(id=pk)
+    context = {
+        "article": article,
+    }
+    return render(request, "articles/detail.html", context)

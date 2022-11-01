@@ -1,37 +1,36 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.contrib.auth import get_user_model,login as my_login, logout as my_logout
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
 from django.contrib.auth.decorators import login_required
-from .form import CreateUserForm,ChangeUserInfo
+from .form import CreateUserForm, ChangeUserInfo
 from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
+
 
 def signup(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user= form.save()
+            user = form.save()
             my_login(request, user)
-            return redirect ("main:index")
+            return redirect("main:index")
     else:
         form = CreateUserForm()
-    context= {
-        'form':form
-    }
-    return render (request,"accounts/signup.html",context)
+    context = {"form": form}
+    return render(request, "accounts/signup.html", context)
 
-def login (request):
+
+def login(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            my_login(request,form.get_user())
+            my_login(request, form.get_user())
             return redirect(request.GET.get("next") or "main:index")
     else:
         form = AuthenticationForm()
-    context= {
-        'form':form
-    }
-    return render (request,"accounts/login.html",context)
+    context = {"form": form}
+    return render(request, "accounts/login.html", context)
+
 
 @login_required
 def logout(request):
@@ -39,36 +38,46 @@ def logout(request):
     return redirect("main:index")
 
 
-def detail(request,user_pk):
-    pick_user= get_object_or_404(get_user_model(),pk=user_pk)
-    
-    context ={
-        'pick_user':pick_user
-    }
-    return render (request,"accounts/detail.html",context)
+def detail(request, user_pk):
+    pick_user = get_object_or_404(get_user_model(), pk=user_pk)
+
+    context = {"pick_user": pick_user}
+    return render(request, "accounts/detail.html", context)
+
 
 @login_required
-def update(request,user_pk):
-    pick_user= get_object_or_404(get_user_model(),pk=user_pk)
+def update(request, user_pk):
+    pick_user = get_object_or_404(get_user_model(), pk=user_pk)
     if request.user == pick_user:
         if request.method == "POST":
-            form = ChangeUserInfo(request.POST ,instance=pick_user)
+            form = ChangeUserInfo(request.POST, instance=pick_user)
             if form.is_valid():
                 form.save()
-                return redirect ("accounts:detail",user_pk)
+                return redirect("accounts:detail", user_pk)
         else:
             form = ChangeUserInfo(instance=pick_user)
-        context= {
-            'form':form
+        context = {
+            "form": form,
+            "pick_user": pick_user,
         }
-    return render (request,"accounts/update.html",context)
+    return render(request, "accounts/update.html", context)
 
-def follow (request,user_pk):
-    pick_user= get_object_or_404(get_user_model(),pk=user_pk)
-    if request.user == pick_user :
+
+@login_required
+def follow(request, user_pk):
+    pick_user = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.user == pick_user:
         pass
-    elif get_user_model().followings.filter(pk=request.user).exists():
-        get_user_model().followings.remove(pk=request.user)
+    elif pick_user.followings.filter(pk=request.user.pk).exists():
+        pick_user.followings.remove(request.user)
     else:
-        get_user_model().followings.add(pk=request.user)
-    return redirect("accounts/detail",user_pk)
+        pick_user.followings.add(request.user)
+    return redirect("accounts:detail", user_pk)
+
+
+@login_required
+def delete(request, user_pk):
+    pick_user = get_user_model().objects.get(pk=user_pk)
+    if request.user == pick_user:
+        pick_user.delete()
+    return redirect("main:index")

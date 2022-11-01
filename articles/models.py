@@ -27,7 +27,7 @@ class Article(models.Model):
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     tags = models.BooleanField(null=True)
     # like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
-    # bookmark_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
+
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 

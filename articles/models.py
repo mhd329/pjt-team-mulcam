@@ -6,6 +6,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Article(models.Model):
+    image = models.ImageField(
+        default="images/default_image.jpeg",
+        upload_to="images/",
+        blank=True,
+    )
     thumbnail = ProcessedImageField(
         upload_to="thumbnail/",
         blank=True,
@@ -17,22 +22,25 @@ class Article(models.Model):
     )
     address = models.CharField(max_length=100)
     contact = models.CharField(max_length=14)
-    geography = models.BooleanField()
     camp_type = models.CharField(max_length=20)
     season = models.CharField(max_length=20)
     active_day = models.CharField(max_length=10)
     reservation = models.CharField(max_length=15)
     amenities = models.CharField(max_length=50)
-    tags = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
 
-class Image(models.Model):
+class SubImage(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(
+    sub_image = models.ImageField(
         default="images/default_image.jpeg",
         upload_to="images/",
         blank=True,
     )
+
+
+class Geography(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    tags = models.CharField(max_length=10)

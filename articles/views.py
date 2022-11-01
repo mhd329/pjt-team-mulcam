@@ -1,5 +1,5 @@
-from .models import Article, Image
-from articles.forms import ImageForm
+from .models import Article, SubImage
+from articles.forms import SubImageForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 
@@ -8,14 +8,15 @@ def detail(request, pk):
     article = Article.objects.get(id=pk)
     context = {
         "article": article,
-        "images": article.image_set.all,
+        "images": article.subimage_set.all,
+        "geography": article.geography_set.all,
     }
     return render(request, "articles/detail.html", context)
 
 
 def photos(request, pk):
     article = Article.objects.get(pk=pk)
-    images = article.image_set.order_by("-id")
+    images = article.subimage_set.order_by("-id")
     context = {
         "images": images,
     }
@@ -25,7 +26,7 @@ def photos(request, pk):
 def add_image(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == "POST":
-        image_form = ImageForm(request.POST, request.FILES)
+        image_form = SubImageForm(request.POST, request.FILES)
         if image_form.is_valid():
             image = image_form.save(commit=False)
             image.article = article
@@ -33,7 +34,7 @@ def add_image(request, pk):
             image.save()
             return redirect("articles:detail", article.pk)
     else:
-        image_form = ImageForm()
+        image_form = SubImageForm()
     context = {
         "image_form": image_form,
     }

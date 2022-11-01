@@ -1,25 +1,24 @@
 from django import forms
-from .models import Article, Image
+from .models import Article, SubImage
 
 
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = (
+            "image",
             "thumbnail",
             "address",
             "contact",
-            "geography",
             "camp_type",
             "season",
             "active_day",
             "reservation",
             "amenities",
-            "tags",
         )
 
 
-class ImageForm(forms.ModelForm):
+class SubImageForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ("image",)
+        model = SubImage
+        fields = ("sub_image",)

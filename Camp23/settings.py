@@ -34,6 +34,7 @@ ADDED_APPS = [
     "main",
     "reviews",
     "articles",
+    "accounts",
     "imagekit",
     "django_bootstrap5",
 ]
@@ -151,3 +152,7 @@ STATIC_ROOT = BASE_DIR / "static_root"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media_root"
+
+# user model
+
+AUTH_USER_MODEL = "accounts.User"

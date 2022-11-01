@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block body %}
+<a href="{% url 'accounts:update' pick_user.pk %}">회원정보수정</a>
+
+<h1>회원 정보 페이지</h1>
+
+
+<h3>{{pick_user.username}}<h3>
+<p>{{pick_user.email}}</p>
+
+{% endblock body %}

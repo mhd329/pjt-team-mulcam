@@ -16,10 +16,6 @@ class Article(models.Model):
             "quality": 60,
         },
     )
-    carousel_images = models.ImageField(
-        upload_to="images/",
-        blank=True,
-    )
     address = models.CharField(max_length=100)
     contact = models.CharField(max_length=14)
     geography = models.BooleanField()
@@ -30,16 +26,16 @@ class Article(models.Model):
     amenities = models.CharField(max_length=50)
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     tags = models.BooleanField(null=True)
-    like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
-    bookmark_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
+    # like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
+    # bookmark_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="articles")
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
 
-class Image(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    image = models.ImageField(
-        default="images/default_image.jpeg",
-        upload_to="images/",
-        blank=True,
-    )
+# class Image(models.Model):
+#     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+#     image = models.ImageField(
+#         default="images/default_image.jpeg",
+#         upload_to="images/",
+#         blank=True,
+#     )

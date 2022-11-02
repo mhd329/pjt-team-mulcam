@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .tab-content {
   display: none;
   position: absolute;

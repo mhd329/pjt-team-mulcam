@@ -1,26 +1,37 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% block body %}
-<a href="{% url 'accounts:update' pick_user.pk %}">회원정보수정</a>
 
-<h1>회원 정보 페이지</h1>
+<div class="container">
+  <a href="{% url 'accounts:update' pick_user.pk %}">회원정보수정</a>
 
-<div>
-  <h3>{{pick_user.username}}<h3>
-      <p>{{pick_user.email}}</p>
-      <hr>
-      <p>팔로워 {{pick_user.follower.all.count}}</p>
-      <p>팔로잉 {{pick_user.followings.all.count}}</p>
-      {% if pick_user != request.user %}
-      <a href="{% url 'accounts:follow' pick_user.pk %}">
-        <p> {% if request.user in pick_user.follower.all %}언팔로우 {% else %} 팔로우 {% endif %}</p>
-      </a>
-      {%endif %}
+  <h1>회원 정보 페이지</h1>
 
-      <hr>
-      <p>북마크 목록({{pick_user.marker.all.count}})</p>
-      {% for mark in pick_user.marker.all %}
-      <p>{{mark}}</p>
-      {% endfor %}
+  <div>
+    <h3>{{ pick_user.username }}</h3>
+    <h6>{{ pick_user.full_name }}</h6>
+    <p>{{ pick_user.email }}</p>
+    <p>{{ pick_user.phone }}</p>
+    <hr>
+    <p>팔로워 {{pick_user.follower.all.count}}</p>
+    <p>팔로잉 {{pick_user.followings.all.count}}</p>
+    {% if pick_user != request.user %}
+    <a href="{% url 'accounts:follow' pick_user.pk %}">
+      <p>
+        {% if request.user in pick_user.follower.all %}
+        언팔로우
+        {% else %}
+        팔로우
+        {% endif %}
+      </p>
+    </a>
+    {%endif %}
+
+    <hr>
+    <p>북마크 목록 ({{pick_user.marker.all.count}})</p>
+    {% for mark in pick_user.marker.all %}
+    <p>{{ mark }}</p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock body %}

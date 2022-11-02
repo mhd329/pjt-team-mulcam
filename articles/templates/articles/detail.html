@@ -50,6 +50,11 @@
             <th class="col-3">예약 방법</th>
             <td class="col-9">{{ article.reservation }}</td>
           </tr>
+          <!-- 주변 지형 -->
+          <tr>
+            <th class="col-3">주변 지형</th>
+            <td class="col-9">{{ article.geography }}</td>
+          </tr>
           <!-- 주변 편의시설 -->
           <tr>
             <th class="col-3">주변 시설</th>
@@ -65,45 +70,45 @@
     </div>
   </div>
   <!-- 탭 리스트 -->
-  <ul class="nav nav-tabs nav-justified">
-    <li class="nav-item">
+  <ul class="nav nav-tabs nav-justified tab-menu">
+    <li class="tab-item nav-item">
       <!-- 사진 탭 -->
       <a class="nav-link active" aria-current="page" href="#photos">사진</a>
-      <div id="photos">
-        <div class="row gx-5">
-          <!-- 이미지는 세 개만 표시 -->
-          {% for img in images %}
-          <div class="col-4">
-            {{ img.url }}
+      <div class="tab-content" id="photos">
+        <div class="container">
+          <div class="row gx-3 py-3">
+            <!-- 이미지는 세 개만 표시 -->
+            {% for photo in photos %}
+            <img class="col-4 m-0" src="{{ photo.image.url }}">
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
         <div class="d-flex">
           <a href="{% url 'articles:photos' article.pk %}" class="btn btn-primary">모든 사진들</a>
-          <a href="{% url 'articles:add-image' article.pk %}" class="btn btn-primary ms-auto">사진 등록하기</a>
+          <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-primary ms-auto">사진 등록하기</a>
         </div>
       </div>
     </li>
     <!-- 지도 탭 -->
     <li class="nav-item">
       <a class="nav-link" href="#map">지도</a>
-      <div id="map">카카오맵 연동</div>
+      <div class="tab-content" id="map">카카오맵 연동</div>
     </li>
     <!-- 시설정보 탭 -->
     <li class="nav-item">
       <a class="nav-link" href="#amenities">시설정보</a>
-      <div id="amenities">시설 아이콘</div>
+      <div class="tab-content" id="amenities">시설 아이콘</div>
     </li>
     <!-- 후기 탭 -->
     <li class="nav-item">
       <a class="nav-link" href="#reviews">캠핑후기</a>
-      <div id="reviews">이 캠프장에 해당하는 후기 리스트</div>
+      <div class="tab-content" id="reviews">이 캠프장에 해당하는 후기 리스트</div>
     </li>
   </ul>
 </div>
 
 <script>
-  const tabList = document.querySelectorAll(".nav-tabs li");
+  let tabList = document.querySelectorAll(".nav-item");
 
   for (let i = 0; i < tabList.length; i++) {
     tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {

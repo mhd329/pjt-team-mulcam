@@ -1,0 +1,17 @@
+.tab-menu {
+  overflow: hidden;
+}
+
+.tab-item {
+  float: left;
+}
+
+.tab-content {
+  display: none;
+  position: absolute;
+  text-align: center;
+}
+
+.active .tab-content {
+  display: block;
+}

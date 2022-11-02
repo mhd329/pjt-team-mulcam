@@ -11,3 +11,15 @@ a {
 .active .tab-content {
   display: block;
 }
+
+body {
+  font-family: 'Noto Serif KR', serif;
+}
+
+.banner {
+  height: 500px;
+  background-image: url('/static/img/main_1920.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

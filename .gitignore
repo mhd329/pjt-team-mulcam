@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,python,visualstudiocode,windows,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,visualstudiocode,windows,macos
 
+.db.sqlite3
 ### Django ###
 *.log
 *.pot

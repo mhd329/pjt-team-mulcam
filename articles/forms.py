@@ -15,6 +15,7 @@ class ArticleForm(forms.ModelForm):
             "season",
             "active_day",
             "reservation",
+            "geography",
             "amenities",
         )
 

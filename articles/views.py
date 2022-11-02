@@ -8,7 +8,7 @@ def detail(request, pk):
     article = Article.objects.get(id=pk)
     context = {
         "article": article,
-        "photos": article.photo_set.all,
+        "photos": article.photo_set.order_by("-id")[:3],
     }
     return render(request, "articles/detail.html", context)
 

@@ -6,12 +6,10 @@
 <a href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
 
 <div class="container">
-
   <div class="container mt-5">
     <div class="text-center">
       <h1>{{ article.name }}</h1>
     </div>
-
     <div class="row gx-3">
       <div class="col-7">
         <img src="{{ article.image.url }}">
@@ -70,60 +68,125 @@
         <!-- 추천, 북마크 버튼 -->
         <a href="#" class="btn btn-primary">추천하기</a>
         <a href="#" class="btn btn-primary">즐겨찾기</a>
+        >>>>>>> master
 
-      </div>
-    </div>
-    <!-- 탭 리스트 -->
-    <ul class="nav nav-tabs nav-justified tab-menu">
-      <li class="tab-item nav-item">
-        <!-- 사진 탭 -->
-        <a class="nav-link active" aria-current="page" href="#photos">사진</a>
-        <div class="tab-content" id="photos">
-          <div class="row gx-3 py-3">
-            <!-- 이미지는 세 개만 표시 -->
-            {% for photo in photos %}
-            <img class="col-4 m-0" src="{{ photo.image.url }}">
-            {% endfor %}
+        <div class="container mt-5">
+          <div class="text-center">
+            <h1>{{ article.name }}</h1>
           </div>
-          <div class="d-flex">
-            <a href="{% url 'articles:photos' article.pk %}" class="btn btn-primary">모든 사진들</a>
-            <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-primary ms-auto">사진 등록하기</a>
+
+          <div class="row gx-3">
+            <div class="col-7">
+              <img src="{{ article.image.url }}">
+            </div>
+            <div class="col-5">
+              <table class="table">
+                <tbody>
+                  <!-- 주소 -->
+                  <tr>
+                    <th class="col-3">주소</th>
+                    <td class="col-9">{{ article.address }}</td>
+                  </tr>
+                  <!-- 업체 연락처 -->
+                  <tr>
+                    <th class="col-3">문의처</th>
+                    <td class="col-9">{{ article.contact }}</td>
+                  </tr>
+                  <!-- 캠핑장 유형 -->
+                  <tr>
+                    <th class="col-3">캠핑장 유형</th>
+                    <td class="col-9">{{ article.camp_type }}</td>
+                  </tr>
+                  <!-- 운영 시즌 -->
+                  <tr>
+                    <th class="col-3">운영 기간</th>
+                    <td class="col-9">{{ article.season }}</td>
+                  </tr>
+                  <!-- 운영일 -->
+                  <tr>
+                    <th class="col-3">운영일</th>
+                    <td class="col-9">{{ article.active_day }}</td>
+                  </tr>
+                  <!-- 운영일 -->
+                  <tr>
+                    <th class="col-3">홈페이지</th>
+                    <td class="col-9"><a href="{{ article.homepage }}">홈페이지 바로가기</a></td>
+                  </tr>
+                  <!-- 예약 방법 -->
+                  <tr>
+                    <th class="col-3">예약 방법</th>
+                    <td class="col-9">{{ article.reservation }}</td>
+                  </tr>
+                  <!-- 주변 지형 -->
+                  <tr>
+                    <th class="col-3">주변 지형</th>
+                    <td class="col-9">{{ article.geography }}</td>
+                  </tr>
+                  <!-- 주변 편의시설 -->
+                  <tr>
+                    <th class="col-3">주변 시설</th>
+                    <td class="col-9">{{ article.amenities }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 추천, 북마크 버튼 -->
+              <a href="#" class="btn btn-primary">추천하기</a>
+              <a href="#" class="btn btn-primary">즐겨찾기</a>
+
+            </div>
           </div>
+          <!-- 탭 리스트 -->
+          <ul class="nav nav-tabs nav-justified tab-menu">
+            <li class="tab-item nav-item">
+              <!-- 사진 탭 -->
+              <a class="nav-link active" aria-current="page" href="#photos">사진</a>
+              <div class="tab-content" id="photos">
+                <div class="row gx-3 py-3">
+                  <!-- 이미지는 세 개만 표시 -->
+                  {% for photo in photos %}
+                  <img class="col-4 m-0" src="{{ photo.image.url }}">
+                  {% endfor %}
+                </div>
+                <div class="d-flex">
+                  <a href="{% url 'articles:photos' article.pk %}" class="btn btn-primary">모든 사진들</a>
+                  <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-primary ms-auto">사진 등록하기</a>
+                </div>
+              </div>
+            </li>
+            <!-- 지도 탭 -->
+            <li class="nav-item">
+              <a class="nav-link" href="#map">지도</a>
+              <div class="tab-content" id="map">카카오맵 연동</div>
+            </li>
+            <!-- 시설정보 탭 -->
+            <li class="nav-item">
+              <a class="nav-link" href="#amenities">시설정보</a>
+              <div class="tab-content" id="amenities">시설 아이콘</div>
+            </li>
+            <!-- 후기 탭 -->
+            <li class="nav-item">
+              <a class="nav-link" href="#reviews">캠핑후기</a>
+              <div class="tab-content" id="reviews">이 캠프장에 해당하는 후기 리스트</div>
+              {%for review in reviews%}
+              <p>{{review.title}}</p>
+              {%endfor%}
+            </li>
+          </ul>
         </div>
-      </li>
-      <!-- 지도 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#map">지도</a>
-        <div class="tab-content" id="map">카카오맵 연동</div>
-      </li>
-      <!-- 시설정보 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#amenities">시설정보</a>
-        <div class="tab-content" id="amenities">시설 아이콘</div>
-      </li>
-      <!-- 후기 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#reviews">캠핑후기</a>
-        <div class="tab-content" id="reviews">이 캠프장에 해당하는 후기 리스트</div>
-        {%for review in reviews%}
-        <p>{{review.title}}</p>
-        {%endfor%}
-      </li>
-    </ul>
-  </div>
 
-  <script>
-    let tabList = document.querySelectorAll(".nav-item");
+        <script>
+          let tabList = document.querySelectorAll(".nav-item");
 
-    for (let i = 0; i < tabList.length; i++) {
-      tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
-        event.preventDefault();
-        for (let j = 0; j < tabList.length; j++) {
-          tabList[j].classList.remove("active");
-        }
-        this.parentNode.classList.add("active");
-      });
-    }
-  </script>
+          for (let i = 0; i < tabList.length; i++) {
+            tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
+              event.preventDefault();
+              for (let j = 0; j < tabList.length; j++) {
+                tabList[j].classList.remove("active");
+              }
+              this.parentNode.classList.add("active");
+            });
+          }
+        </script>
 
-  {% endblock body %}
+        {% endblock body %}

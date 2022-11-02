@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, SubImage
+from .models import Article, Photo
 
 
 class ArticleForm(forms.ModelForm):
@@ -15,10 +15,11 @@ class ArticleForm(forms.ModelForm):
             "active_day",
             "reservation",
             "amenities",
+            "geography",
         )
 
 
-class SubImageForm(forms.ModelForm):
+class PhotoForm(forms.ModelForm):
     class Meta:
-        model = SubImage
-        fields = ("sub_image",)
+        model = Photo
+        fields = ("image",)

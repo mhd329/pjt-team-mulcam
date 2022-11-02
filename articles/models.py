@@ -2,7 +2,6 @@ from django.db import models
 from Camp23.settings import AUTH_USER_MODEL
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Article(models.Model):
@@ -25,22 +24,19 @@ class Article(models.Model):
     camp_type = models.CharField(max_length=20)
     season = models.CharField(max_length=20)
     active_day = models.CharField(max_length=10)
+    homepage = models.CharField(max_length=40, blank=True)
     reservation = models.CharField(max_length=15)
     amenities = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    geography = models.CharField(max_length=20)
 
 
-class SubImage(models.Model):
+class Photo(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    sub_image = models.ImageField(
-        default="images/default_image.jpeg",
-        upload_to="images/",
+    image = models.ImageField(
+        default="photos/default_image.jpeg",
+        upload_to="photos/",
         blank=True,
     )
-
-
-class Geography(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    tags = models.CharField(max_length=10)

@@ -35,10 +35,11 @@ def create(request, article_pk):
 
 
 def detail(request, review_pk):
-    pick_review = get_object_or_404(Review(), pk=review_pk)
+    pick_review = get_object_or_404(Review, pk=review_pk)
 
     context = {"pick_review": pick_review}
-    return render(request, "accounts/detail.html", context)
+
+    return render(request, "reviews/detail.html", context)
 
 
 @login_required

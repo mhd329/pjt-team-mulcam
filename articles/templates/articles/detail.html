@@ -45,6 +45,11 @@
             <th class="col-3">운영일</th>
             <td class="col-9">{{ article.active_day }}</td>
           </tr>
+          <!-- 운영일 -->
+          <tr>
+            <th class="col-3">홈페이지</th>
+            <td class="col-9"><a href="{{ article.homepage }}">홈페이지 바로가기</a></td>
+          </tr>
           <!-- 예약 방법 -->
           <tr>
             <th class="col-3">예약 방법</th>
@@ -75,13 +80,11 @@
       <!-- 사진 탭 -->
       <a class="nav-link active" aria-current="page" href="#photos">사진</a>
       <div class="tab-content" id="photos">
-        <div class="container">
-          <div class="row gx-3 py-3">
-            <!-- 이미지는 세 개만 표시 -->
-            {% for photo in photos %}
-            <img class="col-4 m-0" src="{{ photo.image.url }}">
-            {% endfor %}
-          </div>
+        <div class="row gx-3 py-3">
+          <!-- 이미지는 세 개만 표시 -->
+          {% for photo in photos %}
+          <img class="col-4 m-0" src="{{ photo.image.url }}">
+          {% endfor %}
         </div>
         <div class="d-flex">
           <a href="{% url 'articles:photos' article.pk %}" class="btn btn-primary">모든 사진들</a>

@@ -6,6 +6,7 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = (
+            "name",
             "image",
             "thumbnail",
             "address",
@@ -15,7 +16,6 @@ class ArticleForm(forms.ModelForm):
             "active_day",
             "reservation",
             "amenities",
-            "geography",
         )
 
 

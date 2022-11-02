@@ -5,6 +5,7 @@ from imagekit.models import ProcessedImageField
 
 # Create your models here.
 class Article(models.Model):
+    name = models.CharField(max_length=30, null=True)
     image = models.ImageField(
         default="images/default_image.jpeg",
         upload_to="images/",
@@ -29,7 +30,6 @@ class Article(models.Model):
     amenities = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    geography = models.CharField(max_length=20)
 
 
 class Photo(models.Model):

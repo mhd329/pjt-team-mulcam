@@ -3,7 +3,10 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container mt-5">
+  <div class="text-center">
+    <h1>{{ article.name }}</h1>
+  </div>
   <div class="row gx-3">
     <div class="col-7">
       <img src="{{ article.image.url }}">
@@ -20,15 +23,6 @@
           <tr>
             <th class="col-3">문의처</th>
             <td class="col-9">{{ article.contact }}</td>
-          </tr>
-          <!-- 주변 자연 -->
-          <tr>
-            <th class="col-3">캠핑장 환경</th>
-            <td class="col-9">
-              {% for geo in geography %}
-              <span>{{ geo.tags }} </span>
-              {% endfor %}
-            </td>
           </tr>
           <!-- 캠핑장 유형 -->
           <tr>

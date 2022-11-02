@@ -36,16 +36,19 @@ def search(request):
 
     if search:
         search_data = all_article.filter(Q(contact__icontains=search))
+        if len(search) == 0:
+            none_info = "공백을 입력하셨습니다."
+            context = {
+                "none_info": none_info,
+            }
 
-    if len(search) == 0:
-        none_info = "공백을 입력하셨습니다."
-        context = {
-            "none_info": none_info,
-        }
+        elif len(search_data) == 0:
+            none_info = "검색 결과가 없습니다."
+            context = {
+                "none_info": none_info,
+            }
 
-    elif len(search_data) == 0:
-        none_info = "검색 결과가 없습니다."
         context = {
-            "none_info": none_info,
+            "search_data": search_data,
         }
-    return render(request, "reviews/index.html", context)
+        return render(request, "search/search_list.html", context)

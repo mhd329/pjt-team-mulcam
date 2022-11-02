@@ -3,12 +3,15 @@
 {% block body %}
 
 <!-- 아티클 pk 못구하는중, search기능으로 아티클pk가져오기 -->
-<!-- <a href="{% url 'reviews:create' %}">리뷰쓰기</a> -->
+{% comment %} <!-- <a href="{% url 'reviews:create' %}">리뷰쓰기</a> --> {% endcomment %}
+
+
 
 <h1>reviews</h1>
+
 {% for review in all_reviews %}
 
-{{review.title}}
+<p>{{review.title}}</p>
 
 {% endfor %}
 

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+
+{% block body %}
+
+
+
+
+{% if search_data %}
+{% for data in search_data %}
+
+{{data}}
+
+{% endfor %}
+
+{% else %}
+
+{% for data in none_info %}
+{{data}}
+{% endfor %}
+
+{% endif %}
+
+{% endblock body %}

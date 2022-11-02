@@ -7,16 +7,19 @@
   <img src="./media_root/images/main_1920.jpg" alt="">
   <h1 class="text-center mt-5">오늘은 어디로 갈까?</h1>
   <div class="container d-flex justify-content-center mb-5">
-    <form class="d-flex" role="search" action="" style="width: 50%;">
+    <form class="d-flex" role="search" action=" {% url 'search:search' %}" name="search" style="width: 50%;">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
     </div>
 
 
@@ -58,79 +61,28 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
- </section>
+</section>
 <br>
 <br>
 <br>
 <div class="container mb-5">
   <h2 class="text-center">인기순(테마별)</h2>
   <div class="row">
+
+    {% for article in all_article %}
+
     <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
+      <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
+          <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
+            <h5 class="card-title fw-bold">{{article.contact}} </h5>
             <p class="card-text">text</p>
           </div>
         </div>
       </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
-        <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
-            <p class="card-text">text</p>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
-        <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
-            <p class="card-text">text</p>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
-        <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
-            <p class="card-text">text</p>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
-        <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
-            <p class="card-text">text</p>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
-      <a href="#" class="btn btn-light">
-        <div class="card text-center">
-          <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Card title</h5>
-            <p class="card-text">text</p>
-          </div>
-        </div>
-      </a>
-    </div>
+    {% endfor %}
 
   </div>
 </div>

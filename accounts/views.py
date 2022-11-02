@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
-from django.contrib.auth.decorators import login_required
-from .form import CreateUserForm, ChangeUserInfo
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .form import CreateUserForm, ChangeUserInfo, UserPhoneNumberForm
+from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
+
 
 # Create your views here.
 
@@ -16,7 +17,9 @@ def signup(request):
             return redirect("main:index")
     else:
         form = CreateUserForm()
-    context = {"form": form}
+    context = {
+        "form": form,
+    }
     return render(request, "accounts/signup.html", context)
 
 
@@ -48,16 +51,32 @@ def detail(request, user_pk):
 @login_required
 def update(request, user_pk):
     pick_user = get_object_or_404(get_user_model(), pk=user_pk)
+    phone = pick_user.userphonenumber
     if request.user == pick_user:
         if request.method == "POST":
             form = ChangeUserInfo(request.POST, instance=pick_user)
-            if form.is_valid():
-                form.save()
+            pn_form = UserPhoneNumberForm(request.POST, instance=phone)
+            if form.is_valid() and pn_form.is_valid():
+                user = form.save()
+                user_phone_number = pn_form.save(commit=False)
+                user_phone_number.user = user
+                phone = user_phone_number.phone
+                if phone:
+                    p1 = "".join(phone[:3])
+                    p2 = "".join(phone[3:7])
+                    p3 = "".join(phone[7:])
+                    phone = "-".join([p1, p2, p3])
+                    user_phone_number.phone = phone
+                else:
+                    pass
+                user_phone_number.save()
                 return redirect("accounts:detail", user_pk)
         else:
             form = ChangeUserInfo(instance=pick_user)
+            pn_form = UserPhoneNumberForm(instance=phone)
         context = {
             "form": form,
+            "pn_form": pn_form,
             "pick_user": pick_user,
         }
     return render(request, "accounts/update.html", context)

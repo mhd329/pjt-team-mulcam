@@ -3,13 +3,13 @@
 {% block body %}
 <h1>리뷰 작성페이지</h1>
 
-<form action="" method="POST">
-
-  {% bootstrap_form form %}
-  {% csrf_token %}
-
-  <input type="submit" value="작성완료">
-
-</form>
+<div class="m-3">
+  <form action="" method="POST" class="justify-content-center" style="width: 75%;">
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    <input type="submit" value="작성완료" class="btn btn-outline-dark">
+  
+  </form>
+</div>
 
 {% endblock body %}

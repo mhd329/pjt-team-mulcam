@@ -2,11 +2,16 @@ from .models import Article, Photo
 from articles.forms import PhotoForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from reviews.models import Review
 
 # Create your views here.
+
+
 def detail(request, pk):
     article = Article.objects.get(id=pk)
+    reviews = Review.objects.filter(pk=article.pk)
     context = {
+        "reviews": reviews,
         "article": article,
         "photos": article.photo_set.order_by("-id")[:3],
     }

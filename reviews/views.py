@@ -9,7 +9,7 @@ from .models import Review
 
 
 def review_list(request):
-    all_reviews = Article.objects.all()
+    all_reviews = Review.objects.all()
 
     context = {
         "all_reviews": all_reviews,
@@ -17,6 +17,7 @@ def review_list(request):
     return render(request, "reviews/review_list.html", context)
 
 
+@login_required
 def create(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     if request.method == "POST":

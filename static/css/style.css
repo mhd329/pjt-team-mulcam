@@ -42,13 +42,35 @@ body {
   font-size: 3.5rem;
   font-weight: bolder;
   font-family: 'East Sea Dokdo', cursive;
+  letter-spacing: 1rem;
 }
 
-.carousel-inner>.carousel-item>img {
+.menu_title {
+  font-family: 'Jua', sans-serif;
+}
+
+.carousel-inner>.carousel-item>.img {
   min-width: 100%;
   min-height: 400px;
 }
 
 .banner-color {
   background-color: rgba(0, 0, 0, 0.668);
+}
+
+.detail-title {
+  text-align: center;
+  display: table;
+  width: 280px;
+  height: 250px;
+}
+
+.detail-img-div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.detail-img {
+  max-width: 550px;
+  max-height: 400px;
 }

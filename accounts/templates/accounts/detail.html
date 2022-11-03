@@ -3,10 +3,7 @@
 {% block body %}
 
 <div class="container">
-  <a href="{% url 'accounts:update' pick_user.pk %}">회원정보수정</a>
-
   <h1>회원 정보 페이지</h1>
-
   <div>
     <h3>{{ pick_user.username }}</h3>
     <h6>{{ pick_user.full_name }}</h6>
@@ -26,12 +23,13 @@
       </p>
     </a>
     {%endif %}
-
     <hr>
     <p>북마크 목록 ({{pick_user.marker.all.count}})</p>
     {% for mark in pick_user.marker.all %}
     <p>{{ mark }}</p>
     {% endfor %}
   </div>
+  <a class="btn btn-primary" href="{% url 'accounts:update' pick_user.pk %}">회원정보 수정</a>
+  <a class="btn btn-primary ms-2" href="{% url 'accounts:password' pick_user.pk %}">비밀번호 변경</a>
 </div>
 {% endblock body %}

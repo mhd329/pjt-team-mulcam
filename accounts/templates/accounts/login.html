@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% block body %}
-<h1>로그인 페이지</h1>
 
 <div style="text-align: center; max-width:500px; margin:4rem auto">
   <div>
-      <h4>Login</h4>
+    <h4>Login</h4>
   </div>
   <div>
-      <form action="" method="POST">
-          {% csrf_token %}
-          {% bootstrap_form form %}
-          <br>
-          <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">
-      </form>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <br>
+      <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">
+    </form>
   </div>
 </div>
 {% endblock body %}

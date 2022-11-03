@@ -9,11 +9,13 @@
 {% block body %}
 <!-- banner 영역 -->
 <section class="banner">
-  <h1 class="text-center mt-5">오늘은 어디로 갈까?</h1>
+
+  <div class="banner-title">오늘은 어디로 갈까?</div>
   <div class="container d-flex justify-content-center mb-5">
-    <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
+<form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
+
     </form>
   </div>
 </section>
@@ -33,34 +35,42 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-
-
-  <!-- 여기에 update되는 캠핑장에 따라 사진, 이름 바뀌기, 크기 조절 다시 하기
-  사진 크기 정해서 가운데 정렬, 여백은 흑백처리, 마우스 올리면 흑백으로 패딩 되면서 사진 안에 글씨, -->
-  <div class="carousel-inner" style="height: 400px;">
-    <h3>New & Update</h3>
-    <div class="carousel-item active align-self-center">
-      <a href=""><img src="https://placeimg.com/200/100/any/grayscale" class="d-block w-100" alt="..."></a>
-      <div class="carousel-caption d-none d-md-block text-center">
-        <h5>First Spot</h5>
-        <p>Charged Camp</p>
-        <h4>순철형님 캠핑장</h4>
+  <h3 style="margin-top: 100px;">New & Update</h3>
+    <div class="carousel-inner" style="height: 400px;">
+      <div class="text-center">
+        <div class="carousel-item banner-color active align-self-center">
+          <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
+          <div class="carousel-caption d-none d-md-block">
+            <b>
+              <h5>First Spot</h5>
+              <p>Charged Camp</p>
+              <h4>순철형님 캠핑장</h4>
+            </b>
+          </div>
       </div>
     </div>
-    <div class="carousel-item">
-      <a href=""><img src="https://placeimg.com/200/100/any/grayscale" class="d-block w-100" alt="..."></a>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second Spot</h5>
-        <p>Free Camp</p>
-        <h4>특전 캠핑장</h4>
+    <div class="carousel-item banner-color">
+      <div class="text-center">
+        <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
+        <div class="carousel-caption d-none d-md-block">
+          <b>
+            <h5>Second Spot</h5>
+            <p>Free Camp</p>
+            <h4>특전 캠핑장</h4>
+          </b>
+        </div>
       </div>
     </div>
-    <div class="carousel-item">
-      <a href=""><img src="https://placeimg.com/200/100/any/grayscale" class="d-block w-100" alt="..."></a>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third Spot</h5>
-        <p>Charged Camp</p>
-        <h4>특수 캠핑장</h4>
+    <div class="carousel-item banner-color">
+      <div class="text-center">
+        <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
+        <div class="carousel-caption d-none d-md-block">
+          <b>
+            <h5>Third Spot</h5>
+            <p>Charged Camp</p>
+            <h4>특수 캠핑장</h4>
+          </b>
+        </div>
       </div>
     </div>
   </div>

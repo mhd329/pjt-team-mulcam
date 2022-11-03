@@ -18,29 +18,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
   
   {% block css %}{% endblock css %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
-<style>
-  body {
-    font-family: 'Noto Serif KR', serif;}
-  .carousel-inner > .carousel-item > img {
-    min-width: 100%;
-    min-height: 400px;
-  }
-  .banner-color {
-    background-color: rgba(0, 0, 0, 0.668);
-  }
-</style>
+
 
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="{% url 'main:index' %}">
         <img src="{% static 'img/favicons/favicon-16x16.png' %}" alt="logo" width="30" height="24">
-        Camp23
+        <span class="nav_title text-white">Camp23</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

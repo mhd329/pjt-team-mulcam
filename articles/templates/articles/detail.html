@@ -32,17 +32,22 @@
               <th class="col-3">캠핑장 유형</th>
               <td class="col-9">{{ article.camp_type }}</td>
             </tr>
-            <!-- 운영 시즌 -->
+            <!-- 바닥 유형 -->
             <tr>
-              <th class="col-3">운영 기간</th>
+              <th class="col-3">바닥 유형</th>
+              <td class="col-9">{{ article.geography }}</td>
+            </tr>
+            <!-- 이용 시간 -->
+            <tr>
+              <th class="col-3">이용 시간</th>
               <td class="col-9">{{ article.season }}</td>
             </tr>
-            <!-- 운영일 -->
+            <!-- 이용요금 -->
             <tr>
-              <th class="col-3">운영일</th>
+              <th class="col-3">이용 요금</th>
               <td class="col-9">{{ article.active_day }}</td>
             </tr>
-            <!-- 운영일 -->
+            <!-- 홈페이지 -->
             <tr>
               <th class="col-3">홈페이지</th>
               <td class="col-9"><a href="{{ article.homepage }}">홈페이지 바로가기</a></td>
@@ -51,11 +56,6 @@
             <tr>
               <th class="col-3">예약 방법</th>
               <td class="col-9">{{ article.reservation }}</td>
-            </tr>
-            <!-- 주변 지형 -->
-            <tr>
-              <th class="col-3">주변 지형</th>
-              <td class="col-9">{{ article.geography }}</td>
             </tr>
             <!-- 주변 편의시설 -->
             <tr>

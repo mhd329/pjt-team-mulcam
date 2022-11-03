@@ -3,13 +3,19 @@
 {% block body %}
 <h1>리뷰 작성페이지</h1>
 
-<div class="m-3">
-  <form action="" method="POST" class="justify-content-center" style="width: 75%;">
-    {% bootstrap_form form %}
-    {% csrf_token %}
-    <input type="submit" value="작성완료" class="btn btn-outline-dark">
-  
-  </form>
+
+<div style="text-align: center; max-width:500px; margin:4rem auto">
+  <div>
+      <h4>Create</h4>
+  </div>
+  <div>
+      <form action="" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <br>
+          <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">
+      </form>
+  </div>
 </div>
 
 {% endblock body %}

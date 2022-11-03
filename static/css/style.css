@@ -17,9 +17,20 @@ body {
 }
 
 .banner {
-  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
   background-image: url('/static/img/main_1920.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.banner-title {
+  margin: 2rem;
+  color: black;
+  font-size: 3rem;
+  font-weight: bolder;
 }

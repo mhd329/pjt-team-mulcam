@@ -3,12 +3,11 @@
 
 {% block body %}
 
-<a href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
 
 <div class="container">
   <div class="container mt-5">
     <div class="text-center">
-      <h1>{{ article.name }}</h1>
+      <h1 class="mb-3">{{ article.name }}</h1>
     </div>
     <div class="row gx-3">
       <div class="col-7">
@@ -66,8 +65,9 @@
         </table>
 
         <!-- 추천, 북마크 버튼 -->
-        <a href="#" class="btn btn-primary">추천하기</a>
-        <a href="#" class="btn btn-primary">즐겨찾기</a>
+        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">추천하기</a>
+        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">즐겨찾기</a>
+        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
 
       </div>
     </div>
@@ -84,8 +84,8 @@
             {% endfor %}
           </div>
           <div class="d-flex">
-            <a href="{% url 'articles:photos' article.pk %}" class="btn btn-primary">모든 사진들</a>
-            <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-primary ms-auto">사진 등록하기</a>
+            <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-7 mx-1">모든 사진들</a>
+            <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-7">사진 등록하기</a>
           </div>
         </div>
       </li>

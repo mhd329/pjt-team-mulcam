@@ -16,6 +16,14 @@ body {
   font-family: 'Noto Serif KR', serif;
 }
 
+.nav_title {
+  margin: 0;
+  color: black;
+  font-size: 2rem;
+  font-weight: bolder;
+  font-family: 'East Sea Dokdo', cursive;
+}
+
 .banner {
   display: flex;
   flex-direction: column;
@@ -31,6 +39,16 @@ body {
 .banner-title {
   margin: 2rem;
   color: black;
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bolder;
+  font-family: 'East Sea Dokdo', cursive;
+}
+
+.carousel-inner>.carousel-item>img {
+  min-width: 100%;
+  min-height: 400px;
+}
+
+.banner-color {
+  background-color: rgba(0, 0, 0, 0.668);
 }

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
+{% block css %}
+{% endblock css%}
+
 
 {% block body %}
 <section class="banner">
-  <h1 class="text-center mt-5">{%if none_info %} {{none_info}} {%else%} {{search}} 에 대한 검색 결과 {%endif%}</h1>
+  <div class="banner-title">{%if none_info %} {{none_info}} {%else%} {{search}} 에 대한 검색 결과 {%endif%}</div>
   <div class="container d-flex justify-content-center mb-5">
     <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">

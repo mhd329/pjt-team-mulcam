@@ -29,6 +29,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 500px;
+
   background-image: url('/static/img/main_1920.jpg');
   background-size: cover;
   background-repeat: no-repeat;

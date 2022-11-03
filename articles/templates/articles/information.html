@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+  <div class="container mt-5">
+    <div class="text-center">
+      <h2 class="mb-3">캠핑이 처음이라면?</h2>
+    </div>
+    <div class="row gx-3">
+      <div class="col-7 detail_title">
+        <div class="detail_img_div">
+          <img src="{% static 'img/ora.jpg' %}">
+        </div>
+      </div>
+      <div class="col-5">
+        <table class="table">
+          <tbody>
+            <!-- 주소 -->
+            <tr>
+              <th class="col-3">주소</th>
+              <td class="col-9">{{ article.address }}</td>
+            </tr>
+            <!-- 업체 연락처 -->
+            <tr>
+              <th class="col-3">문의처</th>
+              <td class="col-9">{{ article.contact }}</td>
+            </tr>
+            <!-- 캠핑장 유형 -->
+            <tr>
+              <th class="col-3">캠핑장 유형</th>
+              <td class="col-9">{{ article.camp_type }}</td>
+            </tr>
+            <!-- 바닥 유형 -->
+            <tr>
+              <th class="col-3">바닥 유형</th>
+              <td class="col-9">{{ article.geography }}</td>
+            </tr>
+            <!-- 이용 시간 -->
+            <tr>
+              <th class="col-3">이용 시간</th>
+              <td class="col-9">{{ article.season }}</td>
+            </tr>
+            <!-- 이용요금 -->
+            <tr>
+              <th class="col-3">이용 요금</th>
+              <td class="col-9">{{ article.active_day }}</td>
+            </tr>
+            <!-- 홈페이지 -->
+            <tr>
+              <th class="col-3">홈페이지</th>
+              <td class="col-9"><a href="{{ article.homepage }}">홈페이지 바로가기</a></td>
+            </tr>
+            <!-- 예약 방법 -->
+            <tr>
+              <th class="col-3">예약 방법</th>
+              <td class="col-9">{{ article.reservation }}</td>
+            </tr>
+            <!-- 주변 편의시설 -->
+            <tr>
+              <th class="col-3">주변 시설</th>
+              <td class="col-9">{{ article.amenities }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+{% endblock body %}

@@ -43,3 +43,6 @@ def add_photo(request, pk):
         "photo_form": photo_form,
     }
     return render(request, "articles/photo-form.html", context)
+
+def information(request):
+    return render(request, "articles/information.html")

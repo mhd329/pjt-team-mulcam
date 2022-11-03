@@ -7,8 +7,8 @@
   <form action="" method="POST">
     {% bootstrap_form form %}
     {% csrf_token %}
-    <input type="submit" class="btn btn-outline-dark" value="수정완료">
-    <a class="btn btn-outline-dark" href="{% url 'accounts:delete' pick_user.pk %}">회원탈퇴</a>
+    <input type="submit" class="btn btn-dark rounded-pill" value="수정완료">
+    <a class="btn btn-dark rounded-pill" href="{% url 'accounts:delete' pick_user.pk %}">회원탈퇴</a>
   </form>
 </div>
 

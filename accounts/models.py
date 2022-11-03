@@ -31,5 +31,4 @@ class UserPhoneNumber(models.Model):
     phone = models.CharField(
         max_length=13,
         validators=[MinLengthValidator(11), MaxLengthValidator(11), input_only_number],
-        blank=True,
     )

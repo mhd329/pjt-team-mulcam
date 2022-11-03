@@ -3,25 +3,80 @@
 
 
 {% block body %}
-<form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
+<section class="banner">
+  <h1 class="text-center mt-5">{%if none_info %} {{none_info}} {%else%} {{search}} 에 대한 검색 결과 {%endif%}</h1>
+  <div class="container d-flex justify-content-center mb-5">
+    <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
+      <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</section>
 
-{% if search_data %}
 
-{% for data in search_data %}
+{% comment %} 아티클검색 {% endcomment %}
+{% if search_article %}
 
-{{data}}
+<div class="container my-5" style="width: 70%;">
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">캠핑장</th>
+        <th scope="col">위치</th>
+        <th scope="col">번호</th>
+        <th scope="col">평점</th>
+      </tr>
+    </thead>
+{% for adata in search_article %}
 
+<tr>
+        <th scope="row">
+          <a class="text-decoration-none text-black" href="{% url 'reviews:detail' review.pk %}">{{adata.name}}</a>
+        </th>
+        <td>
+          <p>{{ adata.address}}</p>
+        </td>
+         <td>
+         <p>{{address.contact}}
+        </td>
+         <td>
+         <p></p>
+        </td>
+      </tr>
 {% endfor %}
-
-{% else %}
-
-{% for data in none_info %}
-{{data}}
-{% endfor %}
-
+<hr>
 {% endif %}
+
+<div class="container my-5" style="width: 70%;">
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">캠핑장</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성 시간</th>
+        <th scope="col">평점</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in all_reviews %}
+      <tr>
+        <th scope="row">
+          <a class="text-decoration-none text-black" href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+        </th>
+        <td>
+          <a class="text-decoration-none text-black" href="{% url 'accounts:detail' review.user.pk %}">{{ review.user}}</a>
+        </td>
+         <td>
+         <p>{{review.created_at}}
+        </td>
+         <td>
+         <p>{{review.grade}}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
 
 {% endblock body %}

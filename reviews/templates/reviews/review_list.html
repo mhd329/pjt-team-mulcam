@@ -12,36 +12,6 @@
 
 
 <div class="container my-5" style="width: 70%;">
-    <table class="table mt-5">
-        <thead>
-            <tr>
-                <th scope="col">리뷰 제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성시간</th>
-                <th scope="col">평점</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for review in all_reviews %}
-            <tr>
-                <th scope="row">
-                    <a class="text-decoration-none text-black"
-                        href="{% url 'reviews:detail' review.pk %}">{{review.title }}</a>
-                </th>
-                <td>
-                    <a class="text-decoration-none text-black"
-                        href="{% url 'accounts:detail' review.user.pk %}">{{review.user}}</a>
-                </td>
-                <td>
-                    <p>{{review.created_at}}
-                </td>
-                <td>
-                    <p>{{review.grade}}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
   <table class="table mt-5">
     <thead>

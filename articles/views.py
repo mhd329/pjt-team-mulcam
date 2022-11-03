@@ -46,9 +46,11 @@ def add_photo(request, pk):
 
 
 def delete(request, article_pk):
-
     article = Article.objects.get(pk=article_pk)
     if request.user.is_superuser:
         article.delete()
-
     redirect("main:index")
+    
+def information(request):
+    return render(request, "articles/information.html")
+

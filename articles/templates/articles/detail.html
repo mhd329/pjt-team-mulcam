@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
+
 {% block body %}
 
 
 <div class="container">
   <div class="container mt-5">
     <div class="text-center">
-      <h1 class="mb-3">{{ article.name }}</h1>
+      <h1 class="menu_title mb-3">{{ article.name }}</h1>
     </div>
     <div class="row gx-3">
-      <div class="col-7">
-        <img src="{{ article.image.url }}">
+      <div class="col-7 detail-title">
+        <div class="detail-img-div">
+          <img class="detail-img" src="{{ article.image.url }}">
+        </div>
       </div>
       <div class="col-5">
         <table class="table">
@@ -57,65 +61,73 @@
               <td class="col-9">{{ article.reservation }}</td>
             </tr>
             <!-- 주변 편의시설 -->
-            <tr>
-              <th class="col-3">주변 시설</th>
-              <td class="col-9">{{ article.amenities }}</td>
-            </tr>
           </tbody>
         </table>
 
         <!-- 추천, 북마크 버튼 -->
+
         <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">추천하기</a>
         <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">즐겨찾기</a>
         <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
         {% if user.is_superuser %}
         <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{url 'articles:delete' article.pk}">삭제하기</a>
         {% endif %}
+        <a href="#" class="btn btn-dark rounded-pill mt-3">추천하기</a>
+        <a href="#" class="btn btn-dark rounded-pill mt-3">즐겨찾기</a>
+
 
       </div>
     </div>
-    <!-- 탭 리스트 -->
-    <ul class="nav nav-tabs nav-justified tab-menu">
-      <li class="tab-item nav-item">
-        <!-- 사진 탭 -->
-        <a class="nav-link" aria-current="page" href="#photos">사진</a>
-        <div class="tab-content" id="photos">
-          <div class="row gx-3 py-3">
-            <!-- 이미지는 세 개만 표시 -->
-            {% for photo in photos %}
-            <img class="col-4 m-0" src="{{ photo.image.url }}">
+    <!-- 탭 공간 -->
+    <div class="tab-div">
+      <ul class="nav nav-tabs nav-justified tab-menu">
+        <li class="tab-item nav-item">
+          <!-- 사진 탭 -->
+          <a class="nav-link" aria-current="page" href="#photos">사진</a>
+          <div class="tab-content" id="photos">
+            <div class="row gx-3 py-3">
+              <!-- 이미지는 세 개만 표시 -->
+              {% for photo in photos %}
+              <img class="col-4 m-0" src="{{ photo.image.url }}">
+              {% endfor %}
+            </div>
+            <div class="d-flex">
+              <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-7 mx-1">모든 사진들</a>
+              <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-7">사진 등록하기</a>
+            </div>
+          </div>
+        </li>
+        <!-- 지도 탭 -->
+        <li class="nav-item">
+          <a class="nav-link" href="#map">지도</a>
+          <div class="tab-content" id="map">카카오맵 연동</div>
+        </li>
+        <!-- 시설정보 탭 -->
+        <li class="nav-item">
+          <a class="nav-link" href="#amenities">시설정보</a>
+          <div class="tab-content" id="amenities">
+            {% for amenity in article.amenities %}
+            <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png">
             {% endfor %}
           </div>
-          <div class="d-flex">
-            <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-7 mx-1">모든 사진들</a>
-            <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-7">사진 등록하기</a>
+        </li>
+        <!-- 후기 탭 -->
+        <li class="nav-item">
+          <a class="nav-link" href="#reviews">캠핑후기</a>
+          <div class="tab-content" id="reviews">
+            {% for review in reviews %}
+            <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+            {% endfor %}
           </div>
-        </div>
-      </li>
-      <!-- 지도 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#map">지도</a>
-        <div class="tab-content" id="map">카카오맵 연동</div>
-      </li>
-      <!-- 시설정보 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#amenities">시설정보</a>
-        <div class="tab-content" id="amenities">시설 아이콘</div>
-      </li>
-      <!-- 후기 탭 -->
-      <li class="nav-item">
-        <a class="nav-link" href="#reviews">캠핑후기</a>
-        <div class="tab-content" id="reviews">
-          {% for review in reviews %}
-          <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-          {% endfor %}
-        </div>
-      </li>
-    </ul>
+
+        </li>
+      </ul>
+    </div>
+
   </div>
 
   <script>
-    let tabList = document.querySelectorAll(".nav-item");
+    let tabList = document.querySelectorAll(".tab-div > .nav > .nav-item");
 
     for (let i = 0; i < tabList.length; i++) {
       tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
@@ -127,5 +139,5 @@
       });
     }
   </script>
-
+  
   {% endblock body %}

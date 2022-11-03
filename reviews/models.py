@@ -30,6 +30,6 @@ class Review(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     grade = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(10)]
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
     tag = MultiSelectField(choices=tag, max_choices=3)

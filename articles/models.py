@@ -1,7 +1,18 @@
 from django.db import models
 from Camp23.settings import AUTH_USER_MODEL
 from imagekit.processors import ResizeToFill
+from multiselectfield import MultiSelectField
 from imagekit.models import ProcessedImageField
+
+amenities_list = (
+    (1, "화장실"),
+    (2, "전기"),
+    (3, "개수대"),
+    (4, "샤워실"),
+    (5, "온수"),
+    (6, "와이파이"),
+    (7, "펫"),
+)
 
 # Create your models here.
 class Article(models.Model):
@@ -27,7 +38,7 @@ class Article(models.Model):
     active_day = models.CharField(max_length=10)
     homepage = models.CharField(max_length=40, blank=True)
     reservation = models.CharField(max_length=15)
-    amenities = models.CharField(max_length=50, blank=True)
+    amenities = MultiSelectField(choices=amenities_list)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     geography = models.CharField(max_length=20)

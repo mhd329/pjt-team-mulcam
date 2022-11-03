@@ -2,8 +2,9 @@
 {% load django_bootstrap5 %}
 {% block body %}
 
-<div class="container">
-  <h1>회원 정보 페이지</h1>
+<div class="container mt-5">
+  <h1>회원 정보</h1>
+  <br>
   <div>
     <h3>{{ pick_user.username }}</h3>
     <h6>{{ pick_user.full_name }}</h6>
@@ -13,7 +14,7 @@
     <p>팔로워 {{pick_user.follower.all.count}}</p>
     <p>팔로잉 {{pick_user.followings.all.count}}</p>
     {% if pick_user != request.user %}
-    <a href="{% url 'accounts:follow' pick_user.pk %}">
+    <a class="" href="{% url 'accounts:follow' pick_user.pk %}">
       <p>
         {% if request.user in pick_user.follower.all %}
         언팔로우
@@ -29,7 +30,7 @@
     <p>{{ mark }}</p>
     {% endfor %}
   </div>
-  <a class="btn btn-primary" href="{% url 'accounts:update' pick_user.pk %}">회원정보 수정</a>
-  <a class="btn btn-primary ms-2" href="{% url 'accounts:password' pick_user.pk %}">비밀번호 변경</a>
+  <a class="btn btn-dark rounded-pill" href="{% url 'accounts:update' pick_user.pk %}">회원정보 수정</a>
+  <a class="btn btn-dark rounded-pill mx-2" href="{% url 'accounts:password' pick_user.pk %}">비밀번호 변경</a>
 </div>
 {% endblock body %}

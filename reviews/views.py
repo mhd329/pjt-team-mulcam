@@ -60,6 +60,6 @@ def update(request, review_pk):
 @login_required
 def delete(request, review_pk):
     pick_review = Review.objects.get(pk=review_pk)
-    if request.user == pick_review:
+    if request.user == pick_review.user:
         pick_review.delete()
-    return redirect("reviews:reviews_list")
+    return redirect("reviews:review_list")

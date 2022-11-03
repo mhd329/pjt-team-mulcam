@@ -18,11 +18,13 @@
 
 
 {% if request.user.is_authenticated %}
+{% if request.user == pick_review.user %}
 <hr>
 <div class="text-end mt-3 mx-5">
   <a class="btn btn-dark rounded-pill mx-2" href="{% url 'reviews:update' pick_review.pk %}">후기 수정</a>
   <a class="btn btn-dark rounded-pill" href="{% url 'reviews:delete' pick_review.pk %}">후기 삭제</a>
 </div>
+{% endif %}
 {% endif %}
 
 

@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% block body %}
-<h1>회원정보수정</h1>
 
-<form action="" method="POST">
+<div class="container">
+  <h1>회원정보수정</h1>
+  <form action="" method="POST">
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    <input type="submit" value="수정완료">
+  </form>
+  <a href="{% url 'accounts:delete' pick_user.pk %}">회원탈퇴</a>
+</div>
 
-  {% bootstrap_form form %}
-  {% bootstrap_form pn_form %}
-  {% csrf_token %}
-
-  <input type="submit" value="수정완료">
-
-</form>
-<a href="{% url 'accounts:delete' pick_user.pk %}">회원탈퇴</a>
 {% endblock body %}

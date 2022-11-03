@@ -38,6 +38,7 @@ ADDED_APPS = [
     "accounts",
     "imagekit",
     "django_bootstrap5",
+    "multiselectfield",
 ]
 
 ORIGINAL_APPS = [

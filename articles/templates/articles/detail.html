@@ -102,10 +102,11 @@
       <!-- 후기 탭 -->
       <li class="nav-item">
         <a class="nav-link" href="#reviews">캠핑후기</a>
-        <div class="tab-content" id="reviews">이 캠프장에 해당하는 후기 리스트</div>
-        {%for review in reviews%}
-        <p>{{review.title}}</p>
-        {%endfor%}
+        <div class="tab-content" id="reviews">
+          {% for review in reviews %}
+          <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+          {% endfor %}
+        </div>
       </li>
     </ul>
   </div>

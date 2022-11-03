@@ -3,7 +3,8 @@
 {% block body %}
 
 <!-- 아티클 pk 못구하는중, search기능으로 아티클pk가져오기 -->
-{% comment %} <!-- <a href="{% url 'reviews:create' %}">리뷰쓰기</a> --> {% endcomment %}
+{% comment %}
+<!-- <a href="{% url 'reviews:create' %}">리뷰쓰기</a> --> {% endcomment %}
 
 
 <h1 class="text-center mt-5">리뷰게시판</h1>
@@ -25,13 +26,14 @@
           <a class="text-decoration-none text-black" href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
         </th>
         <td>
-          <a class="text-decoration-none text-black" href="{% url 'accounts:detail' review.user.pk %}">{{ review.user}}</a>
+          <a class="text-decoration-none text-black" href="{% url 'accounts:detail' review.user.pk %}">{{
+            review.user}}</a>
         </td>
-         <td>
-         <p>{{review.created_at}}
+        <td>
+          <p>{{review.created_at}}
         </td>
-         <td>
-         <p>{{review.grade}}
+        <td>
+          <p>{{review.grade}}
         </td>
       </tr>
       {% endfor %}
@@ -39,4 +41,4 @@
   </table>
 
 
-{% endblock body %}
+  {% endblock body %}

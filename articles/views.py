@@ -9,7 +9,7 @@ from reviews.models import Review
 
 def detail(request, pk):
     article = Article.objects.get(id=pk)
-    reviews = Review.objects.filter(pk=article.pk)
+    reviews = Review.objects.filter(article_id=article.pk)
     context = {
         "reviews": reviews,
         "article": article,
@@ -50,7 +50,7 @@ def delete(request, article_pk):
     if request.user.is_superuser:
         article.delete()
     redirect("main:index")
-    
+
+
 def information(request):
     return render(request, "articles/information.html")
-

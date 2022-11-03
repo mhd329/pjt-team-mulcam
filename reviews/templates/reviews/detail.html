@@ -3,6 +3,7 @@
 {% block body %}
 <h1 class="text-center m-5">평점 및 후기</h1>
 
+
 <div class="m-5">
   <p>{{ pick_review.pk }}번 게시글 | 작성자:<a href="{% url 'accounts:detail' pick_review.user.pk %}">{{ pick_review.user }}</a></p>
   <p>작성: {{ pick_review.created_at|date:"SHORT_DATETIME_FORMAT" }} | 최종수정: {{ pick_review.updated_at|date:"y-m-d D" }}</p>
@@ -14,6 +15,7 @@
     </div>
   </div>
 </div>
+
 
 {% if request.user.is_authenticated %}
 <hr>

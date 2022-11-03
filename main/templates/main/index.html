@@ -6,25 +6,25 @@
 
 {% block body %}
 <!-- banner 영역 -->
-<section class="banner">
+<section class="banner" style="height:500px; opacity: 0.9;">
 
   <div class="banner-title">오늘은 어디로 갈까?</div>
   <div class="container d-flex justify-content-center mb-5">
 <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
       <button class="btn btn-dark rounded-pill" type="submit">Search</button>
-
     </form>
   </div>
+  <div class =" text-center mt-2">
+  <p style="font-weight:bold; "> 오늘의 인기검색어</p>
+  {%for key in hot_keyword %}
+  <p class="text-white"> {{key.keyword}}</p>
+  {%endfor%}
+</div>
 </section>
 
-<div>
-  <p>인기검색어</p>
-  {%for key in hot_keyword %}
-  <p> {{key.keyword}}</p>
-  {%endfor%}
 
-</div>
+
 <!-- carousel 영역 -->
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
   <div class="carousel-indicators">
@@ -96,7 +96,11 @@
     <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card text-center">
+          {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
+          {%else%}
+          <img src="{% static 'img/main1920.jpg' %}"  class="card-img-top" alt="...">
+          {%endif%}
           <div class="card-body">
             <h5 class="card-title fw-bold">{{article.name}} </h5>
             <p class="card-text">{{article.amenities}}</p>

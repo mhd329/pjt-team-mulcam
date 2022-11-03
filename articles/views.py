@@ -1,5 +1,5 @@
 from .models import Article, Photo
-from articles.forms import PhotoForm
+from articles.forms import PhotoForm, ArticleForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from reviews.models import Review
@@ -54,3 +54,17 @@ def delete(request, article_pk):
 
 def information(request):
     return render(request, "articles/information.html")
+
+
+def admin_create(request):
+    if request.method == "POST":
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("main:index")
+    else:
+        form = ArticleForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "articles/admin_create.html", context)

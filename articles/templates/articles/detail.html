@@ -66,9 +66,15 @@
 
         <!-- 추천, 북마크 버튼 -->
 
+        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">추천하기</a>
+        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">즐겨찾기</a>
+        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
+        {% if user.is_superuser %}
+        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{url 'articles:delete' article.pk}">삭제하기</a>
+        {% endif %}
         <a href="#" class="btn btn-dark rounded-pill mt-3">추천하기</a>
         <a href="#" class="btn btn-dark rounded-pill mt-3">즐겨찾기</a>
-        <a class="btn btn-dark rounded-pill mt-3 mx-5" href="{% url 'reviews:create' article.pk %}"> 후기작성</a>
+
 
       </div>
     </div>

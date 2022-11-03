@@ -2,9 +2,24 @@ from django.db import models
 from articles.models import Article
 from Camp23.settings import AUTH_USER_MODEL
 from django.core.validators import MinValueValidator, MaxValueValidator
+from multiselectfield import MultiSelectField
+
+tag = [
+    (1, "별 보기 좋은"),
+    (2, "시원한 여름"),
+    (3, "파티가 있는"),
+    (4, "가족이랑"),
+    (5, "커플"),
+    (6, "조용한"),
+    (7, "애견동반"),
+    (8, "도심 속 캠핑장"),
+    (9, "풍경이 좋은"),
+    (10, "2030인기"),
+    (11, "바다가 보이는"),
+]
 
 
-grade_ = {}
+grade_ = []
 
 # Create your models here.
 class Review(models.Model):
@@ -17,3 +32,4 @@ class Review(models.Model):
     grade = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
+    tag = MultiSelectField(choices=tag, max_choices=3)

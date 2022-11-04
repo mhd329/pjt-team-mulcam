@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<h1 class="menu-title text-center mt-5">전국 캠핑장</h1>
+<div class="row">
+
+  {% for article in all_article %}
+
+  <div class="col-12 col-sm-6 col- col-lg-2 col-auto my-3 ">
+    <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
+      <div class="card text-center h-100">
+        <div class="card-img h-100">
+          {%if article.thumbnail %}
+          <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
+          {%else%}
+          <img src="{% static 'img/No_image.jpeg' %}"  class="card-img-top" alt="...">
+          {%endif%}
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{article.name}} </h5>
+            <p class="card-text">{{article.camp_type}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+
+</div>
+
+
+{% endblock body %}

@@ -7,11 +7,13 @@ from search.models import Search
 
 def index(request):
     all_article = Article.objects.all()
+    new_articles = Article.objects.order_by("-pk")
     hot_keyword = Search.objects.all().order_by()[:5]
 
     context = {
         "all_article": all_article,
         "hot_keyword": hot_keyword,
+        "new_articles": new_articles,
     }
 
     return render(request, "main/index.html", context)
@@ -26,7 +28,7 @@ def theme(request, pk):
         theme = "바다"
     elif pk == 4:
         theme = "자연휴양림"
-    filter_article = Article.objects.filter(camp_type=theme)
+    filter_article = Article.objects.filter(camp_type__contains=theme)
 
     context = {
         "filter_article": filter_article,
@@ -34,3 +36,13 @@ def theme(request, pk):
     }
 
     return render(request, "main/theme.html", context)
+
+
+def all(request):
+    all_article = Article.objects.all()
+
+    context = {
+        "all_article": all_article,
+    }
+
+    return render(request, "main/all.html", context)

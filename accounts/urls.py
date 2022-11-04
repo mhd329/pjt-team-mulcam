@@ -12,4 +12,6 @@ urlpatterns = [
     path("<int:user_pk>/follow/", views.follow, name="follow"),
     path("<int:user_pk>/delete/", views.delete, name="delete"),
     path("<int:user_pk>/password/", views.change_pw, name="password"),
+    path("login/kakao/", views.kakao_request, name="kakao"),
+    path("login/kakao/callback/", views.kakao_callback),
 ]

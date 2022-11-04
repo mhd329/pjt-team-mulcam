@@ -14,6 +14,7 @@ def input_only_number(value):
 
 
 class User(AbstractUser):
+    kakao_id = models.BigIntegerField(blank=True, unique=True)
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="follower"
     )

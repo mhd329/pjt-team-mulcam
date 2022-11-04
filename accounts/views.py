@@ -1,3 +1,4 @@
+import requests
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -112,3 +113,40 @@ def change_pw(request, user_pk):
         "form": form,
     }
     return render(request, "accounts/password.html", context)
+
+
+def kakao_request(request):
+    kakao_api = "https://kauth.kakao.com/oauth/authorize?response_type=code"
+    redirect_uri = "http://localhost:8000/accounts/login/kakao/callback"
+    client_id = "e913455abcf98190d3d4f963e1cf9140"  # 배포시 보안적용 해야함
+    return redirect(f"{kakao_api}&client_id={client_id}&redirect_uri={redirect_uri}")
+
+
+def kakao_callback(request):
+    data = {
+        "grant_type": "authorization_code",
+        "client_id": "e913455abcf98190d3d4f963e1cf9140",
+        "redirect_uri": "http://localhost:8000/accounts/login/kakao/callback",
+        "code": request.GET.get("code"),
+    }
+    kakao_token_api = "https://kauth.kakao.com/oauth/token"
+    access_token = requests.post(kakao_token_api, data=data).json()["access_token"]
+
+    headers = {"Authorization": f"bearer ${access_token}"}
+    kakao_user_api = "https://kapi.kakao.com/v2/user/me"
+    user_information = requests.get(kakao_user_api, headers=headers).json()
+
+    kakao_id = user_information["id"]
+    kakao_nickname = user_information["properties"]["nickname"]
+
+    if get_user_model().objects.filter(kakao_id=kakao_id).exists():
+        kakao_user = get_user_model().objects.get(kakao_id=kakao_id)
+    else:
+        kakao_login_user = get_user_model()()
+        kakao_login_user.username = kakao_nickname
+        kakao_login_user.kakao_id = kakao_id
+        kakao_login_user.set_password(str(kakao_id))
+        kakao_login_user.save()
+        kakao_user = get_user_model().objects.get(kakao_id=kakao_id)
+    my_login(request, kakao_user)
+    return redirect("main:index")

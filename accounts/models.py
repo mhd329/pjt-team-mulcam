@@ -18,8 +18,9 @@ class User(AbstractUser):
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="follower"
     )
-    marker = models.ManyToManyField(Article, related_name="articles")
-    like_reviews = models.ManyToManyField(Review, related_name="like_it")
+    marker = models.ManyToManyField(Article, related_name="link_article")
+    like_reviews = models.ManyToManyField(Review, related_name="reviews_like")
+    like_articles = models.ManyToManyField(Article, related_name="articles_like")
     phone = models.CharField(
         max_length=13,
         validators=[MinLengthValidator(11), MaxLengthValidator(11), input_only_number],

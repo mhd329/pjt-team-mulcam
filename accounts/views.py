@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .form import CreateUserForm, ChangeUserInfo, ChangePasswordForm
 from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
-
+from articles.models import Article
+from reviews.models import Review
 
 # Create your views here.
 
@@ -115,6 +116,36 @@ def change_pw(request, user_pk):
     return render(request, "accounts/password.html", context)
 
 
+
+@login_required
+def marker(request, article_pk):
+    pick_article = get_object_or_404(Article, pk=article_pk)
+    if request.user.marker.filter(pk=pick_article.pk):
+        request.user.marker.remove(pick_article)
+    else:
+        request.user.marker.add(pick_article)
+    return redirect("articles:detail", article_pk)
+
+
+@login_required
+def like_reviews(request, review_pk):
+    pick_reviews = get_object_or_404(Review, pk=review_pk)
+    if request.user.like_reviews.filter(pk=pick_reviews.pk):
+        request.user.like_reviews.remove(pick_reviews)
+    else:
+        request.user.like_reviews.add(pick_reviews)
+    return redirect("reviews:detail", review_pk)
+
+
+@login_required
+def like_articles(request, article_pk):
+    pick_article = get_object_or_404(Article, pk=article_pk)
+    if request.user.like_articles.filter(pk=pick_article.pk):
+        request.user.like_articles.remove(pick_article)
+    else:
+        request.user.like_articles.add(pick_article)
+    return redirect("articles:detail", article_pk)
+
 def kakao_request(request):
     kakao_api = "https://kauth.kakao.com/oauth/authorize?response_type=code"
     redirect_uri = "http://localhost:8000/accounts/login/kakao/callback"
@@ -150,3 +181,4 @@ def kakao_callback(request):
         kakao_user = get_user_model().objects.get(kakao_id=kakao_id)
     my_login(request, kakao_user)
     return redirect("main:index")
+

@@ -11,6 +11,7 @@
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <title>Camp23</title>
   <!-- 카카오 맵 불러오는 api -->
+  <!-- apikey= 부분은 배포할 때 반드시 보안적용 -->
   <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c5ba8e30be91a6fcff3a86da96a42e&libraries=services">
     </script>
@@ -31,10 +32,10 @@
 </head>
 
 
-<body >
+<body>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div class="container" >
-      <a class="navbar-brand" href="{% url 'main:index' %}?{% now "U" %}">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'main:index' %}?{% now 'U' %}">
         <img src="{% static 'img/favicons/favicon-16x16.png' %}" alt="logo" width="30" height="24">
         <span class="nav-title text-white">Camp23</span>
       </a>
@@ -52,10 +53,12 @@
               <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button"
                 aria-expanded="false">캠핑장</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'main:theme' 1%}">산</a></li>
-                <li><a class="dropdown-item" href="{% url 'main:theme' 2%}">강</a></li>
-                <li><a class="dropdown-item" href="{% url 'main:theme' 3%}">바다</a></li>
-                <li><a class="dropdown-item" href="{% url 'main:theme' 4%}">자연휴양림</a></li>
+
+                <li><a class="dropdown-item" href="{% url 'main:theme' 1 %}">산</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 2 %}">강</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 3 %}">바다</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 4 %}">자연휴양림</a></li>
+
               </ul>
             </li>
             <li class="nav-item">
@@ -84,7 +87,7 @@
           <a class="nav-link text-white" href="{% url 'accounts:signup' %}">회원가입</a>
         </li>
         {% endif %}
-       {% if user.is_superuser %}
+        {% if user.is_superuser %}
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'articles:admin_create' %}">캠프생성(admin)</a>
         </li>

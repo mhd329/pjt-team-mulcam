@@ -16,14 +16,28 @@
     </form>
   </div>
   <div class =" text-center mt-2">
-  <p style="font-weight:bold; "> 오늘의 인기검색어</p>
-  {%for key in hot_keyword %}
+        <p style="font-weight:bold; "> 오늘의 인기검색어</p>
+          {%for key in hot_keyword %}
   <p class="text-white"> {{key.keyword}}</p>
-  {%endfor%}
-</div>
+          {%endfor%}
+        </div>
 </section>
 
-
+<!-- 인기검색어 위에랑 합치기 -->
+<p>
+  <a style="color: black;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    오늘의 인기검색어
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <a href="">1</a>
+    <a href="">2</a>
+    <a href="">3</a>
+    <a href="">4</a>
+    <a href="">5</a>
+  </div>
+</div>
 
 <!-- carousel 영역 -->
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
@@ -33,42 +47,45 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <h3  class="menu-title text-center my-3">New & Update</h3>
-  <div class="carousel-inner" style="height: 400px;">
+  <h3 class="menu-title text-center my-3 fw-bold">New & Update</h3>
+  <div class="carousel-inner">
+
     <div class="text-center">
-      <div class="carousel-item banner-color active align-self-center">
-        <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
-        <div class="carousel-caption d-none d-md-block">
-          <b>
-            <h5>First Spot</h5>
-            <p>Charged Camp</p>
-            <h4>순철형님 캠핑장</h4>
-          </b>
+      <div class="carousel-item banner-color active align-self-center photo-wrap">
+        <a href="{% url 'articles:detail' one.pk %}"><img class="img" src="{{ one.image.url }}" class="d-block w-100" alt="img">
+        <div class="carousel-caption d-none d-md-block fw-bold">
+          <h5>First Spot</h5>
+          <p>{{ one.camp_type }}</p>
+          <h4>{{ one.name }}</h4>
         </div>
+
+        </a>
+    </div>
+
+      </div>
+
+  </div>
+
+  <div class="carousel-item banner-color photo-wrap">
+    <div class="text-center">
+      <a href="{% url 'articles:detail' two.pk%}"><img class="img" src="{{ two.image.url }}" class="d-block w-100" alt="img">
+      <div class="carousel-caption d-none d-md-block fw-bold">
+        <h5>Second Spot</h5>
+        <p>{{ two.camp_type }}</p>
+        <h4>{{ two.name }}</h4>
+      </div>
+    </a>
     </div>
   </div>
-  <div class="carousel-item banner-color">
+  <div class="carousel-item banner-color photo-wrap">
     <div class="text-center">
-      <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
-      <div class="carousel-caption d-none d-md-block">
-        <b>
-          <h5>Second Spot</h5>
-          <p>Free Camp</p>
-          <h4>특전 캠핑장</h4>
-        </b>
+      <a href="{% url 'articles:detail' three.pk %}"><img class="img" src="{{ three.image.url }}" class="d-block w-100" alt="img">
+      <div class="carousel-caption d-none d-md-block fw-bold">
+        <h5>Third Spot</h5>
+        <p>{{ three.name }}</p>
+        <h4>{{ three.name }}</h4>
       </div>
-    </div>
-  </div>
-  <div class="carousel-item banner-color">
-    <div class="text-center">
-      <a href=""><img class="img" src="https://placeimg.com/700/400/any/grayscale" class="d-block w-100" alt="..."></a>
-      <div class="carousel-caption d-none d-md-block">
-        <b>
-          <h5>Third Spot</h5>
-          <p>Charged Camp</p>
-          <h4>특수 캠핑장</h4>
-        </b>
-      </div>
+    </a>
   </div>
   </div>
   </div>

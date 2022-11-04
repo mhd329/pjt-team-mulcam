@@ -7,12 +7,17 @@ from search.models import Search
 
 def index(request):
     all_article = Article.objects.all()
+
     new_articles = Article.objects.order_by("-pk")[:3]
     hot_keyword = Search.objects.all().order_by("-count")[:5]
     
     nn = []
     for new in new_articles:
         nn.append(new)
+
+    new_articles = Article.objects.order_by("-pk")
+    hot_keyword = Search.objects.all().order_by("-count")[:5]
+
 
     context = {
         'one' : nn[0],
@@ -33,7 +38,7 @@ def theme(request, pk):
     elif pk == 3:
         theme = "바다"
     elif pk == 4:
-        theme = "자연휴양림"
+        theme = "도심"
     filter_article = Article.objects.filter(camp_type__contains=theme)
 
     context = {

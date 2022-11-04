@@ -6,89 +6,94 @@
 
 {% block body %}
 <!-- banner 영역 -->
-<section class="banner" style =" height: 500px;">
-
-  <div class="banner-title">오늘은 어디로 갈까?</div>
-  <div class="container d-flex justify-content-center mb-5">
-<form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
+<section class="banner" style="height: 500px;">
+  <div class="text-center">
+    <div class="banner-title">
+      오늘은 어디로 갈까?
+    </div>
+    <form class="d-flex" role="search" action=" {% url 'search:search' %}">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
       <button class="btn btn-dark rounded-pill" type="submit">Search</button>
     </form>
   </div>
-  <div class =" text-center mt-2">
-        <p style="font-weight:bold; "> 오늘의 인기검색어</p>
+  
+
+
+  <div class ="text-center position-absolute end-0" style="padding: 5rem 5rem;">
+    <div class="hot-Key">
+      <div class="d-flex justify-content-center dropdown">
+        <span style="color: white;">
+          오늘의 인기검색어
+        </span>
+        <div class="dropdown-content">
           {%for key in hot_keyword %}
-  <p class="text-white"> {{key.keyword}}</p>
+          <p class="text-white">
+            <a href="">{{ key.keyword }}</a>
+          </p>
           {%endfor%}
         </div>
+      </div>
+    </div>
+  </div>
+
+
+
 </section>
 
-<!-- 인기검색어 위에랑 합치기 -->
-<p>
-  <a style="color: black;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    오늘의 인기검색어
-  </a>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    <a href="">1</a>
-    <a href="">2</a>
-    <a href="">3</a>
-    <a href="">4</a>
-    <a href="">5</a>
-  </div>
-</div>
-
 <!-- carousel 영역 -->
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+<div id="carouselExampleCaptions" class="carousel slide pb-5" data-bs-ride="false">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-      aria-current="true" aria-label="Slide 1"></button>
+      aria-current="true" aria-label="Slide 1">
+    </button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <h3 class="menu-title text-center my-3 fw-bold">New & Update</h3>
+  
   <div class="carousel-inner">
 
     <div class="text-center">
-      <div class="carousel-item banner-color active align-self-center photo-wrap">
-        <a href="{% url 'articles:detail' one.pk %}"><img class="img" src="{{ one.image.url }}" class="d-block w-100" alt="img">
-        <div class="carousel-caption d-none d-md-block fw-bold">
-          <h5>First Spot</h5>
-          <p>{{ one.camp_type }}</p>
-          <h4>{{ one.name }}</h4>
-        </div>
-
+      <div class="carousel-item banner-color active">
+        <a href="{% url 'articles:detail' one.pk %}">
+          <img class="photo" src="{{ one.image.url }}" class="d-block w-100" alt="img">
+          <div class="carousel-caption d-none d-md-block fw-bold">
+            <h5>First Spot</h5>
+            <p>{{ one.camp_type }}</p>
+            <h4>{{ one.name }}</h4>
+          </div>
         </a>
+      </div>
+    </div>
+  
+    <div class="text-center">
+      <div class="carousel-item banner-color">
+        <a href="{% url 'articles:detail' two.pk%}">
+          <img class="photo" src="{{ two.image.url }}" class="d-block w-100" alt="img">
+          <div class="carousel-caption d-none d-md-block fw-bold">
+            <h5>Second Spot</h5>
+            <p>{{ two.camp_type }}</p>
+            <h4>{{ two.name }}</h4>
+          </div>
+        </a>
+      </div>
     </div>
 
-      </div>
-
-  </div>
-
-  <div class="carousel-item banner-color photo-wrap">
     <div class="text-center">
-      <a href="{% url 'articles:detail' two.pk%}"><img class="img" src="{{ two.image.url }}" class="d-block w-100" alt="img">
-      <div class="carousel-caption d-none d-md-block fw-bold">
-        <h5>Second Spot</h5>
-        <p>{{ two.camp_type }}</p>
-        <h4>{{ two.name }}</h4>
+      <div class="carousel-item banner-color">
+        <a href="{% url 'articles:detail' three.pk %}">
+          <img class="photo" src="{{ three.image.url }}" class="d-block w-100" alt="img">
+          <div class="carousel-caption d-none d-md-block fw-bold">
+            <h5>Third Spot</h5>
+            <p>{{ three.name }}</p>
+            <h4>{{ three.name }}</h4>
+          </div>
+        </a>
       </div>
-    </a>
     </div>
+
   </div>
-  <div class="carousel-item banner-color photo-wrap">
-    <div class="text-center">
-      <a href="{% url 'articles:detail' three.pk %}"><img class="img" src="{{ three.image.url }}" class="d-block w-100" alt="img">
-      <div class="carousel-caption d-none d-md-block fw-bold">
-        <h5>Third Spot</h5>
-        <p>{{ three.name }}</p>
-        <h4>{{ three.name }}</h4>
-      </div>
-    </a>
-  </div>
-  </div>
-  </div>
+ 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -97,22 +102,19 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+
 </div>
-<br>
-<br>
-<br>
+
 <!-- 본문 영역 -->
-<div class="container mb-5">
-
-  <h2 class="menu-title text-center">인기순(테마별)</h2>
-
+<div class="container mb-5 text-center">
+  <h2 class="menu-title">인기순(테마별)</h2>
   <div class="row">
 
     {% for article in all_article %}
 
     <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
-        <div class="card text-center">
+        <div class="card">
           {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
           {%else%}

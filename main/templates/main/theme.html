@@ -7,20 +7,21 @@
 {% block body %}
 <!-- banner 영역 -->
 <section class="banner" >
-  <div class="banner-title">{{theme}}테마</div>
-  <div class="container d-flex justify-content-center mb-5">
-<form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
-      <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
-      <button class="btn btn-dark rounded-pill" type="submit">Search</button>
-
-    </form>
+  <div class="text-center">
+    <div class="banner-title">{{theme}}테마</div>
+    <div class="container">
+      <form class="d-flex" role="search" action=" {% url 'search:search' %}">
+        <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
+        <button class="btn btn-dark rounded-pill" type="submit">Search</button>
+      </form>
+    </div>
   </div>
 </section>
 
 <!-- 본문 영역 -->
-<div class="container mb-5">
+<div class="container mb-5 text-center">
 
-  <h2 class="menu-title text-center mt-3">{{theme}}</h2>
+  <h2 class="menu-title mt-3">{{theme}}</h2>
 
   <div class="row">
 

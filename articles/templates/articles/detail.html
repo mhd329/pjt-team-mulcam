@@ -60,7 +60,6 @@
               <th class="col-3">예약 방법</th>
               <td class="col-9">{{ article.reservation }}</td>
             </tr>
-            <!-- 주변 편의시설 -->
           </tbody>
         </table>
 
@@ -96,9 +95,10 @@
           </div>
         </li>
         <!-- 지도 탭 -->
-        <li class="nav-item">
+        <li id="mapDiv" class="nav-item">
           <a class="nav-link" href="#map">지도</a>
-          <div class="tab-content" id="map">카카오맵 연동</div>
+          <div class="tab-content" id="map" style="width: 500px; height :400px;">
+          </div>
         </li>
         <!-- 시설정보 탭 -->
         <li class="nav-item">
@@ -128,9 +128,34 @@
 
   </div>
 
+  <!-- 카카오 지도 + 탭 스크립트 -->
+  <!-- 설명서 : https://apis.map.kakao.com/web/sample/addr2coord/ -->
   <script>
-    let tabList = document.querySelectorAll(".tab-div > .nav > .nav-item");
+    let container = document.getElementById("map");
+    let options = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3
+    };
+    const map = new kakao.maps.Map(container, options);
 
+    const geocoder = new kakao.maps.services.Geocoder();
+    function showKakaoMap(result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+        const infowindow = new kakao.maps.InfoWindow({
+          content: "<div style='width:150px; text-align: center; padding: 6px 0;'>{{ article.address }}</div>"
+        });
+        infowindow.open(map, marker);
+        map.setCenter(coords);
+      };
+    };
+    geocoder.addressSearch("{{ article.address }}", showKakaoMap);
+
+    let tabList = document.querySelectorAll(".tab-div > .nav > .nav-item");
     for (let i = 0; i < tabList.length; i++) {
       tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
         event.preventDefault();
@@ -138,8 +163,15 @@
           tabList[j].classList.remove("active");
         }
         this.parentNode.classList.add("active");
+        if (this.parentNode.id === "mapDiv") {
+          const resetCampPosition = geocoder.addressSearch("{{ article.address }}", function (result) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            map.relayout();
+            map.setCenter(coords);
+          });
+        }
       });
-    }
+    };
   </script>
   
   {% endblock body %}

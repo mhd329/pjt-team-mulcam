@@ -34,7 +34,7 @@ body {
   background-image: url('/static/img/main.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: bottom;
 }
 
 .banner-title {

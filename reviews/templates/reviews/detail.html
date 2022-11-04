@@ -3,9 +3,9 @@
 {% block body %}
 
 
-<div class="m-5">
-<p class="fs-5">후기 제목 : {{pick_review.title}}</p>
+<div class="container m-5">
   <p>{{ pick_review.pk }}번 게시글 | 작성자:<a href="{% url 'accounts:detail' pick_review.user.pk %}">{{ pick_review.user }}</a></p>
+  <h5><span class="menu-title">후기 제목</span> : {{pick_review.title}}</h5>
   <p>작성: {{ pick_review.created_at|date:"SHORT_DATETIME_FORMAT" }} | 최종수정: {{ pick_review.updated_at|date:"y-m-d D" }}</p>
   <div class="container mt-5">
 

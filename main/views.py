@@ -8,7 +8,7 @@ from search.models import Search
 def index(request):
     all_article = Article.objects.all()
     new_articles = Article.objects.order_by("-pk")
-    hot_keyword = Search.objects.all().order_by()[:5]
+    hot_keyword = Search.objects.all().order_by("-count")[:5]
 
     context = {
         "all_article": all_article,

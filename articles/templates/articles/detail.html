@@ -64,14 +64,13 @@
         </table>
 
         <!-- 추천, 북마크 버튼 -->
+        <a href="{% url 'accounts:like_articles' article.pk %}" class="btn btn-dark rounded-pill col-3 mt-3">{% if article not in request.user.like_articles.all %} <i class="bi bi-hand-thumbs-up"></i>추천  {%else%}  <i class="bi bi-hand-thumbs-up-fill"></i>취소 {%endif%}</a>
 
-        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">추천하기</a>
-        <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">즐겨찾기</a>
+        <a href="{% url 'accounts:marker' article.pk %}" class="btn btn-dark rounded-pill col-3 mt-3">{% if article not in request.user.marker.all %} <i class="bi bi-bookmark-star"></i>즐겨찾기  {%else%}  <i class="bi bi-bookmark-star-fill"></i>즐겨찾기 해제 {%endif%}</a>
         <a class="btn btn-dark rounded-pill col-4 mt-3 mx-3" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
         {% if user.is_superuser %}
         <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{url 'articles:delete' article.pk}">삭제하기</a>
         {% endif %}
-
 
       </div>
     </div>

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+
+  <div class="text-center">
+    <h2 class="mt-5 mb-5 fw-bold">캠핑이 처음이라면?</h2>
+  </div>
+
+  <div class="d-flex">
+    <div class="card text-center m-3" style="height: 600px; width: 500px;">
+      <div class="card-body">
+        <br>
+        <h4 class="card-title fw-bold">준비하자!</h4>
+        <br>
+        <table class="table">
+          <tbody>
+
+            <tr>
+              <th class="col-3">준비물</th>
+              <td class="col-9">
+                <p>필수: 텐트, 버너, 코펠, 음식, 식기류, 의자</p>
+                <p>선택: 간이테이블, 영화시청준비물, 렌턴,<br>미니화로, 타프, 벌레퇴치제, 담요</p>
+              </td>
+            </tr>
+
+            <tr>
+              <th class="col-3">
+                <p>캠핑 음식</p>
+              </th>
+              <td class="col-9">
+                <p>커피, 바베큐, 소세지, 회(겨울), 라면,<br> 와인, 닭요리, 해산물요리, 고구마 등</p>
+              </td>
+            </tr>
+
+            <tr>
+              <th class="col-3">
+                <p>사전 조사</p>
+              </th>
+              <td class="col-9">
+                <p>캠핑장 주변 환경과 시설을 알아보자.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <th class="col-3">
+                <p>주의사항</p>
+              </th>
+              <td class="col-9">
+                <p>1. 과도한 음주 및 소란방지</p>
+                <p>2. 화재 및 안전사고 예방</p>
+                <p>3. 반려동물 동반입장 허용여부 확인</p>
+                <p>5. 분리수거</p>
+              </td>
+            </tr>
+
+            <tr>
+              <th><p>search</p></th>
+              <td>
+                <a href="{% url 'main:all' %}">캠핑하러가기</a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="m-3 card text-center" style="height: 600px; width: 800px;">        
+      <iframe class="" style="width: 100%; height: 100%;" src="https://www.youtube.com/embed/JwzXRE3mu84" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</div>
+
+{% endblock body %}

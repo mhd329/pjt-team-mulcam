@@ -7,13 +7,16 @@
 <!-- <a href="{% url 'reviews:create' %}">리뷰쓰기</a> --> {% endcomment %}
 
 
-<h1 class="text-center mt-5">리뷰게시판</h1>
+
+<h1 class="menu_title text-center mt-5">후기게시판</h1>
+
 
 <div class="container my-5" style="width: 70%;">
-  <table class="table mt-5">
+
+  <table class="table mt-5 text-center">
     <thead>
       <tr>
-        <th scope="col">리뷰 제목</th>
+        <th scope="col">후기 제목</th>
         <th scope="col">작성자</th>
         <th scope="col">작성시간</th>
         <th scope="col">평점</th>
@@ -26,8 +29,8 @@
           <a class="text-decoration-none text-black" href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
         </th>
         <td>
-          <a class="text-decoration-none text-black" href="{% url 'accounts:detail' review.user.pk %}">{{
-            review.user}}</a>
+          <a class="text-decoration-none text-black" href="{% url 'accounts:detail' review.user.pk %}">
+            {{review.user}}</a>
         </td>
         <td>
           <p>{{review.created_at}}
@@ -40,5 +43,4 @@
     </tbody>
   </table>
 
-
-  {% endblock body %}
+    {% endblock body %}

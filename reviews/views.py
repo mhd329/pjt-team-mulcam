@@ -36,33 +36,30 @@ def create(request, article_pk):
 
 def detail(request, review_pk):
     pick_review = get_object_or_404(Review, pk=review_pk)
-
     context = {"pick_review": pick_review}
-
     return render(request, "reviews/detail.html", context)
 
 
 @login_required
 def update(request, review_pk):
     pick_review = get_object_or_404(Review, pk=review_pk)
-    if request.user == pick_review:
-        if request.method == "POST":
-            form = CreateReview(request.POST, instance=review_pk)
-            if form.is_valid():
-                form.save()
-                return redirect("reviews:reviews_list")
-        else:
-            form = CreateReview(instance=review_pk)
-        context = {
-            "form": form,
-            "pick_user": pick_review,
-        }
+    if request.method == "POST":
+        form = CreateReview(request.POST, instance=pick_review)
+        if form.is_valid():
+            form.save()
+            return redirect("reviews:detail", review_pk)
+    else:
+        form = CreateReview(instance=pick_review)
+    context = {
+        "form": form,
+        "pick_user": pick_review,
+    }
     return render(request, "reviews/update.html", context)
 
 
 @login_required
 def delete(request, review_pk):
     pick_review = Review.objects.get(pk=review_pk)
-    if request.user == pick_review:
+    if request.user == pick_review.user:
         pick_review.delete()
-    return redirect("reviews:reviews_list")
+    return redirect("reviews:review_list")

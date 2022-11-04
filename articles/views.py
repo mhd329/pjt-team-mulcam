@@ -1,5 +1,5 @@
 from .models import Article, Photo
-from articles.forms import PhotoForm
+from articles.forms import PhotoForm, ArticleForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from reviews.models import Review
@@ -9,7 +9,7 @@ from reviews.models import Review
 
 def detail(request, pk):
     article = Article.objects.get(id=pk)
-    reviews = Review.objects.filter(pk=article.pk)
+    reviews = Review.objects.filter(article_id=article.pk)
     context = {
         "reviews": reviews,
         "article": article,
@@ -43,3 +43,28 @@ def add_photo(request, pk):
         "photo_form": photo_form,
     }
     return render(request, "articles/photo-form.html", context)
+
+
+def delete(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.user.is_superuser:
+        article.delete()
+    redirect("main:index")
+
+
+def information(request):
+    return render(request, "articles/information.html")
+
+
+def admin_create(request):
+    if request.method == "POST":
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("main:index")
+    else:
+        form = ArticleForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "articles/admin_create.html", context)

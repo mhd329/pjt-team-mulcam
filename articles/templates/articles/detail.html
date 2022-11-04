@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
+
 {% block body %}
 
 
 <div class="container">
   <div class="container mt-5">
     <div class="text-center">
-      <h1 class="mb-3">{{ article.name }}</h1>
+      <h1 class="menu_title mb-3">{{ article.name }}</h1>
     </div>
     <div class="row gx-3">
-      <div class="col-7">
-        <img src="{{ article.image.url }}">
+      <div class="col-7 detail-title">
+        <div class="detail-img-div">
+          <img class="detail-img" src="{{ article.image.url }}">
+        </div>
       </div>
-      <div class="col-5">
+      <div class="col-5 mb-5">
         <table class="table">
           <tbody>
             <!-- 주소 -->
@@ -60,9 +64,14 @@
         </table>
 
         <!-- 추천, 북마크 버튼 -->
+
         <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">추천하기</a>
         <a href="#" class="btn btn-dark rounded-pill col-3 mt-3">즐겨찾기</a>
-        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'reviews:create' article.pk %}">리뷰 작성하기</a>
+        <a class="btn btn-dark rounded-pill col-4 mt-3 mx-3" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
+        {% if user.is_superuser %}
+        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{url 'articles:delete' article.pk}">삭제하기</a>
+        {% endif %}
+
 
       </div>
     </div>
@@ -72,7 +81,7 @@
         <li class="tab-item nav-item">
           <!-- 사진 탭 -->
           <a class="nav-link" aria-current="page" href="#photos">사진</a>
-          <div class="tab-content" id="photos">
+          <div class="tab-content container" id="photos">
             <div class="row gx-3 py-3">
               <!-- 이미지는 세 개만 표시 -->
               {% for photo in photos %}
@@ -80,8 +89,8 @@
               {% endfor %}
             </div>
             <div class="d-flex">
-              <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-7 mx-1">모든 사진들</a>
-              <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-7">사진 등록하기</a>
+              <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-3 mx-1">모든 사진들</a>
+              <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-3">사진 등록하기</a>
             </div>
           </div>
         </li>
@@ -104,13 +113,19 @@
         <li class="nav-item">
           <a class="nav-link" href="#reviews">캠핑후기</a>
           <div class="tab-content" id="reviews">
-            {% for review in reviews %}
-            <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-            {% endfor %}
+            <ul>
+              {% for review in reviews %}
+              <li>
+                <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+              </li>
+              {% endfor %}
+            </ul>
           </div>
+
         </li>
       </ul>
     </div>
+
   </div>
 
   <!-- 카카오 지도 + 탭 스크립트 -->
@@ -158,5 +173,5 @@
       });
     };
   </script>
-
+  
   {% endblock body %}

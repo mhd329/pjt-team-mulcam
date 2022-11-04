@@ -1,12 +1,31 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% block body %}
-<a href="{% url 'reviews:update' pick_review.pk %}">리뷰 수정</a>
 
-<h1>후기 페이지</h1>
 
-<div>
-  <h3>{{pick_review.title}}<h3>
+<div class="m-5">
+<p class="fs-5">후기 제목 : {{pick_review.title}}</p>
+  <p>{{ pick_review.pk }}번 게시글 | 작성자:<a href="{% url 'accounts:detail' pick_review.user.pk %}">{{ pick_review.user }}</a></p>
+  <p>작성: {{ pick_review.created_at|date:"SHORT_DATETIME_FORMAT" }} | 최종수정: {{ pick_review.updated_at|date:"y-m-d D" }}</p>
+  <div class="container mt-5">
 
+    {{pick_review.tag}}
+    <div class="text-end">
+      <p class="fs-5">평점: {{pick_review.grade }}점</p>
+    </div>
+  </div>
 </div>
+
+
+{% if request.user.is_authenticated %}
+{% if request.user == pick_review.user %}
+<hr>
+<div class="text-end mt-3 mx-5">
+  <a class="btn btn-dark rounded-pill mx-2" href="{% url 'reviews:update' pick_review.pk %}">후기 수정</a>
+  <a class="btn btn-dark rounded-pill" href="{% url 'reviews:delete' pick_review.pk %}">후기 삭제</a>
+</div>
+{% endif %}
+{% endif %}
+
+
 {% endblock body %}

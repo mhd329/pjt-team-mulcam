@@ -2,31 +2,29 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
-{% block css %}
-{% endblock css%}
 
 
 {% block body %}
 <!-- banner 영역 -->
-<section class="banner">
+<section class="banner" style =" height: 500px;">
 
   <div class="banner-title">오늘은 어디로 갈까?</div>
   <div class="container d-flex justify-content-center mb-5">
 <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
-      <button class="btn btn-dark rounded-pill col-2" type="submit">Search</button>
-
+      <button class="btn btn-dark rounded-pill" type="submit">Search</button>
     </form>
   </div>
+  <div class =" text-center mt-2">
+  <p style="font-weight:bold; "> 오늘의 인기검색어</p>
+  {%for key in hot_keyword %}
+  <p class="text-white"> {{key.keyword}}</p>
+  {%endfor%}
+</div>
 </section>
 
-<div>
-  <p>인기검색어</p>
-  {%for key in hot_keyword %}
-  <p> {{key.keyword}}</p>
-  {%endfor%}
 
-</div>
+
 <!-- carousel 영역 -->
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
   <div class="carousel-indicators">
@@ -35,7 +33,7 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <h3 style="margin-top: 100px;">New & Update</h3>
+  <h3  class="menu_title text-center my-3">New & Update</h3>
     <div class="carousel-inner" style="height: 400px;">
       <div class="text-center">
         <div class="carousel-item banner-color active align-self-center">
@@ -88,7 +86,9 @@
 <br>
 <!-- 본문 영역 -->
 <div class="container mb-5">
-  <h2 class="text-center">인기순(테마별)</h2>
+
+  <h2 class="menu_title text-center">인기순(테마별)</h2>
+
   <div class="row">
 
     {% for article in all_article %}
@@ -96,7 +96,11 @@
     <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card text-center">
+          {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
+          {%else%}
+          <img src="{% static 'img/main1920.jpg' %}"  class="card-img-top" alt="...">
+          {%endif%}
           <div class="card-body">
             <h5 class="card-title fw-bold">{{article.name}} </h5>
             <p class="card-text">{{article.amenities}}</p>

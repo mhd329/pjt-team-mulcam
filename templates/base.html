@@ -33,9 +33,9 @@
 <body >
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container" >
-      <a class="navbar-brand" href="{% url 'main:index' %}">
+      <a class="navbar-brand" href="{% url 'main:index' %}?{% now "U" %}">
         <img src="{% static 'img/favicons/favicon-16x16.png' %}" alt="logo" width="30" height="24">
-        <span class="nav_title text-white">Camp23</span>
+        <span class="nav-title text-white">Camp23</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,9 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'main:all' %}">전체</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button"
                 aria-expanded="false">캠핑장</a>

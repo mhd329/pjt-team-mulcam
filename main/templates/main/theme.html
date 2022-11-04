@@ -7,7 +7,6 @@
 {% block body %}
 <!-- banner 영역 -->
 <section class="banner" >
-
   <div class="banner-title">{{theme}}테마</div>
   <div class="container d-flex justify-content-center mb-5">
 <form class="d-flex" role="search" action=" {% url 'search:search' %}" style="width: 50%;">
@@ -21,7 +20,7 @@
 <!-- 본문 영역 -->
 <div class="container mb-5">
 
-  <h2 class="menu_title text-center">{{theme}}</h2>
+  <h2 class="menu-title text-center mt-3">{{theme}}</h2>
 
   <div class="row">
 
@@ -33,7 +32,7 @@
           {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
           {%else%}
-          <img src="{% static 'img/main1920.jpg' %}"  class="card-img-top" alt="...">
+          <img src="{% static 'img/No_image.jpeg' %}"  class="card-img-top" alt="...">
           {%endif%}
           <div class="card-body">
             <h5 class="card-title fw-bold">{{article.name}} </h5>

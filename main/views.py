@@ -27,7 +27,7 @@ def theme(request, pk):
     elif pk == 3:
         theme = "바다"
     elif pk == 4:
-        theme = "자연휴양림"
+        theme = "도심"
     filter_article = Article.objects.filter(camp_type__contains=theme)
 
     context = {

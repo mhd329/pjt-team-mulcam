@@ -28,7 +28,7 @@
 
     <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
-        <div class="card text-center">
+        <div class="card">
           {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
           {%else%}

@@ -8,24 +8,12 @@ from search.models import Search
 def index(request):
     all_article = Article.objects.all()
 
-    new_articles = Article.objects.order_by("-pk")[:3]
+    carousel_articles = Article.objects.order_by("-pk")[:3]
     hot_keyword = Search.objects.all().order_by("-count")[:5]
-    
-    nn = []
-    for new in new_articles:
-        nn.append(new)
-
-    new_articles = Article.objects.order_by("-pk")
-    hot_keyword = Search.objects.all().order_by("-count")[:5]
-
-
     context = {
-        'one' : nn[0],
-        'two' : nn[1],
-        'three' : nn[2],
+        "carousel_articles": carousel_articles,
         "all_article": all_article,
         "hot_keyword": hot_keyword,
-        "new_articles": new_articles,
     }
     return render(request, "main/index.html", context)
 

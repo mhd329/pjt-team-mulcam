@@ -5,6 +5,6 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("<int:pk>/theme/", views.theme, name="theme"),
     path("all/", views.all, name="all"),
+    path("<int:pk>/theme/", views.theme, name="theme"),
 ]

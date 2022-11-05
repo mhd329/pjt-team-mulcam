@@ -116,7 +116,6 @@ def change_pw(request, user_pk):
     return render(request, "accounts/password.html", context)
 
 
-
 @login_required
 def marker(request, article_pk):
     pick_article = get_object_or_404(Article, pk=article_pk)
@@ -145,6 +144,7 @@ def like_articles(request, article_pk):
     else:
         request.user.like_articles.add(pick_article)
     return redirect("articles:detail", article_pk)
+
 
 def kakao_request(request):
     kakao_api = "https://kauth.kakao.com/oauth/authorize?response_type=code"
@@ -182,3 +182,12 @@ def kakao_callback(request):
     my_login(request, kakao_user)
     return redirect("main:index")
 
+
+def naver_request(request):
+    client_id = "rsgA7pxw8Rg9ZuAA0NAa"  # 배포시 보안적용 해야함
+    client_secret = "9j7HPHbOuA"  # 배포시 보안적용 해야함
+    return
+
+
+def naver_callback(request):
+    return

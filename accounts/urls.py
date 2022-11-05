@@ -16,6 +16,7 @@ urlpatterns = [
     path("<int:review_pk>/like_reviews/", views.like_reviews, name="like_reviews"),
     path("<int:article_pk>/like_articles/", views.like_articles, name="like_articles"),
     path("login/kakao/", views.kakao_request, name="kakao"),
+    path("login/naver/", views.naver_request, name="naver"),
     path("login/kakao/callback/", views.kakao_callback),
-
+    path("login/naver/callback/", views.naver_callback),
 ]

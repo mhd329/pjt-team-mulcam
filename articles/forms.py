@@ -11,6 +11,7 @@ class ArticleForm(forms.ModelForm):
             "thumbnail",
             "address",
             "contact",
+            "homepage",
             "camp_type",
             "season",
             "active_day",
@@ -18,6 +19,21 @@ class ArticleForm(forms.ModelForm):
             "geography",
             "amenities",
         )
+
+        labels = {
+            "name": "캠핑장명",
+            "image": "메인이미지",
+            "thumbnail": "썸네일이미지",
+            "address": "주소",
+            "contact": "연락처",
+            "homepage": "홈페이지",
+            "camp_type": "테마(환경)",
+            "season": "이용시간",
+            "active_day": "이용요금",
+            "reservation": "예약방법",
+            "geography": "바닥유형",
+            "amenities": "편의시설",
+        }
 
 
 class PhotoForm(forms.ModelForm):

@@ -73,7 +73,7 @@ def admin_create(request):
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("main:index")
+            return redirect("main:all")
     else:
         form = ArticleForm()
     context = {

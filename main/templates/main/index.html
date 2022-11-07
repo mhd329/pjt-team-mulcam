@@ -6,10 +6,11 @@
 
 {% block body %}
 <!-- banner 영역 -->
-<section class="banner" style="height: 500px;">
-  <div class="text-center">
-    <div class="banner-title">
-      오늘은 어디로 갈까?
+<section class="banner row">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <div class="banner-title text-center">
+        오늘은 어디로 갈까? 
     </div>
     <form class="d-flex" role="search" action=" {% url 'search:search' %}">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
@@ -19,17 +20,19 @@
 
 
 
-  <div class="text-center position-absolute end-0" style="padding: 5rem 5rem;">
+  <div class="col-3">
     <div class="hot-Key">
-      <div class="d-flex justify-content-center dropdown">
-        <span style="color: white;">
-          오늘의 인기검색어
-        </span>
+      <div class="dropdown">
+        <p class="text-center text-white">
+          인기검색어
+        </p>
         <div class="dropdown-content">
           {%for key in hot_keyword %}
-          <p class="text-white">
-            <a href="">{{ key.keyword }}</a>
-          </p>
+          <a href="">
+          <p class="text-center text-white">
+              {{ key.keyword }}
+            </p>
+          </a>
           {%endfor%}
         </div>
       </div>
@@ -59,7 +62,9 @@
         <a href="{% url 'articles:detail' carousel_article.pk %}">
           <img class="photo" src="{{ carousel_article.image.url }}" class="d-block w-100" alt="img">
           <div class="carousel-caption d-none d-md-block fw-bold">
-            <h5>First Spot</h5>
+            <h5>
+              New Spot
+            </h5>
             <p>{{ carousel_article.camp_type }}</p>
 
             <h4>{{ carousel_article.name }}</h4>
@@ -89,13 +94,13 @@
 </div>
 
 <!-- 본문 영역 -->
-<div class="container mb-5 text-center">
-  <h2 class="menu-title">인기순(테마별)</h2>
+<div class="container">
+  <h2 class="menu-title text-center">인기순(테마별)</h2>
   <div class="row">
 
     {% for article,grade in all_article %}
 
-    <div class="col-12 col-sm-6 col-lg-4 my-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card">
           {%if article.thumbnail %}

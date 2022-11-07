@@ -14,6 +14,7 @@ a {
 
 body {
   font-family: 'Noto Serif KR', serif;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .nav-title {
@@ -25,10 +26,10 @@ body {
 }
 
 .banner {
-  height: 500px;
+  height: 400px;
   display: flex;
   justify-content: center;
-  background-image: url('/static/img/main.jpg');
+  background-image: url(/static/img/main.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -87,18 +88,25 @@ body {
 }
 
 .hot-Key>.dropdown {
-  position: relative;
+  position: absolute;
+  margin-top: 5rem;
+  background-size: 5rem;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.7;
   display: inline-block;
+  width: 160px;
+  border-radius: 1rem;
 }
 
 .hot-Key>.dropdown>.dropdown-content {
   display: none;
   position: absolute;
-  background-color: bisque;
-  opacity: 0.5;
+  background-color: rgb(0, 0, 0);
   min-width: 160px;
   padding: 8px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  width: 160px;
+  border-radius: 1rem;
 }
 
 .hot-Key>.dropdown:hover .dropdown-content {

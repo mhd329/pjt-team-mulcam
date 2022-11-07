@@ -125,9 +125,13 @@
         <li class="nav-item">
           <a class="nav-link" href="#amenities">시설정보</a>
           <div class="tab-content" id="amenities">
-            {% for amenity in article.amenities %}
-            <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png"><br>
-            {% endfor %}
+            <div class="row">
+              {% for amenity in article.amenities %}
+              <div class="col-4">
+                <img class="mt-5" src="{% static 'img/amenity_icons/' %}{{ amenity }}.png"><br>
+              </div>
+              {% endfor %}
+            </div>
           </div>
         </li>
         <!-- 후기 탭 -->

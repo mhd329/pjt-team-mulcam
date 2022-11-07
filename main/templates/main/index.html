@@ -124,10 +124,10 @@
   </div>
 </div>
 
-<div class="kmap fl">
-  <h2>Camping <span>Map</span></h2>
-  <p class="csub_head">대한민국 캠핑장</p>
-  <div class="mapwrap">
+<div class="kmap fl mt-5">
+  <h2 class="text-center">Camping <span>Map</span></h2>
+  <p class="csub_head text-center">대한민국 캠핑장</p>
+  <div class="mapwrap d-flex justify-content-center">
     <img class="k_map" src="{% static 'map/kmap.png'%}" alt="" usemap="#campMap" id="Map">
     <map name="campMap" id="campMap">
       <area onmouseover="on_km_031();" onmouseout="offHover();" target="_self" id="km_031" alt="경기도" title="경기도"
@@ -154,11 +154,7 @@
        href="{% url 'search:k_map' 6 %}" coords="113,585,134,580,157,577,166,582,164,595,155,605,143,613,126,614,112,618,97,615,93,601,99,592"
         shape="poly">
     </map>
-  <div>
   </div>
-
-  </div>
-
 </div>
 
 

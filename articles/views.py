@@ -72,7 +72,7 @@ def delete(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.user.is_superuser:
         article.delete()
-    redirect("main:index")
+    return redirect("main:index")
 
 
 def information(request):

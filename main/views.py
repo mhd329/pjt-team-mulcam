@@ -11,6 +11,7 @@ def index(request):
     # 모든 아티클 + 평균평점
     all_article = Article.objects.annotate(gra=Avg("review__grade"))
     all_grade = []
+    carousel_grade = []
     for article in all_article:
         g = article.gra
         if g is None:
@@ -22,7 +23,6 @@ def index(request):
     carousel_articles = Article.objects.order_by("-pk")[:3].annotate(
         gra=Avg("review__grade")
     )
-    carousel_grade = []
     for carousel in carousel_articles:
         c = carousel.gra
         if c is None:
@@ -30,19 +30,9 @@ def index(request):
         else:
             carousel_grade.append(carousel.gra * 20)
 
+
     carousel = zip(carousel_articles, carousel_grade)
     hot_keyword = Search.objects.all().order_by("-count")[:5]
-
-    # for article in carousel_articles:
-    #     reviews = Review.objects.filter(article_id=article.pk)
-    #     grade_list = []
-    #     for g in reviews:
-    #         grade_list.append(g.grade)
-    #     if len(grade_list) > 1:
-    #         grade = round(sum(grade_list) / len(grade_list), 1)
-    #         send_grade_ = (grade) * 20
-    #         grades.append(send_grade_)
-
     context = {
         "carousel_articles": carousel,
         "all_article": all_articles,

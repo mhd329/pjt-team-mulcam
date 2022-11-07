@@ -57,7 +57,7 @@
   <div class="carousel-inner">
 
     <div class="carousel-div text-center">
-      {% for carousel_article ,grade in carousel_articles %}
+      {% for carousel_article, grade in carousel_articles %}
       <div class="carousel-item banner-color">
         <a href="{% url 'articles:detail' carousel_article.pk %}">
           <img class="photo" src="{{ carousel_article.image.url }}" class="d-block w-100" alt="img">
@@ -66,20 +66,17 @@
               New Spot
             </h5>
             <p>{{ carousel_article.camp_type }}</p>
-
             <h4>{{ carousel_article.name }}</h4>
             <div class="wrap-star">
               <div class="star-rating">
-                <span class="d-flex justify-content-start" id="grade" style="width:{{grade}}%;"></span>
+                <span class="d-flex justify-content-start" id="grade" style="width:{{ grade }}%;"></span>
               </div>
             </div>
           </div>
         </a>
       </div>
-
       {% endfor %}
     </div>
-
   </div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -97,10 +94,8 @@
 <div class="container">
   <h2 class="menu-title text-center">인기순(테마별)</h2>
   <div class="row">
-
-    {% for article,grade in all_article %}
-
-    <div class="col-12 col-sm-6 col-lg-4 col-auto my-3">
+    {% for article, grade in all_article %}
+    <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card">
           {%if article.thumbnail %}
@@ -112,7 +107,7 @@
             <h5 class="card-title fw-bold">{{article.name}} </h5>
             <p class="card-text">{{article.camp_type}}</p>
             <div class="wrap-star d-flex">
-              <div class="star-rating d-flex justify-content-start" >
+              <div class="star-rating d-flex justify-content-start">
                 <span id="grade" style="width:{{grade}}%;"></span>
               </div>
             </div>
@@ -197,7 +192,8 @@
   }
 
 </script>
-{% comment %} <script>
+{% comment %}
+<script>
 
   document.getElementById('grade').setAttribute('style', "{{send_grade}}");
 

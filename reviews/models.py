@@ -19,7 +19,6 @@ tag = [
 ]
 
 
-grade_ = []
 
 # Create your models here.
 class Review(models.Model):

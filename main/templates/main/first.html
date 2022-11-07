@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome</title>
+    {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+
+</head>
+
+<body>
+    <section>
+        <div>
+            <video id="video" autoplay="" loop="" muted="" width="20%" height="20%" playsinline poster="">
+                <source src="{% static 'first/fire.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <a text-white href="{% url 'main:index' %}"> <video id="video" autoplay="" loop="" muted="" max_width="100%"
+                height="100%" playsinline poster="">
+                <source src="{% static 'first/fire.mp4' %}" type="video/mp4"></a>
+        Your browser does not support the video tag.
+        </video>
+        <div class="scroll-dummy ">
+            홈으로
+        </div>
+    </section>
+
+
+
+    <style>
+        body {
+            z-index: 0;
+        }
+
+        video {
+            position: fixed;
+            z-index: 0;
+            width: 100%;
+            object-fit: fill;
+        }
+
+        .video1 {
+
+            z-index: 1;
+            width: 100%;
+            object-fit: fill;
+        }
+
+        .scroll-dummy {
+            height: 4500px;
+            max-width: 998px;
+            padding: 20px;
+            z-index: 1;
+            font-family: sans-serif;
+        }
+    </style>
+
+
+
+</body>
+
+</html>

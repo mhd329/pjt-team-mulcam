@@ -18,6 +18,7 @@ class ArticleForm(forms.ModelForm):
             "reservation",
             "geography",
             "amenities",
+            "local",
         )
 
         labels = {
@@ -33,6 +34,7 @@ class ArticleForm(forms.ModelForm):
             "reservation": "예약방법",
             "geography": "바닥유형",
             "amenities": "편의시설",
+            "local": "지역",
         }
 
 

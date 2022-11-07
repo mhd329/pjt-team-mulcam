@@ -4,7 +4,7 @@
 {% load static %}
 
 
-<div class="container m-5">
+<div class="container m-5" >
   <div class="" style="margin:150px 300px;">
     <p>{{ pick_review.pk }}번 게시글 | 작성자:<a
         href="{% url 'accounts:detail' pick_review.user.pk %}">{{pick_review.user}}</a>
@@ -41,14 +41,8 @@
       </div>
       {% endif %}
       {% endif %}
-
     </div>
-
   </div>
-
-
-
-
 </div>
 
 

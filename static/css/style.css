@@ -12,9 +12,14 @@ a {
   display: block;
 }
 
+
+
 body {
   font-family: 'Noto Serif KR', serif;
-  background-color: rgba(0, 0, 0, 0.3);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(#959aa1, #314d6d);
 }
 
 .nav-title {

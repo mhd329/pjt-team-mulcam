@@ -36,7 +36,12 @@ def create(request, article_pk):
 
 def detail(request, review_pk):
     pick_review = get_object_or_404(Review, pk=review_pk)
-    context = {"pick_review": pick_review}
+    grade = round(pick_review.grade, 1)
+    send_grade = f"width:{(grade)*20}%;"
+    context = {
+        "pick_review": pick_review,
+        "send_grade": send_grade,
+    }
     return render(request, "reviews/detail.html", context)
 
 

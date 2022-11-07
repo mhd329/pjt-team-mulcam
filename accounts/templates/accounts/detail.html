@@ -30,7 +30,10 @@
     <p>{{ mark }}</p>
     {% endfor %}
   </div>
+  {% if request.user == pick_user %}
   <a class="btn btn-dark rounded-pill" href="{% url 'accounts:update' pick_user.pk %}">회원정보 수정</a>
   <a class="btn btn-dark rounded-pill mx-2" href="{% url 'accounts:password' pick_user.pk %}">비밀번호 변경</a>
+  {% endif %}
+
 </div>
 {% endblock body %}

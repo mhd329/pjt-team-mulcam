@@ -27,7 +27,7 @@ def create(request, article_pk):
             review.article = article
             review.user = request.user
             review.save()
-            return redirect("main:index")
+            return redirect("articles:detail", article_pk)
     else:
         form = CreateReview()
     context = {"form": form}

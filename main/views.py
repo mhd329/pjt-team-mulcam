@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from articles.models import Article
 from search.models import Search
 from reviews.models import Review

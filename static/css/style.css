@@ -12,10 +12,14 @@ a {
   display: block;
 }
 
+
+
 body {
   font-family: 'Jua', sans-serif;
-  background: conic-gradient(lightCyan, skyBlue, deepSkyBlue);
-  background-repeat: repeat;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(#959aa1, #314d6d);
 }
 
 .nav-title {

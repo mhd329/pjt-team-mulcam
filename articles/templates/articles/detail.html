@@ -177,7 +177,7 @@
           position: coords
         });
         const infowindow = new kakao.maps.InfoWindow({
-          content: "<div style='width:150px; text-align: center; padding: 6px 0;'>{{ article.address }}</div>"
+          content: "<div style='width:150px; text-align: center;'>{{ article.name }}</div>"
         });
         infowindow.open(map, marker);
         map.setCenter(coords);

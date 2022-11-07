@@ -3,10 +3,23 @@
 {% block body %}
 
 <div class="container mt-5">
-  <h1>회원 정보</h1>
-  <br>
+  {% if pick_user.social_profile_picture %}
   <div>
-    <h3>{{ pick_user.username }}</h3>
+    <img class="ms-auto my-3 rounded-5" src="{{ pick_user.social_profile_picture }}"
+      style="width: 25rem; height: 25rem;">
+  </div>
+  {% endif %}
+  <h1>회원 정보</h1>
+  <div>
+    <h3>{{ pick_user.username }}
+      {% if pick_user.kakao_id %}
+      <span class="text-warning ps-2">[ 카카오 로그인 유저 ]</span>
+      {% elif pick_user.naver_id %}
+      <span class="text-success ps-2">[ 네이버 로그인 유저 ]</span>
+      {% elif pick_user.googld_id %}
+      <span class="text-secondary ps-2">[ 구글 로그인 유저 ]</span>
+      {% endif %}
+    </h3>
     <h6>{{ pick_user.full_name }}</h6>
     <p>{{ pick_user.email }}</p>
     <p>{{ pick_user.phone }}</p>

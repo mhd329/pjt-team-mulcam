@@ -1,3 +1,4 @@
+import random
 import requests
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
@@ -5,10 +6,32 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .form import CreateUserForm, ChangeUserInfo, ChangePasswordForm
 from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
+from django.contrib import messages
 from articles.models import Article
 from reviews.models import Review
 
 # Create your views here.
+
+greetings = [
+    "안녕하세요.",
+    "환영합니다!",
+    "반갑습니다.",
+    "반가워요!",
+]
+check_user_name = [
+    "이름을 등록해주세요!",
+    "아직 이름을 입력하지 않으셨네요!",
+]
+bye = [
+    "안녕히가세요.",
+    "잘가요!",
+    "다음에 또 오세요!",
+    "다음에 또 봐요!",
+]
+wd = [
+    "당신이 그리울 거에요...",
+    "다음에 또 오세요!",
+]
 
 
 def signup(request):
@@ -17,6 +40,13 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             my_login(request, user)
+            g = random.choice(greetings)
+            c = random.choice(check_user_name)
+            if user.full_name:
+                messages.success(request, f"{user.full_name}님, {g}")
+            else:
+                messages.success(request, f"익명의 사용자님, {g}")
+                messages.warning(request, f"{c}")
             return redirect("main:index")
     else:
         form = CreateUserForm()
@@ -31,6 +61,13 @@ def login(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             my_login(request, form.get_user())
+            g = random.choice(greetings)
+            c = random.choice(check_user_name)
+            if form.get_user().full_name:
+                messages.success(request, f"{form.get_user().full_name}님, {g}")
+            else:
+                messages.success(request, f"익명의 사용자님, {g}")
+                messages.warning(request, f"{c}")
             return redirect(request.GET.get("next") or "main:index")
     else:
         form = AuthenticationForm()
@@ -46,7 +83,6 @@ def logout(request):
 
 def detail(request, user_pk):
     pick_user = get_object_or_404(get_user_model(), pk=user_pk)
-
     context = {"pick_user": pick_user}
     return render(request, "accounts/detail.html", context)
 
@@ -182,11 +218,13 @@ def kakao_callback(request):
         kakao_login_user = get_user_model()()
         kakao_login_user.username = kakao_nickname
         kakao_login_user.kakao_id = kakao_id
-        kakao_login_user.profile_picture = kakao_profile_image
+        kakao_login_user.social_profile_picture = kakao_profile_image
         kakao_login_user.set_password(str(state_token))
         kakao_login_user.save()
         kakao_user = get_user_model().objects.get(kakao_id=kakao_id)
     my_login(request, kakao_user)
+    g = random.choice(greetings)
+    messages.success(request, f"{kakao_nickname}님, {g}")
     return redirect(request.GET.get("next") or "main:index")
 
 
@@ -229,12 +267,13 @@ def naver_callback(request):
         naver_login_user = get_user_model()()
         naver_login_user.username = naver_nickname
         naver_login_user.naver_id = naver_id
-        naver_login_user.profile_picture = naver_profile_image
+        naver_login_user.social_profile_picture = naver_profile_image
         naver_login_user.set_password(str(state_token))
         naver_login_user.save()
         naver_user = get_user_model().objects.get(naver_id=naver_id)
     my_login(request, naver_user)
-
+    g = random.choice(greetings)
+    messages.success(request, f"{naver_nickname}님, {g}")
     return redirect(request.GET.get("next") or "main:index")
 
 
@@ -281,11 +320,12 @@ def google_callback(request):
         google_login_user = get_user_model()()
         google_login_user.username = googld_name
         google_login_user.email = googld_email
-        google_login_user.profile_picture = googld_picture
+        google_login_user.social_profile_picture = googld_picture
         google_login_user.googld_id = googld_id
         google_login_user.set_password(str(state_token))
         google_login_user.save()
         google_user = get_user_model().objects.get(googld_id=googld_id)
     my_login(request, google_user)
-
+    g = random.choice(greetings)
+    messages.success(request, f"{googld_name}님, {g}")
     return redirect(request.GET.get("next") or "main:index")

@@ -2,6 +2,17 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
+.msgbox {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 15rem;
+}
+
 .tab-content {
   display: none;
   position: absolute;
@@ -13,7 +24,7 @@ a {
 }
 
 body {
-  font-family: 'Noto Serif KR', serif;
+  font-family: 'NanumSquareNeo';
   background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -37,7 +48,7 @@ body {
 
 .banner-title {
   margin: 2rem;
-  color: black;
+  color: rgb(0, 0, 0);
   font-size: 3.5rem;
   font-weight: bolder;
   font-family: 'East Sea Dokdo', cursive;

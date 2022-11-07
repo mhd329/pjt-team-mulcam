@@ -38,6 +38,7 @@ class User(AbstractUser):
             "quality": 30,
         },
     )
+    social_profile_picture = models.CharField(null=True, max_length=150)
 
     @property
     def full_name(self):

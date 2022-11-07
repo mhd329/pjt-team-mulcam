@@ -11,11 +11,7 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ("username",)
-        exclude = (
-            "phone",
-            "kakao_id",
-            "kakao_nickname",
-        )
+        exclude = ("phone",)
         labels = {
             "phone": "휴대폰",
         }

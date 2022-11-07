@@ -13,6 +13,16 @@ def detail(request, pk):
     grades = []
     grade = 0
     send_grade = 0
+    amenity_dict = {
+        "1": "화장실",
+        "2": "전기",
+        "3": "개수대",
+        "4": "샤워실",
+        "5": "온수",
+        "6": "와이파이",
+        "7": "펫",
+    }
+
     for g in reviews:
         grades.append(g.grade)
         print(g.grade)
@@ -26,6 +36,7 @@ def detail(request, pk):
         "photos": article.photo_set.order_by("-id")[:3],
         "send_grade": send_grade,
         "grade": grade,
+        "amenity_dict": amenity_dict,
     }
     return render(request, "articles/detail.html", context)
 
@@ -73,7 +84,7 @@ def admin_create(request):
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("main:index")
+            return redirect("main:all")
     else:
         form = ArticleForm()
     context = {

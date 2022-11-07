@@ -6,16 +6,17 @@
 
 {% block body %}
 <!-- banner 영역 -->
-<section class="banner" >
-  <div class="text-center">
-    <div class="banner-title">{{theme}}테마</div>
-    <div class="container">
-      <form class="d-flex" role="search" action=" {% url 'search:search' %}">
-        <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
-        <button class="btn btn-dark rounded-pill" type="submit">Search</button>
-      </form>
-    </div>
+<section class="banner row" >
+  <div class="col-3">
   </div>
+  <div class="col-6">
+    <div class="banner-title text-center">{{theme}}테마</div>
+    <form class="d-flex" role="search" action=" {% url 'search:search' %}">
+      <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
+      <button class="btn btn-dark rounded-pill" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="col-3"></div>
 </section>
 
 <!-- 본문 영역 -->

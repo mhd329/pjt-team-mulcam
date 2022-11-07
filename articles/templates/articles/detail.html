@@ -10,13 +10,13 @@
     <div class="text-center">
       <h1 class="menu-title mb-5">{{ article.name }}</h1>
     </div>
-    <div class="row gx-3">
-      <div class="col-7 d-flex justify-content-center">
+    <div class="row gx-3 ">
+      <div class="col-lg-7">
         <div class="detail-img-div">
           <img class="detail-img" src="{{ article.image.url }}">
         </div>
       </div>
-      <div class="col-5 mb-5">
+      <div class="col-lg-5 mb-5">
         <table class="table">
           <tbody>
             <!-- 주소 -->
@@ -78,10 +78,10 @@
           즐겨찾기
           {%else%}
           <i class="bi bi-bookmark-star-fill"></i>
-          즐겨찾기 해제
+          해제
           {%endif%}
         </a>
-        <a class="btn btn-dark rounded-pill col-4 mt-3 mx-3" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
+        <a class="btn btn-dark rounded-pill col-4 mt-3 mx-3" href="{% url 'reviews:create' article.pk %}"> 후기 작성하기</a>
         {% if user.is_superuser %}
         <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'articles:delete' article.pk %}">삭제하기</a>
         {% endif %}
@@ -115,32 +115,41 @@
               </div>
             </div>
           </li>
-          <!-- 지도 탭 -->
-          <li id="mapDiv" class="nav-item">
-            <a class="nav-link" href="#map">지도</a>
-            <div class="tab-content" id="map" style="width: 500px; height :400px;">
-            </div>
-          </li>
-          <!-- 시설정보 탭 -->
-          <li class="nav-item">
-            <a class="nav-link" href="#amenities">시설정보</a>
-            <div class="tab-content" id="amenities">
+        <!-- 지도 탭 -->
+        <li id="mapDiv" class="nav-item">
+          <a class="nav-link" href="#map">지도</a>
+          <div class="tab-content" id="map" style="width: 500px; height :400px;">
+          </div>
+        </li>
+        <!-- 시설정보 탭 -->
+        <li class="nav-item">
+          <a class="nav-link" href="#amenities">시설정보</a>
+
+          <div class="tab-content" id="amenities">
+            <div class="row">
               {% for amenity in article.amenities %}
-              <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png">
-              <br>
-              <p>{{ amenity }}</p>
+              <div class="col-4">
+                {% for key,value in amenity_dict.items %}
+                  {% if key == amenity %}
+                    <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png">
+                    <h5>{{ value }}</h5>
+                    <br>
+                  {% endif %}
+                {% endfor %}
+              </div>
               {% endfor %}
             </div>
-          </li>
-          <!-- 후기 탭 -->
-          <li class="nav-item">
-            <a class="nav-link" href="#reviews">캠핑후기</a>
-            <div class="tab-content" id="reviews">
-              <ul class="list-group">
-                {% for review in reviews %}
-                <li class="list-group-item">
-                  <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-                </li>
+          </div>
+        </li>
+        <!-- 후기 탭 -->
+        <li class="nav-item">
+          <a class="nav-link" href="#reviews">캠핑후기</a>
+          <div class="tab-content" id="reviews">
+            <ul class="list-group">
+              {% for review in reviews %}
+              <li class="list-group-item list-group-item-action" style="max-width:318px;">
+                <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+              </li>
                 {% endfor %}
               </ul>
             </div>

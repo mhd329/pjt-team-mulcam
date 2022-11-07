@@ -11,9 +11,11 @@
     <div class="banner-title">
       {% if none_info %}
       {{ none_info }}
-      {% else %} 
+      {% elif search_data %} 
       {{ search }}
       에 대한 검색 결과
+      {% elif localmap %}
+      {{localmap}}
       {% endif %}
     </div>
     <div class="container">
@@ -33,13 +35,14 @@
 
 
 <div class="container my-5" style="width: 70%;">
-  <h1>캠핑장 검색 결과</h1>
+
+  <h1>{%if localmap %} {{localmap}}  {%else%} 캠핑장 검색 결과 {% endif %}</h1>
   <table class="table mt-5 ">
     <thead>
       <tr>
         <th scope="col">캠핑장</th>
         <th scope="col">위치</th>
-        <th scope="col">번호</th>
+        <th scope="col">전화번호</th>
         <th scope="col">평점</th>
       </tr>
     </thead>
@@ -56,7 +59,7 @@
           <p>{{adata.contact}}
         </td>
         <td>
-          <p></p>
+          <p>{{adata.grade}}</p>
         </td>
       </tr>
       {% endfor %}

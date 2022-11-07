@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from articles.models import Article
 from search.models import Search
 from reviews.models import Review
@@ -13,20 +13,24 @@ def index(request):
     all_grade = []
     carousel_grade = []
     for article in all_article:
-        if article.gra:
-            all_grade.append(article.gra * 20)
-        else:
+        g = article.gra
+        if g is None:
             all_grade.append(0)
+        else:
+            all_grade.append(g * 20)
     all_articles = zip(all_article, all_grade)
     # 캐러셀 + 평균평점
     carousel_articles = Article.objects.order_by("-pk")[:3].annotate(
         gra=Avg("review__grade")
     )
     for carousel in carousel_articles:
-        if carousel.gra:
-            carousel_grade.append(carousel.gra * 20)
-        else:
+        c = carousel.gra
+        if c is None:
             carousel_grade.append(0)
+        else:
+            carousel_grade.append(carousel.gra * 20)
+
+
     carousel = zip(carousel_articles, carousel_grade)
     hot_keyword = Search.objects.all().order_by("-count")[:5]
     context = {
@@ -64,6 +68,11 @@ def all(request):
     }
 
     return render(request, "main/all.html", context)
+
+
+def first(request):
+
+    return render(request, "main/first.html")
 
 
 # def map_filter(request,pk):

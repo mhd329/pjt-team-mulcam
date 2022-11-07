@@ -54,28 +54,27 @@ def detail(request, user_pk):
 @login_required
 def update(request, user_pk):
     pick_user = get_object_or_404(get_user_model(), pk=user_pk)
-    if request.user == pick_user:
-        if request.method == "POST":
-            form = ChangeUserInfo(request.POST, instance=pick_user)
-            if form.is_valid():
-                user = form.save(commit=False)
-                phone = user.phone
-                if phone:
-                    p1 = "".join(phone[:3])
-                    p2 = "".join(phone[3:7])
-                    p3 = "".join(phone[7:])
-                    phone = "-".join([p1, p2, p3])
-                    user.phone = phone
-                else:
-                    pass
-                user.save()
-                return redirect("accounts:detail", user_pk)
-        else:
-            form = ChangeUserInfo(instance=pick_user)
-        context = {
-            "form": form,
-            "pick_user": pick_user,
-        }
+    if request.method == "POST":
+        form = ChangeUserInfo(request.POST, instance=pick_user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            phone = user.phone
+            if phone:
+                p1 = "".join(phone[:3])
+                p2 = "".join(phone[3:7])
+                p3 = "".join(phone[7:])
+                phone = "-".join([p1, p2, p3])
+                user.phone = phone
+            else:
+                pass
+            user.save()
+            return redirect("accounts:detail", user_pk)
+    else:
+        form = ChangeUserInfo(instance=pick_user)
+    context = {
+        "form": form,
+        "pick_user": pick_user,
+    }
     return render(request, "accounts/update.html", context)
 
 

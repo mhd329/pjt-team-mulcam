@@ -13,6 +13,14 @@ amenities_list = (
     ("와이파이", "와이파이"),
     ("펫", "펫"),
 )
+local_map = (
+    (1, "경기도"),
+    (2, "강원도"),
+    (3, "충청도"),
+    (4, "경상도"),
+    (5, "전라도"),
+    (6, "제주도"),
+)
 
 # Create your models here.
 class Article(models.Model):
@@ -42,6 +50,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     geography = models.CharField(max_length=20)
+    local = models.IntegerField(choices=local_map)
 
 
 class Photo(models.Model):

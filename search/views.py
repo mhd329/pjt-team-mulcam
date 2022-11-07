@@ -61,3 +61,27 @@ def search(request):
             "search": search,
         }
     return render(request, "search/search_list.html", context)
+
+
+def k_map(request, pk):
+    if pk == 1:
+        localmap = "경기도"
+    elif pk == 2:
+        localmap = "강원도"
+    elif pk == 3:
+        localmap = "충청도"
+    elif pk == 4:
+        localmap = "경상도"
+    elif pk == 5:
+        localmap = "전라도"
+    elif pk == 6:
+        localmap = "제주도"
+
+    local_list = Article.objects.filter(local=pk)
+    print(local_list)
+    context = {
+        "search_article": local_list,
+        "localmap": localmap,
+    }
+
+    return render(request, "search/search_list.html", context)

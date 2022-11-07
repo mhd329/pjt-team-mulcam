@@ -12,7 +12,11 @@ def index(request):
     all_article = Article.objects.annotate(gra=Avg("review__grade"))
     all_grade = []
     for article in all_article:
-        all_grade.append(article.gra * 20)
+        g = article.gra
+        if g is None:
+            all_grade.append(0)
+        else:
+            all_grade.append(g * 20)
     all_articles = zip(all_article, all_grade)
     # 캐러셀 + 평균평점
     carousel_articles = Article.objects.order_by("-pk")[:3].annotate(
@@ -20,7 +24,12 @@ def index(request):
     )
     carousel_grade = []
     for carousel in carousel_articles:
-        carousel_grade.append(carousel.gra * 20)
+        c = carousel.gra
+        if c is None:
+            carousel_grade.append(0)
+        else:
+            carousel_grade.append(carousel.gra * 20)
+
     carousel = zip(carousel_articles, carousel_grade)
     hot_keyword = Search.objects.all().order_by("-count")[:5]
 
@@ -69,6 +78,11 @@ def all(request):
     }
 
     return render(request, "main/all.html", context)
+
+
+def first(request):
+
+    return render(request, "main/first.html")
 
 
 # def map_filter(request,pk):

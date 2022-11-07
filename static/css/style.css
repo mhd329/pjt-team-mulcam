@@ -13,8 +13,9 @@ a {
 }
 
 body {
-  font-family: 'Noto Serif KR', serif;
-  background-color: rgba(0, 0, 0, 0.3);
+  font-family: 'Jua', sans-serif;
+  background: conic-gradient(lightCyan, skyBlue, deepSkyBlue);
+  background-repeat: repeat;
 }
 
 .nav-title {
@@ -22,7 +23,7 @@ body {
   color: black;
   font-size: 2rem;
   font-weight: bolder;
-  font-family: 'East Sea Dokdo', cursive;
+  font-family: 'Jua', sans-serif;
 }
 
 .banner {
@@ -36,12 +37,11 @@ body {
 }
 
 .banner-title {
-  margin: 2rem;
+  margin-top: 2rem;
   color: black;
-  font-size: 3.5rem;
+  font-size: 2rem;
   font-weight: bolder;
-  font-family: 'East Sea Dokdo', cursive;
-  letter-spacing: 1rem;
+  letter-spacing: 0.3rem;
 }
 
 .menu-title {

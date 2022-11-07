@@ -1,32 +1,30 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
-{% block css %}
-{% endblock css%}
 
 
 {% block body %}
-<section class="banner">
-  <div class="text-center">
+<section class="banner row">
+  <div class="col-3"></div>
+  <div class="col-6 mt-5 text-center">
     <div class="banner-title">
       {% if none_info %}
-      {{ none_info }}
-      {% elif search_data %} 
-      {{ search }}
+        {{ none_info }}
+      {% elif search %} 
+        {{ search }}
       에 대한 검색 결과
       {% elif localmap %}
-      {{localmap}}
+        {{localmap}}
       {% endif %}
     </div>
-    <div class="container">
-      <form class="d-flex" role="search" action=" {% url 'search:search' %}">
-        <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
-        <button class="btn btn-dark rounded-pill" type="submit">Search</button>
-      </form>
-    </div>
+    <form class="d-flex" role="search" action=" {% url 'search:search' %}">
+      <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
+      <button class="btn btn-dark rounded-pill" type="submit">Search</button>
+    </form>
   </div>
-  
+  <div class="col-3"></div>
 </section>
+
 
 
 {% comment %} 아티클검색 {% endcomment %}

@@ -10,11 +10,11 @@
   <div class="col-3"></div>
   <div class="col-6 mt-5">
     <div class="banner-title text-center">
-        오늘은 어디로 갈까? 
+      오늘은 어디로 갈까?
     </div>
     <form class="d-flex" role="search" action=" {% url 'search:search' %}">
       <input class="form-control me-2" type="search" placeholder="캠핑장 검색" name="q" aria-label="Search">
-      <button class="btn btn-dark rounded-pill" type="submit">Search</button>
+      <button class="btn btn-dark rounded-pill" type="submit" style="width: 5rem;">검색</button>
     </form>
   </div>
 
@@ -23,18 +23,20 @@
   <div class="col-3">
     <div class="hot-Key">
       <div class="dropdown">
-        <p class="text-center text-white">
+        <p class="text-center text-white my-2">
           인기검색어
         </p>
+        {% if hot_keyword %}
         <div class="dropdown-content">
           {%for key in hot_keyword %}
           <a href="">
-          <p class="text-center text-white">
+            <p class="text-center text-white">
               {{ key.keyword }}
             </p>
           </a>
           {%endfor%}
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -142,11 +144,12 @@
         coords="374,209,383,221,382,239,386,261,384,283,383,298,378,316,381,329,385,339,397,333,394,350,393,374,388,393,385,406,381,420,371,427,369,443,359,447,346,457,330,465,326,485,318,497,306,497,293,487,285,480,268,487,266,499,258,498,251,493,244,483,242,461,232,448,227,433,224,425,230,413,227,401,228,378,239,362,251,362,254,350,245,342,254,336,266,325,264,315,255,311,246,306,249,294,249,273,261,259,279,250,292,253,302,245,300,234,306,228,328,223,341,223,362,222"
         shape="poly">
       <area onmouseover="on_km_061();" onmouseout="offHover();" target="_self" id="km_061" alt="전라도" title="전라도"
-       href="{% url 'search:k_map' 5 %}"
+        href="{% url 'search:k_map' 5 %}"
         coords="171,330,154,346,132,348,139,365,142,380,135,389,123,389,127,400,127,416,122,430,110,441,99,447,87,448,89,462,95,469,84,476,75,486,75,500,81,514,89,514,81,530,69,549,79,562,91,561,101,553,108,541,122,538,135,548,155,548,173,548,183,546,187,540,200,532,212,532,224,533,220,515,228,508,239,512,243,503,247,493,238,461,226,443,224,430,227,414,227,387,230,370,247,360,252,352,243,347,231,348,216,353,203,347,202,339,164,334,160,340"
         shape="poly">
       <area onmouseover="on_km_064();" onmouseout="offHover();" target="_self" id="km_064" alt="제주도" title="제주도"
-       href="{% url 'search:k_map' 6 %}" coords="113,585,134,580,157,577,166,582,164,595,155,605,143,613,126,614,112,618,97,615,93,601,99,592"
+        href="{% url 'search:k_map' 6 %}"
+        coords="113,585,134,580,157,577,166,582,164,595,155,605,143,613,126,614,112,618,97,615,93,601,99,592"
         shape="poly">
     </map>
   </div>

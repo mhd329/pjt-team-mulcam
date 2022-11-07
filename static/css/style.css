@@ -2,6 +2,17 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
+.msgbox {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 15rem;
+}
+
 .tab-content {
   display: none;
   position: absolute;
@@ -15,11 +26,8 @@ a {
 
 
 body {
-  font-family: 'Jua', sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: radial-gradient(#959aa1, #314d6d);
+  font-family: 'NanumSquareNeo';
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .nav-title {

@@ -83,147 +83,149 @@
         </a>
         <a class="btn btn-dark rounded-pill col-4 mt-3 mx-3" href="{% url 'reviews:create' article.pk %}"> 리뷰 작성하기</a>
         {% if user.is_superuser %}
-        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{url 'articles:delete' article.pk}">삭제하기</a>
+        <a class="btn btn-dark rounded-pill col-3 mt-3 mx-5" href="{% url 'articles:delete' article.pk %}">삭제하기</a>
         {% endif %}
         <div class="wrap-star">
-        <p class="fs-5">평점: {{grade }}점</p>
-        <div class="star-rating">
-          <span id="grade"></span>
+          <p class="fs-5">평점: {{grade }}점</p>
+          <div class="star-rating">
+            <span id="grade"></span>
+          </div>
         </div>
       </div>
-      </div>
-    
 
-    <!-- 탭 공간 -->
-    <div class="tab-div">
-      <ul class="nav nav-tabs nav-justified tab-menu">
-        <li class="tab-item nav-item">
-          <!-- 사진 탭 -->
-          <a class="nav-link" aria-current="page" href="#photos">사진</a>
-          <div class="tab-content container" id="photos">
-            <div class="row gx-3 py-3">
-              <!-- 이미지는 세 개만 표시 -->
-              {% for photo in photos %}
-              <div class="photo-wrap">
-                <img class="col-4 m-0 photo" src="{{ photo.image.url }}">
+
+      <!-- 탭 공간 -->
+      <div class="tab-div">
+        <ul class="nav nav-tabs nav-justified tab-menu">
+          <li class="tab-item nav-item">
+            <!-- 사진 탭 -->
+            <a class="nav-link" aria-current="page" href="#photos">사진</a>
+            <div class="tab-content container" id="photos">
+              <div class="row gx-3 py-3">
+                <!-- 이미지는 세 개만 표시 -->
+                {% for photo in photos %}
+                <div class="photo-wrap">
+                  <img class="col-4 m-0 photo" src="{{ photo.image.url }}">
+                </div>
+                {% endfor %}
               </div>
+              <div class="d-flex">
+                <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-3 mx-1">모든 사진들</a>
+                <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-3">사진 등록하기</a>
+              </div>
+            </div>
+          </li>
+          <!-- 지도 탭 -->
+          <li id="mapDiv" class="nav-item">
+            <a class="nav-link" href="#map">지도</a>
+            <div class="tab-content" id="map" style="width: 500px; height :400px;">
+            </div>
+          </li>
+          <!-- 시설정보 탭 -->
+          <li class="nav-item">
+            <a class="nav-link" href="#amenities">시설정보</a>
+            <div class="tab-content" id="amenities">
+              {% for amenity in article.amenities %}
+              <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png">
+              <br>
+              <p>{{ amenity }}</p>
               {% endfor %}
             </div>
-            <div class="d-flex">
-              <a href="{% url 'articles:photos' article.pk %}" class="btn btn-dark rounded-pill col-3 mx-1">모든 사진들</a>
-              <a href="{% url 'articles:add-photo' article.pk %}" class="btn btn-dark rounded-pill col-3">사진 등록하기</a>
+          </li>
+          <!-- 후기 탭 -->
+          <li class="nav-item">
+            <a class="nav-link" href="#reviews">캠핑후기</a>
+            <div class="tab-content" id="reviews">
+              <ul class="list-group">
+                {% for review in reviews %}
+                <li class="list-group-item">
+                  <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+                </li>
+                {% endfor %}
+              </ul>
             </div>
-          </div>
-        </li>
-        <!-- 지도 탭 -->
-        <li id="mapDiv" class="nav-item">
-          <a class="nav-link" href="#map">지도</a>
-          <div class="tab-content" id="map" style="width: 500px; height :400px;">
-          </div>
-        </li>
-        <!-- 시설정보 탭 -->
-        <li class="nav-item">
-          <a class="nav-link" href="#amenities">시설정보</a>
-          <div class="tab-content" id="amenities">
-            {% for amenity in article.amenities %}
-            <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png"><br>
-            {% endfor %}
-          </div>
-        </li>
-        <!-- 후기 탭 -->
-        <li class="nav-item">
-          <a class="nav-link" href="#reviews">캠핑후기</a>
-          <div class="tab-content" id="reviews">
-            <ul class="list-group">
-              {% for review in reviews %}
-              <li class="list-group-item">
-                <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-<!-- 카카오 지도 + 탭 스크립트 -->
-<!-- 설명서 : https://apis.map.kakao.com/web/sample/addr2coord/ -->
-<script>
-  let container = document.getElementById("map");
-  let options = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667),
-    level: 3
-  };
-  const map = new kakao.maps.Map(container, options);
-
-  const geocoder = new kakao.maps.services.Geocoder();
-  function showKakaoMap(result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-      const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-      const marker = new kakao.maps.Marker({
-        map: map,
-        position: coords
-      });
-      const infowindow = new kakao.maps.InfoWindow({
-        content: "<div style='width:150px; text-align: center; padding: 6px 0;'>{{ article.address }}</div>"
-      });
-      infowindow.open(map, marker);
-      map.setCenter(coords);
+  <!-- 카카오 지도 + 탭 스크립트 -->
+  <!-- 설명서 : https://apis.map.kakao.com/web/sample/addr2coord/ -->
+  <script>
+    let container = document.getElementById("map");
+    let options = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3
     };
-  };
-  geocoder.addressSearch("{{ article.address }}", showKakaoMap);
+    const map = new kakao.maps.Map(container, options);
 
-  let tabList = document.querySelectorAll(".tab-div > .nav > .nav-item");
-  for (let i = 0; i < tabList.length; i++) {
-    tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
-      event.preventDefault();
-      for (let j = 0; j < tabList.length; j++) {
-        tabList[j].classList.remove("active");
-      }
-      this.parentNode.classList.add("active");
-      if (this.parentNode.id === "mapDiv") {
-        const resetCampPosition = geocoder.addressSearch("{{ article.address }}", function (result) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          map.relayout();
-          map.setCenter(coords);
+    const geocoder = new kakao.maps.services.Geocoder();
+    function showKakaoMap(result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
         });
-      }
-    });
-  };
+        const infowindow = new kakao.maps.InfoWindow({
+          content: "<div style='width:150px; text-align: center; padding: 6px 0;'>{{ article.address }}</div>"
+        });
+        infowindow.open(map, marker);
+        map.setCenter(coords);
+      };
+    };
+    geocoder.addressSearch("{{ article.address }}", showKakaoMap);
 
-  const startTab = tabList[0]
-  window.onload = function () {
-    startTab.classList.add("active");
-  };
+    let tabList = document.querySelectorAll(".tab-div > .nav > .nav-item");
+    for (let i = 0; i < tabList.length; i++) {
+      tabList[i].querySelector(".nav-link").addEventListener("click", function (event) {
+        event.preventDefault();
+        for (let j = 0; j < tabList.length; j++) {
+          tabList[j].classList.remove("active");
+        }
+        this.parentNode.classList.add("active");
+        if (this.parentNode.id === "mapDiv") {
+          const resetCampPosition = geocoder.addressSearch("{{ article.address }}", function (result) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            map.relayout();
+            map.setCenter(coords);
+          });
+        }
+      });
+    };
 
-</script>
+    const startTab = tabList[0]
+    window.onload = function () {
+      startTab.classList.add("active");
+    };
 
-<script>
+  </script>
 
-  document.getElementById('grade').setAttribute('style', "{{send_grade}}");
+  <script>
 
-</script>
-<style>
-  .star-rating {
-    width: 304px;
-  }
+    document.getElementById('grade').setAttribute('style', "{{send_grade}}");
 
-  .star-rating,
-  .star-rating span {
-    display: inline-block;
-    height: 55px;
-    overflow: hidden;
-    background: url(../../../static/img/star.png)no-repeat;
-    text-decoration-line: underline;
-  }
+  </script>
+  <style>
+    .star-rating {
+      width: 304px;
+    }
 
-  .star-rating span {
-    background-position: left bottom;
-    line-height: 0;
-    vertical-align: top;
-    font-size: larger;
-    text-decoration-line: underline;
-  }
-</style>
-{% endblock body %}
+    .star-rating,
+    .star-rating span {
+      display: inline-block;
+      height: 55px;
+      overflow: hidden;
+      background: url(../../../static/img/star.png)no-repeat;
+      text-decoration-line: underline;
+    }
+
+    .star-rating span {
+      background-position: left bottom;
+      line-height: 0;
+      vertical-align: top;
+      font-size: larger;
+      text-decoration-line: underline;
+    }
+  </style>
+  {% endblock body %}

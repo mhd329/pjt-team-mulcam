@@ -1,6 +1,8 @@
 from django.db import models
 from reviews.models import Review
 from articles.models import Article
+from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator, MaxLengthValidator
@@ -16,6 +18,7 @@ def input_only_number(value):
 class User(AbstractUser):
     kakao_id = models.BigIntegerField(null=True, unique=True)
     naver_id = models.CharField(null=True, unique=True, max_length=100)
+    googld_id = models.CharField(null=True, unique=True, max_length=50)
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="follower"
     )
@@ -25,6 +28,15 @@ class User(AbstractUser):
     phone = models.CharField(
         max_length=13,
         validators=[MinLengthValidator(11), MaxLengthValidator(11), input_only_number],
+    )
+    profile_picture = ProcessedImageField(
+        upload_to="profile_picture/",
+        blank=True,
+        processors=[ResizeToFill(64, 64)],
+        format="JPEG",
+        options={
+            "quality": 30,
+        },
     )
 
     @property

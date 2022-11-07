@@ -15,19 +15,20 @@
 <body>
     <section>
         <div>
-            <video id="video" autoplay="" loop="" muted="" width="20%" height="20%" playsinline poster="">
+
+            <video id="video" autoplay="" loop="" muted="" max_width="100%" height="100%" playsinline poster="">
                 <source src="{% static 'first/fire.mp4' %}" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
+
+            <img id="offtent" class="tent-off" src="/static/img/offtent.png" alt="">
+            <a href="{% url 'main:index' %}"><img id="tent" class="tent-on d-none" src="/static/img/ontent.png"
+                    alt=""></a>
+
+            <audio id="fires" autoplay="" loop="" src="{% static 'sounds/firesound.mp3' %}">
+            </audio>
         </div>
-        <a text-white href="{% url 'main:index' %}"> <video id="video" autoplay="" loop="" muted="" max_width="100%"
-                height="100%" playsinline poster="">
-                <source src="{% static 'first/fire.mp4' %}" type="video/mp4"></a>
-        Your browser does not support the video tag.
-        </video>
-        <div class="scroll-dummy ">
-            홈으로
-        </div>
+
+
     </section>
 
 
@@ -39,28 +40,52 @@
 
         video {
             position: fixed;
-            z-index: 0;
+            z-index: -1;
             width: 100%;
+            object-fit: fill;
+
+        }
+
+
+        .tent-off {
+            z-index: 1;
+            position: fixed;
+            right: 20rem;
+            top: 20rem;
+            height: 25%;
             object-fit: fill;
         }
 
-        .video1 {
-
-            z-index: 1;
-            width: 100%;
+        .tent-on {
+            z-index: 2;
+            position: fixed;
+            right: 20rem;
+            top: 20rem;
+            height: 25%;
             object-fit: fill;
-        }
-
-        .scroll-dummy {
-            height: 4500px;
-            max-width: 998px;
-            padding: 20px;
-            z-index: 1;
-            font-family: sans-serif;
         }
     </style>
 
+    <script>
+        const video = document.getElementById("video");
+        const offtent = document.getElementById("offtent");
+        const tent = document.getElementById("tent");
+        const fire_sound = document.getElementById("fires");
+        const body = document.body
 
+
+        offtent.addEventListener("mouseover", function (event) {
+            tent.classList.remove("d-none")
+        }, false);
+        tent.addEventListener("mouseout", function (event) {
+            tent.classList.add("d-none")
+        }, false);
+
+        tent.addEventListener("mouseover", function (event) {
+            fire_sound.play();
+        })
+
+    </script>
 
 </body>
 

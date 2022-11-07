@@ -100,7 +100,7 @@
 
     {% for article,grade in all_article %}
 
-    <div class="col-12 col-sm-12 col-md-6 col-lg-4 my-3">
+    <div class="col-12 col-sm-6 col-lg-4 col-auto my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card">
           {%if article.thumbnail %}

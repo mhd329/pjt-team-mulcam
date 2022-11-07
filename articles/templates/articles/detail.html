@@ -124,11 +124,18 @@
         <!-- 시설정보 탭 -->
         <li class="nav-item">
           <a class="nav-link" href="#amenities">시설정보</a>
+
           <div class="tab-content" id="amenities">
             <div class="row">
               {% for amenity in article.amenities %}
               <div class="col-4">
-                <img class="mt-5" src="{% static 'img/amenity_icons/' %}{{ amenity }}.png"><br>
+                {% for key,value in amenity_dict.items %}
+                  {% if key == amenity %}
+                    <img src="{% static 'img/amenity_icons/' %}{{ amenity }}.png">
+                    <h5>{{ value }}</h5>
+                    <br>
+                  {% endif %}
+                {% endfor %}
               </div>
               {% endfor %}
             </div>

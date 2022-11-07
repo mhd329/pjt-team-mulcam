@@ -1,18 +1,42 @@
 from django.shortcuts import render
 from articles.models import Article
 from search.models import Search
+from reviews.models import Review
+from django.db.models import Avg
 
 # Create your views here.
 
 
 def index(request):
-    all_article = Article.objects.all()
-
-    carousel_articles = Article.objects.order_by("-pk")[:3]
+    # 모든 아티클 + 평균평점
+    all_article = Article.objects.annotate(gra=Avg("review__grade"))
+    all_grade = []
+    for article in all_article:
+        all_grade.append(article.gra * 20)
+    all_articles = zip(all_article, all_grade)
+    # 캐러셀 + 평균평점
+    carousel_articles = Article.objects.order_by("-pk")[:3].annotate(
+        gra=Avg("review__grade")
+    )
+    carousel_grade = []
+    for carousel in carousel_articles:
+        carousel_grade.append(carousel.gra * 20)
+    carousel = zip(carousel_articles, carousel_grade)
     hot_keyword = Search.objects.all().order_by("-count")[:5]
+
+    # for article in carousel_articles:
+    #     reviews = Review.objects.filter(article_id=article.pk)
+    #     grade_list = []
+    #     for g in reviews:
+    #         grade_list.append(g.grade)
+    #     if len(grade_list) > 1:
+    #         grade = round(sum(grade_list) / len(grade_list), 1)
+    #         send_grade_ = (grade) * 20
+    #         grades.append(send_grade_)
+
     context = {
-        "carousel_articles": carousel_articles,
-        "all_article": all_article,
+        "carousel_articles": carousel,
+        "all_article": all_articles,
         "hot_keyword": hot_keyword,
     }
     return render(request, "main/index.html", context)
@@ -45,3 +69,7 @@ def all(request):
     }
 
     return render(request, "main/all.html", context)
+
+
+# def map_filter(request,pk):
+#     return red

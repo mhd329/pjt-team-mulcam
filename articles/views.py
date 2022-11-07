@@ -10,10 +10,22 @@ from reviews.models import Review
 def detail(request, pk):
     article = Article.objects.get(id=pk)
     reviews = Review.objects.filter(article_id=article.pk)
+    grades = []
+    grade = 0
+    send_grade = 0
+    for g in reviews:
+        grades.append(g.grade)
+        print(g.grade)
+    if len(reviews) >= 1:
+        grade = round(sum(grades) / len(grades), 1)
+        send_grade = f"width:{((grade)*20)}%;"
+
     context = {
         "reviews": reviews,
         "article": article,
         "photos": article.photo_set.order_by("-id")[:3],
+        "send_grade": send_grade,
+        "grade": grade,
     }
     return render(request, "articles/detail.html", context)
 

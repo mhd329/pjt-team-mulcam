@@ -100,6 +100,25 @@
     <div class="col-12 col-sm-6 col-lg-4 my-3">
       <a href="{% url 'articles:detail' article.pk %}" class="btn btn-light">
         <div class="card">
+          <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger"
+            style="margin: 2rem 0 0rem 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-suit-heart-fill me-2" viewBox="0 0 16 16">
+              <path
+                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+            </svg>{{ article.articles_like.all.count }}
+            <span class="visually-hidden">추천수</span>
+          </span>
+
+          <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-warning"
+            style="margin: 4rem 0 0rem 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-star-fill me-2" viewBox="0 0 16 16">
+              <path
+                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+            </svg>{{article.link_article.all.count }}
+            <span class="visually-hidden">즐겨찾기</span>
+          </span>
           {%if article.thumbnail %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
           {%else%}

@@ -40,11 +40,11 @@ class Article(models.Model):
         },
     )
     address = models.CharField(max_length=100)
-    contact = models.CharField(max_length=30)
+    contact = models.CharField(max_length=40)
     camp_type = models.CharField(max_length=20)
     season = models.CharField(max_length=20)
     active_day = models.CharField(max_length=20)
-    homepage = models.CharField(max_length=40, blank=True)
+    homepage = models.CharField(max_length=200, blank=True)
     reservation = models.CharField(max_length=15)
     amenities = MultiSelectField(choices=amenities_list)
     created_at = models.DateTimeField(auto_now=True)

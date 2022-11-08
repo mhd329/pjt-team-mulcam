@@ -27,7 +27,7 @@ li {
 
 body {
   font-family: 'NanumSquareNeo';
-  background-color: rgba(0, 0, 0, 0.3);
+  background: radial-gradient(#c6cbd4, #243b55)
 }
 
 .nav-title {

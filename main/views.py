@@ -9,7 +9,7 @@ from django.db.models import Avg
 
 def index(request):
     # 모든 아티클 + 평균평점
-    all_article = Article.objects.annotate(gra=Avg("review__grade"))
+    all_article = Article.objects.annotate(gra=Avg("review__grade"))[:6]
     all_grade = []
     carousel_grade = []
     for article in all_article:

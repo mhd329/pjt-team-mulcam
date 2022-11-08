@@ -19,6 +19,7 @@ def index(request):
         else:
             all_grade.append(g * 20)
     all_articles = zip(all_article, all_grade)
+    article.articles_like.all
     # 캐러셀 + 평균평점
     carousel_articles = Article.objects.order_by("-pk")[:3].annotate(
         gra=Avg("review__grade")
@@ -29,7 +30,6 @@ def index(request):
             carousel_grade.append(0)
         else:
             carousel_grade.append(carousel.gra * 20)
-
 
     carousel = zip(carousel_articles, carousel_grade)
     hot_keyword = Search.objects.all().order_by("-count")[:5]

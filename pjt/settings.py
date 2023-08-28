@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -19,21 +20,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+
 load_dotenv()
+DEBUG = os.getenv("DEBUG") == "True"
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 
-
-ALLOWED_HOSTS = [
-    "codebee-env-1.eba-ybm4hjsv.ap-northeast-2.elasticbeanstalk.com",
-    'runedemon.shop',
-    "172.31.13.105",
-    "172.31.10.233",
-    "127.0.0.1",
-    "localhost",
-]
+if DEBUG:
+    ALLOWED_HOSTS = [
+        "127.0.0.1",
+        "localhost",
+    ]
+else:
+    ALLOWED_HOSTS = [
+        "",
+    ]
 
 # Application definition
 
@@ -77,7 +78,9 @@ ROOT_URLCONF = "pjt.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "templates",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -91,6 +94,7 @@ TEMPLATES = [
 ]
 
 SASS_PROCESSOR_ENABLED = True
+
 SASS_OUTPUT_STYLE = "compact"
 
 WSGI_APPLICATION = "pjt.wsgi.application"
@@ -100,24 +104,24 @@ WSGI_APPLICATION = "pjt.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-# DEBUG=True
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-#
-# else:
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_NAME"),  # .env 파일에 value 작성
-        "USER": "postgres",
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),  # .env 파일에 value 작성
-        "HOST": os.getenv("DATABASE_HOST"),  # .env 파일에 value 작성
-        "PORT": "5432",
+# db 의존성
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DATABASE_NAME"),  # .env 파일에 value 작성
+            "USER": "postgres",
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),  # .env 파일에 value 작성
+            "HOST": os.getenv("DATABASE_HOST"),  # .env 파일에 value 작성
+            "PORT": "5432",
+        }
     }
 
 # Password validation
@@ -153,26 +157,23 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-DEBUG = True
 
 
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static")
 
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 # STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / "static"
 
 STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'sass_processor.finders.CssFinder',
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 
 # if DEBUG:

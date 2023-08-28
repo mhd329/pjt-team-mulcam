@@ -53,6 +53,7 @@ from django.contrib import messages
 # 소셜 로그인에 필요한 토큰 생성
 state_token = secrets.token_urlsafe(32)
 
+
 # 테스트용 html 페이지
 def test(request):
     members = User.objects.all()
@@ -589,14 +590,22 @@ def password_change(request, user_pk):
 
 def check(request, user_pk):
     today_ = str(datetime.date.today())
-    user = get_object_or_404(get_user_model(), pk=user_pk)
+    user = get_object_or_404(get_user_model(), pk=user_pk)  # 지금은 사용하지 않음
     user_phone = request.POST["phone"]
-    now_auth_phone = AuthPhone.objects.filter(phone=user_phone[1:])
-    auth_count = 0
-    for data in now_auth_phone:
-        if data.created_at.strftime("%Y-%m-%d") == today_:
-            auth_count += 1
-            if auth_count == 5:
+    now_auth_phone = AuthPhone.objects.filter(
+        phone=user_phone[
+            1:
+        ]  # AuthPhone 테이블에서 지금 요청한 휴대폰번호와 같은 번호를 가진 것들이 쿼리셋에 담겨져서 온다.
+    )  # 필드가 int라서 맨 앞의 0이 생략된다.
+    auth_count = 0  # 이 방법의 원리는,
+    for data in now_auth_phone:  # 방금 가져온 그 쿼리셋 안에서,
+        if (
+            data.created_at.strftime("%Y-%m-%d") == today_
+        ):  # 쿼리셋 안에 있는 어떤 데이터의 생성 날짜가 오늘과 같으면,
+            auth_count += 1  # 1씩 올려주기
+            if (
+                auth_count == 5
+            ):  # 그래서 다섯개, 즉 쿼리셋 내부의 모든 휴대폰 번호중에 '오늘'날짜를 가진 것들이 다섯 개 이상 되면 인증이 안된다.
                 break
     context = {
         "authCount": auth_count,
@@ -615,7 +624,7 @@ def phone_auth(request, user_pk):
     auth_phone = AuthPhone()
     auth_phone.phone = user.phone if user.phone else request.POST["phone"]
     auth_phone.auth_number = random_auth_number
-    auth_phone.save()
+    auth_phone.save()  # 여기서 세이브되면서 메세지 전송
     context = {}
     return JsonResponse(context)
 

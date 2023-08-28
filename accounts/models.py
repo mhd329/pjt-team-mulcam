@@ -23,7 +23,7 @@ class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
+    class Meta:  # 추상 클래스로 정의함
         abstract = True
 
 
@@ -99,15 +99,18 @@ load_dotenv()
 
 class AuthPhone(TimeStampedModel):
     phone = models.IntegerField()
-    auth_number = models.IntegerField()
+    auth_count = models.IntegerField()
 
     NAVER_CLOUD_ACCESS_KEY = os.getenv("NAVER_CLOUD_ACCESS_KEY")
     NAVER_CLOUD_SECRET_KEY = os.getenv("NAVER_CLOUD_SECRET_KEY")
     NAVER_CLOUD_SERVICE_ID = os.getenv("NAVER_CLOUD_SERVICE_ID")
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.send_sms()
+    def save(self, *args, **kwargs):  # save 메서드 재정의
+        # 문자 보내기 단계에서 AuthPhone 인스턴스를 새로 만드는데, 그 과정에서 랜덤한 인증번호가 생성된다.
+        # 그래서 그 번호를 auth_number에 저장하고,
+        super().save(*args, **kwargs)  # 그 외 다른 변경사항들을 반영하기 위해 세이브 하면,
+        self.send_sms()  # 문자가 전송되게끔 바꾼것이다.
+        # 즉, 인증번호가 생성되고 유효기간이 카운팅됨과 동시에 문자가 전송되는 구조이다.
 
     def send_sms(self):
         timestamp = str(int(time.time() * 1000))
@@ -117,22 +120,23 @@ class AuthPhone(TimeStampedModel):
         method = "POST"
         uri = f"/sms/v2/services/{service_id}/messages"
         message = method + " " + uri + "\n" + timestamp + "\n" + access_key
-        message = bytes(message, "UTF-8")
+        message = bytes(message, "UTF-8")  # ascii문자 외의 문자 전송을 보장하기위해 bytes로 변환
         signing_key = base64.b64encode(
             hmac.new(secret_key, message, digestmod=hashlib.sha256).digest()
         )
         url = f"https://sens.apigw.ntruss.com/sms/v2/services/{service_id}/messages"
+        # 선택사항은 제외하고 필수사항만 설정
+        headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "x-ncp-apigw-timestamp": timestamp,  # 에포크시간
+            "x-ncp-iam-access-key": access_key,  # 발급받은 access key
+            "x-ncp-apigw-signature-v2": signing_key,  # 가이드에서 권장방식대로 사이닝키 만들어서 제출
+        }
         data = {
             "type": "SMS",
             "from": "01099453849",
             "content": f"[코드비] 인증 번호 [{self.auth_number}]를 입력해주세요.",
             "messages": [{"to": f"{self.phone}"}],
         }
-        headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "x-ncp-apigw-timestamp": timestamp,
-            "x-ncp-iam-access-key": access_key,
-            "x-ncp-apigw-signature-v2": signing_key,
-        }
         # 여기서 인증번호가 보내짐
-        requests.post(url, json=data, headers=headers)
+        requests.post(url, headers=headers, json=data)

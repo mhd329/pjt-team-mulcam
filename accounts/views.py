@@ -280,10 +280,10 @@ def naver_callback(request):
 
 
 def google_request(request):
-    google_api = "https://accounts.google.com/o/oauth2/v2/auth"
+    google_api = ""
     client_id = ""  # 배포시 보안적용 해야함
-    redirect_uri = "http://localhost:8000/accounts/login/google/callback"
-    google_base_url = "https://www.googleapis.com/auth"
+    redirect_uri = ""
+    google_base_url = ""
     google_email = "/userinfo.email"
     google_myinfo = "/userinfo.profile"
     scope = f"{google_base_url}{google_email}+{google_base_url}{google_myinfo}"
@@ -296,19 +296,19 @@ def google_callback(request):
     data = {
         "code": request.GET.get("code"),
         "state": request.GET.get("state"),
-        "grant_type": "authorization_code",
+        "grant_type": "",
         "client_id": "",  # 배포시 보안적용 해야함
         "client_secret": "",
         "redirect_uri": "http://localhost:8000/accounts/login/google/callback",
     }
-    google_token_request_url = "https://oauth2.googleapis.com/token"
+    google_token_request_url = ""
     access_token = requests.post(google_token_request_url, data=data).json()[
         "access_token"
     ]
     params = {
         "access_token": f"{access_token}",
     }
-    google_call_user_api = "https://www.googleapis.com/oauth2/v3/userinfo"
+    google_call_user_api = ""
     google_user_information = requests.get(google_call_user_api, params=params).json()
 
     googld_id = google_user_information["sub"]

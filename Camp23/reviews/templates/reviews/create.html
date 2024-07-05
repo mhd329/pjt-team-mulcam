@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block body %}
+
+
+<div
+  style="text-align: center; background-color: rgba(203, 210, 216, 0.733); max-width:700px; padding:60px; margin:4rem auto">
+  <div>
+    <h2 class="menu-title mb-5">후기 작성</h2>
+  </div>
+  <div>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+
+      <input type="submit" class="btn btn-dark rounded-pill mt-3">
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock body %}

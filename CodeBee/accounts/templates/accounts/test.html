@@ -1,0 +1,34 @@
+{% extends 'base_test.html' %}
+
+{% block content %}
+<h1 class="text-center">이 페이지는 accounts 앱의 테스트 페이지 입니다.</h1>
+<h3 class="text-center">지금 로그인 되어있는 유저와 모든 유저목록이 표시되는 페이지 입니다.</h3>
+{% for user in users %}
+{% if user == request.user %}
+<h5>지금 로그인 되어있는 유저 : {{ user.username }}</h5>
+<a href="{% url 'accounts:logout' %}" class="btn btn-primary">로그아웃</a>
+{{ service_name }}
+{% if service_name == "kakao" %}
+<a href="{% url 'accounts:sns-logout' service_name %}" class="btn btn-primary">카카오 계정 연결끊기</a>
+{% elif service_name == "google" %}
+<a href="{% url 'accounts:sns-logout' service_name %}" class="btn btn-primary">구글 계정 연결끊기</a>
+{% else %}
+<a href="{% url 'accounts:sns-logout' service_name %}" class="btn btn-primary">소셜 계정 연결끊기</a>
+{% endif %}
+<a href="{% url 'accounts:update' user.pk %}" class="btn btn-primary">내정보 수정</a>
+<div>
+  <a href="https://github.com/{{ user.git_username }}/">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username={{ user.git_username }}&layout=compact">
+  </a>
+</div>
+<div>
+  <a href="https://solved.ac/{{ user.boj_username }}" target="_blank">
+    <img src="http://mazassumnida.wtf/api/generate_badge?boj={{ user.boj_username }}">
+  </a>
+</div>
+{% else %}
+<p class="m-0">모든 유저 목록 : {{ user }}</p>
+{% endif %}
+{% endfor %}
+
+{% endblock content %}

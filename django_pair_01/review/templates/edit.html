@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block main_contents %}
+
+<div class="container mt-5 pt-5">
+  <form action="{% url 'review:update' review_data.id %}" method="GET">
+    <div class="mb-3">
+      <div class="my-5">
+        <input type="text" class="form-control" id="titleInput" aria-describedby="title" name="title"
+          value="{{ review_data.title }}" style="height: 50px">
+      </div>
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control text-start p-4 fs-5" style="height: 300px" id="contentInput" name="content"
+        value="{{ review_data.content }}">
+    </div>
+    <button type="submit" class="btn btn-primary">수정 완료</button>
+  </form>
+</div>
+
+{% endblock main_contents %}

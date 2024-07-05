@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block main_contents %}
+
+<div class="container mt-5 pt-5">
+  <form action="{% url 'review:create' %}" method="GET">
+    <div class="mb-3">
+      <label for="titleInput" class="form-label">제목</label>
+      <input type="text" class="form-control" id="titleInput" aria-describedby="title" name="title"
+        placeholder="80자 이내로 작성해주세요.">
+    </div>
+    <div class="mb-3">
+      <label for="contentInput" class="form-label">내용</label>
+      <input type="text" class="form-control" id="contentInput" name="content">
+    </div>
+    <button type="submit" class="btn btn-primary">작성 완료</button>
+  </form>
+</div>
+
+{% endblock main_contents %}

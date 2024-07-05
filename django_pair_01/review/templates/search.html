@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block main_contents %}
+
+<div class="container mb-5">
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th class="col-1">글 번호</th>
+        <th class="col-9">제목</th>
+        <!-- 작성 및 수정된 시간 반영 -->
+        <th class="col-2">작성된 시간</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for reviews in retrieved_review_data %}
+      <tr>
+        <td>{{ reviews.id }}</td>
+        <td>
+          <a href="{% url 'review:detail' reviews.id %}">
+            {% if reviews.title %}
+            {{ reviews.title }}
+            {% else %}
+            제목 없음
+            {% endif %}
+          </a>
+        </td>
+        <td class="col-md-4">{{ reviews.created_at|date:'y년 m월 d일' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-outline-primary float-right" href="{% url 'review:new' %}" role="button">리뷰 작성하기</a>
+  </div>
+</div>
+
+{% endblock main_contents %}

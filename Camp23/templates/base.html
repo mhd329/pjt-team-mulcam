@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Camp23</title>
+  <!-- 카카오 맵 불러오는 api -->
+  <!-- apikey= 부분은 배포할 때 반드시 보안적용 -->
+  <script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c5ba8e30be91a6fcff3a86da96a42e&libraries=services">
+    </script>
+  <!-- favicon 영역 -->
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16x16.png' %}">
+  <meta name="msapplication-TileColor" contesnt="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <!-- font 영역 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  {% block css %}{% endblock css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="msgbox p-0 m-0 animate__animated animate__fadeIn">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="toast show text-bg-{{ message.tags }} mb-3" aria-live="assertive" aria-atomic="true"
+        style="position: relative; top: 2rem; left: 2rem;">
+        <div class="toast-header">
+          <strong class="me-auto">알림
+          </strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {% if "이름" in message.message %}
+          <p>{{ message }}</p>
+          <div class="text-end">
+            <a href="{% url 'accounts:detail' request.user.pk %}" class="btn btn-primary btn-sm">입력하러 가기</a>
+          </div>
+          {% else %}
+          {{ message }}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'main:index' %}?{% now 'U' %}">
+        <img src="{% static 'img/favicons/favicon-16x16.png' %}" alt="logo" width="30" height="24">
+        <span class="nav-title text-white">Camp23</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'main:all' %}">전체</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button"
+                aria-expanded="false">캠핑장</a>
+              <ul class="dropdown-menu">
+
+                <li><a class="dropdown-item" href="{% url 'main:theme' 1 %}">산</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 2 %}">강</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 3 %}">바다</a></li>
+                <li><a class="dropdown-item" href="{% url 'main:theme' 4 %}">도심</a></li>
+
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'reviews:review_list' %}">후기게시판</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'articles:information' %}">캠핑안내</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <ul class="nav">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'accounts:detail' request.user.pk %}">
+            {% if request.user.social_profile_picture %}
+            <img class="rounded-circle" src="{{ request.user.social_profile_picture }}"
+              style="width: 24px; height: 24px;">
+            {% else %}
+            ༼ つ ◕_◕ ༽つ
+            {% endif %}
+            {{ request.user }}님 환영합니다.</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'accounts:login' %}">로그인</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'accounts:signup' %}">회원가입</a>
+        </li>
+        {% endif %}
+        {% if user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'articles:admin_create' %}">캠프생성(admin)</a>
+        </li>
+        {%endif%}
+      </ul>
+    </div>
+  </nav>
+  {% block body %}
+
+  {% endblock body %}
+  <div style="margin-top: 30rem;">
+    <footer class="text-bg-dark fixed-bottom py-1">
+      <p class="text-center my-0">고객센터 1588-1588</p>
+      <p class="text-center my-0">November, 2022 Django_cAmp23_PJT, by 박찬솔, 하승찬, 문현동, 이순철</p>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

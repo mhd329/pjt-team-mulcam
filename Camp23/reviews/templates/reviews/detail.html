@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block body %}
+{% load static %}
+
+
+<div class="container m-5" >
+  <div class="" style="margin:150px 300px;">
+    <p>{{ pick_review.pk }}번 게시글 | 작성자:<a
+        href="{% url 'accounts:detail' pick_review.user.pk %}">{{pick_review.user}}</a>
+    </p>
+    <h5><span class="menu-title">후기 제목</span> : {{pick_review.title}}</h5>
+    <p>작성: {{ pick_review.created_at|date:"SHORT_DATETIME_FORMAT" }} | 최종수정: {{ pick_review.updated_at|date:"y-m-dD"}}
+    </p>
+    <div class="container mt-5">
+      <p>
+        {{ pick_review.content }}
+      </p>
+
+      {{pick_review.tag}}
+
+
+      <div class="wrap-star">
+        <p class="fs-5">평점: {{pick_review.grade }}점</p>
+        <div class="star-rating">
+          <span id="grade"></span>
+        </div>
+      </div>
+      <a href="{% url 'accounts:like_reviews' pick_review.pk %}">
+        {% if pick_review not in request.user.like_reviews.all %}
+        <i class="bi bi-hand-thumbs-up"></i>추천하기
+        {%else%}
+        <i class="bi bi-hand-thumbs-up-fill"></i>추천취소 {%endif%}</a>
+
+      {% if request.user.is_authenticated %}
+      {% if request.user == pick_review.user %}
+      <hr>
+      <div class="text-end mt-3 mx-5">
+        <a class="btn btn-dark rounded-pill mx-2" href="{% url 'reviews:update' pick_review.pk %}">후기 수정</a>
+        <a class="btn btn-dark rounded-pill" href="{% url 'reviews:delete' pick_review.pk %}">후기 삭제</a>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .star-rating {
+    width: 304px;
+  }
+
+  .star-rating,
+  .star-rating span {
+    display: inline-block;
+    height: 55px;
+    overflow: hidden;
+    background: url(../../../static/img/star.png)no-repeat;
+    text-decoration-line: underline;
+  }
+
+  .star-rating span {
+    background-position: left bottom;
+    line-height: 0;
+    vertical-align: top;
+    font-size: larger;
+    text-decoration-line: underline;
+  }
+</style>
+
+<script>
+
+  document.getElementById('grade').setAttribute('style', "{{send_grade}}");
+
+</script>
+{% endblock body %}

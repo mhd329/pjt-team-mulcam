@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>welcome</title>
+  {% load static %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+
+</head>
+
+<body>
+  <section>
+    <div class="first-div raw">
+
+      <video id="video" autoplay="" loop="" muted="" max_width="100%" height="100%" playsinline poster="">
+        <source src="{% static 'first/fire.mp4' %}" type="video/mp4">
+      </video>
+      <div class="img-div col-3">
+        <img id="offtent" class="tent-off" src="/static/img/offtent1.png" alt="">
+        <a href="{% url 'main:index' %}">
+          <img id="tent" class="tent-on d-none" src="/static/img/ontent.png" alt=""></a>
+      </div>
+      <audio id="fires" autoplay="" loop="" src="{% static 'sounds/firesound.mp3' %}">
+      </audio>
+    </div>
+
+
+  </section>
+
+
+
+  <style>
+    body {
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      position: fixed;
+      z-index: -1;
+      width: 100%;
+      object-fit: fill;
+
+    }
+
+    .first-div {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+
+    }
+
+    .img-div {
+      position: relative;
+      right: 20rem;
+      top: 20rem;
+    }
+
+    .tent-off {
+      z-index: 1;
+      position: fixed;
+      right: 20rem;
+      top: 20rem;
+      height: 25%;
+      object-fit: fill;
+    }
+
+    .tent-on {
+      z-index: 2;
+      position: fixed;
+      right: 20rem;
+      top: 20rem;
+      height: 25%;
+      object-fit: fill;
+    }
+  </style>
+
+  <script>
+    const video = document.getElementById("video");
+    const offtent = document.getElementById("offtent");
+    const tent = document.getElementById("tent");
+    const fire_sound = document.getElementById("fires");
+
+
+
+    offtent.addEventListener("mouseover", function (event) {
+      tent.classList.remove("d-none")
+    }, false);
+    tent.addEventListener("mouseout", function (event) {
+      tent.classList.add("d-none")
+    }, false);
+
+    tent.addEventListener("mouseover", function (event) {
+      fire_sound.play();
+    })
+
+  </script>
+
+</body>
+
+</html>

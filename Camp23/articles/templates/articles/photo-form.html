@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %}
+
+<div class="container">
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form photo_form %}
+    {% bootstrap_button button_type="submit" button_class="btn btn-primary" content="제출" %}
+  </form>
+</div>
+
+{% endblock body %}

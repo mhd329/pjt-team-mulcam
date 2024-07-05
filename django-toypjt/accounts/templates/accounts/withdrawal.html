@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="member-interaction container my-5">
+  <div class="card">
+    <div class="card-body">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <h2 class="card-title mb-5 text-center">정말로 탈퇴 하시겠습니까?</h2>
+        <div class="mt-5 text-center">
+          <input class="btn btn-danger" type="submit" value="예" style="width: 5rem;">
+          <a href="{% url 'accounts:detail' user.pk %}" class="btn btn-primary ms-2" style="width: 5rem;">아니오</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

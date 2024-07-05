@@ -1,0 +1,114 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+  <title>MCU</title>
+  <link rel="shortcut icon" href="{% static 'images/film.png' %}">
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script> const review_url = "{% url 'articles:reviews' %}"; </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg py-3 position-sticky top-0 bg-black" style="z-index: 100;">
+    <div class="msgbox p-0 m-0 animate__animated animate__fadeIn">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="toast show text-bg-{{ message.tags }} mb-3" aria-live="assertive" aria-atomic="true"
+        style="position: relative; top: 2rem; left: 2rem;">
+        <div class="toast-header">
+          <strong class="me-auto">알림
+          </strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {% if "이름" in message.message %}
+          <p>{{ message }}</p>
+          <div class="text-end">
+            <a href="{% url 'accounts:detail' request.user.pk %}" class="btn btn-primary btn-sm">입력하러 가기</a>
+          </div>
+          {% else %}
+          {{ message }}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="container">
+      <a class="navbar-brand text-light" href="{% url 'index:intro' %}"><b class="nav-logo fs-1">MCU</b></a>
+      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-light text-center text-lg-start" id="navbarNav">
+
+        <ul class="navbar-nav me-auto mx-0">
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light align-bottom nav-hover" aria-current="page"
+              href="{% url 'articles:reviews' %}">게시판</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'articles:create' %}">글쓰기</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'index:contrib' %}">Contributors</a>
+          </li>
+          <li class="nav-item d-none d-sm-none d-md-block">
+            <a class="nav-link active p-4 p-lg-2 nav-hover" aria-current="page" href="https://github.com/"
+              target="_blank">
+              <img src="{% static 'images/github.png' %}" alt="" style="width: 1.2rem; height: 1.2rem;">
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex p-4 p-lg-0" role="search" method='POST' action="{% url 'articles:search' %}">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="검색" name='search'>
+          <button class="btn btn-outline-light me-2" type="submit" style="width: 5rem;">검색</button>
+        </form>
+        <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2"
+              href="{% url 'accounts:detail' request.user.pk %}">프로필</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:logout' %}">로그아웃</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:signup' %}">회원가입</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% block body %}
+  {% endblock body %}
+
+  <!-- <script src="{% static 'js/bootstrap.bundle.js' %}"></script> -->
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %}
+
+<div class="member-interaction container mt-5">
+  <h1 class="mt-5 text-center">로그인</h1>
+  <div>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="d-flex">
+        {% bootstrap_button button_type="submit" content="로그인" %}
+        <a class="btn btn-primary ms-auto" href="{% url 'accounts:signup' %}">회원가입</a>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+{% endblock body %}

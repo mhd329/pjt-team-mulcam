@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCU</title>
+  <link rel="shortcut icon" href="{% static 'images/film.png' %}">
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/intro.css' %}">
+</head>
+
+<body>
+  <nav class="d-none d-lg-block navbar navbar-expand-lg py-3 bg-black" style="z-index: 1;">
+    <div class="msgbox p-0 m-0 animate__animated animate__fadeIn"
+      style="width: 13%; height: 90%; z-index: 100; position: absolute;">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="toast show text-bg-{{ message.tags }} mb-3" aria-live="assertive" aria-atomic="true"
+        style="position: relative; top: 2rem; left: 2rem;">
+        <div class="toast-header">
+          <strong class="me-auto">알림
+          </strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {% if "이름" in message.message %}
+          <p>{{ message }}</p>
+          <div class="text-end">
+            <a href="{% url 'accounts:detail' request.user.pk %}" class="btn btn-primary btn-sm">입력하러 가기</a>
+          </div>
+          {% else %}
+          {{ message }}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="container">
+      <a class="navbar-brand text-light" href="{% url 'index:intro' %}"><b class="nav-logo fs-1">MCU</b></a>
+      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-light text-center text-lg-start" id="navbarNav">
+
+        <ul class="navbar-nav me-auto mx-0">
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light align-bottom nav-hover" aria-current="page"
+              href="{% url 'articles:reviews' %}">게시판</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'articles:create' %}">글쓰기</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'index:contrib' %}">Contributors</a>
+          </li>
+          <li class="nav-item d-none d-sm-none d-md-block">
+            <a class="nav-link active p-4 p-lg-2 nav-hover" aria-current="page" href="https://github.com/"
+              target="_blank">
+              <img src="{% static 'images/github.png' %}" alt="" style="width: 1.2rem; height: 1.2rem;">
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex p-4 p-lg-0" role="search" method='POST' action="{% url 'articles:search' %}">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="검색" name='search'>
+          <button class="btn btn-outline-light me-2" type="submit" style="width: 5rem;">검색</button>
+        </form>
+        <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2"
+              href="{% url 'accounts:detail' request.user.pk %}">프로필</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:logout' %}">로그아웃</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 p-lg-2" aria-current="page"
+              href="{% url 'accounts:signup' %}">회원가입</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="d-lg-none navbar-expand-lg py-3 bg-black position-sticky top-0" style="z-index: 1;">
+    <div class="p-0 m-0 animate__animated animate__fadeIn"
+      style="width: 13%; height: 90%; z-index: 100; position: absolute;">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="toast show text-bg-{{ message.tags }} mb-3" aria-live="assertive" aria-atomic="true"
+        style="position: relative; top: 2rem; left: 2rem;">
+        <div class="toast-header">
+          <strong class="me-auto">알림
+          </strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {% if "이름" in message.message %}
+          <p>{{ message }}</p>
+          <div class="text-end">
+            <a href="{% url 'accounts:detail' request.user.pk %}" class="btn btn-primary btn-sm">입력하러 가기</a>
+          </div>
+          {% else %}
+          {{ message }}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="container">
+      <div class="d-flex">
+        <a class="navbar-brand text-light" href="{% url 'index:intro' %}"><b class="nav-logo fs-1">MCU</b></a>
+        <button class="navbar-toggler text-light ms-auto" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+          style="position: relative; bottom: 5px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" fill="currentColor" class="bi bi-list"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+          </svg>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse text-light text-center text-lg-start" id="navbarNav">
+        <ul class="navbar-nav me-auto mx-0">
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light align-bottom nav-hover" aria-current="page"
+              href="{% url 'articles:reviews' %}">게시판</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'articles:create' %}">글쓰기</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active p-4 p-lg-2 text-light nav-hover" href="{% url 'index:contrib' %}">Contributors</a>
+          </li>
+          <li class="nav-item d-none d-sm-none d-md-block">
+            <a class="nav-link active p-4 p-lg-2 nav-hover" aria-current="page" href="https://github.com/"
+              target="_blank">
+              <img src="{% static 'images/github.png' %}" alt="" style="width: 1.2rem; height: 1.2rem;">
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex p-4 p-lg-0" role="search" method='POST' action="{% url 'articles:search' %}">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="검색" name='search'>
+          <button class="btn btn-outline-light me-2" type="submit" style="width: 5rem;">검색</button>
+        </form>
+        <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2"
+              href="{% url 'accounts:detail' request.user.pk %}">프로필</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+              href="{% url 'accounts:logout' %}">로그아웃</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+              href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light nav-hover mx-0 p-4 px-lg-2" aria-current="page"
+              href="{% url 'accounts:signup' %}">회원가입</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="text-center">
+    <div class="mcu-intro bg-black d-flex row justify-content-center">
+      <div class="snap-item item-height item-start">
+        <img src="https://dummyimage.com/600x400/000000/000000.png" class="h-25 d-sm-none d-md-none d-lg-block"
+          alt="...">
+      </div>
+
+      <div class="snap-item item-height item-1">
+        <img src="{% static 'images/image_6.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+      <div class="snap-item item-height item-2">
+        <img src="{% static 'images/image_1.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+
+      <div class="snap-item item-height item-3">
+        <img src="{% static 'images/image_2.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+
+      <div class="snap-item item-height item-4">
+        <img src="{% static 'images/image_3.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+
+      <div class="snap-item item-height item-5">
+        <img src="{% static 'images/image_4.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+
+      <div class="snap-item item-height item-6">
+        <img src="{% static 'images/image_5.png' %}" class="my-5 h-auto rounded-5" alt="...">
+      </div>
+      <div class="snap-item item-height item-6">
+        <img src="https://dummyimage.com/600x400/000000/000000.png" style="width: 10%;" alt="...">
+      </div>
+
+      <div class="snap-item item-height item-end text-center mb-5">
+        <a href="{% url 'articles:reviews' %}" class="go-review btn btn-outline-light btn-lg">목록으로 가기</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+</body>
+
+
+</html>

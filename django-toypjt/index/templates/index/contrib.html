@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCU</title>
+  <link rel="shortcut icon" href="{% static 'images/film.png' %}">
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/contrib.css' %}">
+</head>
+
+<body>
+  <div id="itembox" class="d-flex flex-column">
+    <div class="item-start">
+      <h1 class="display-3"> </h1>
+    </div>
+    <div id="item1" class="contrib-item invisible">
+      <h1 class="display-3 contrib-title">감사하다...</h1>
+    </div>
+    <div id="item2" class="contrib-item invisible">
+      <h3 class="my-5">
+        프로젝트 팀원
+      </h3>
+      <p class="lead">1기 1회차 문경욱</p>
+      <p class="lead">1기 3회차 문재윤</p>
+      <p class="lead">1기 3회차 문현동</p>
+    </div>
+    <div id="item13" class="contrib-item invisible">
+      <h3 class="my-5">
+        도움을 주신 강사님
+      </h3>
+      <p class="lead">1기 Tutor Beemo</p>
+      <p class="lead">1기 Tutor Hwang</p>
+    </div>
+    <div id="item4" class="contrib-item invisible">
+      <h3 class="my-5">조언을 해주신 분</h3>
+      <p class="lead">1기 2회차 문상희</p>
+    </div>
+    <div id="item5" class="contrib-item invisible">
+      <h3 class="my-5">검색기능을 배웠습니다.</h3>
+      <p class="lead">1기 3회차 이주용</p>
+    </div>
+    <div id="item6" class="contrib-item invisible">
+      <h3 class="my-5">디자인 영감을 얻음</h3>
+      <p class="lead">1기 1회차 송강섭</p>
+      <p class="lead">1기 2회차 김수빈</p>
+      <p class="lead">1기 2회차 장영진</p>
+      <p class="lead">1기 2회차 조병진</p>
+      <p class="lead">1기 2회차 이제준</p>
+    </div>
+    <div id="item7" class="contrib-item invisible">
+      <h1 class="my-5">코드와트 일동</h1>
+    </div>
+    <div id="item8" class="contrib-item invisible">
+      <h1 class="display-1" style="margin-top: 30rem; margin-bottom: 30rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
+          class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+          <path
+            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+        </svg>
+        End you
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
+          class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+          <path
+            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+        </svg>
+      </h1>
+    </div>
+    <div class="text-center item-end">
+      <a href="{% url 'articles:reviews' %}" class="contrib-btn btn btn-outline-dark btn-lg">목록으로 가기</a>
+    </div>
+    <footer class="text-bg-dark w-100 opacity-100 text-center">
+      <h3 class="fs-3 m-0 py-5">
+        23. Oct. 2022.
+        <br>
+        Created by 三文家
+      </h3>
+    </footer>
+  </div>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'js/contrib.js' %}"></script>
+</body>
+
+
+</html>

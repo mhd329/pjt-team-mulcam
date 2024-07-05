@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %}
+
+<div class="container w-50 mb-5">
+  {% if request.resolver_match.url_name == "create" %}
+  <h1 class="mt-5 mb-3">글쓰기</h1>
+  <form action="" method="POST" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="작성완료" %}
+    <a href="{% url 'articles:reviews' %}" class="btn btn-primary ms-2">돌아가기</a>
+  </form>
+  {% else %}
+  {% if user == article.user or user.is_superuser %}
+  <h1>수정하기</h1>
+  <form action="" method="POST" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="수정완료" %}
+    <a href="{% url 'articles:reviews' %}" class="btn btn-primary ms-2">돌아가기</a>
+  </form>
+  {% else %}
+  <h1>권한이 없습니다.</h1>
+  <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">돌아가기</a>
+  {% endif %}
+  {% endif %}
+</div>
+
+{% endblock body %}

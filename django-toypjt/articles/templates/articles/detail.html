@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load custom_tags %}
+
+{% block body %}
+
+<div class="container">
+  <div class="card p-md-2 p-lg-5">
+    <div class="card-body">
+      <h1 class="card-title mb-0">{{ article.title }}</h1>
+      <div class="card-subtitle mt-2">
+        <!-- 작성자 및 글 정보 -->
+        <div class="d-flex">
+          <h6 class="text-muted">{{ article.movie_name }}</h6>
+          <h6 class="mx-2">
+            {% for i in article.grade|star_range %}
+            <i class="bi bi-star-fill text-warning"></i>
+            {% endfor %}
+          </h6>
+        </div>
+        <div class="text-muted d-flex">
+
+          <!-- 뷰포트에 따라 나뉨 -->
+          <h6 class="big-display">
+            {{ article.user }} | {{ article.created_at|date:"Y.m.d H:m:s" }}
+          </h6>
+          <h6 class="small-display">
+            {{ article.user }} | {{ article.created_at|date:"m.d H:m:s" }}
+          </h6>
+
+          <!-- 뷰포트에 따라 나뉨 -->
+          <h6 class="ms-auto big-display">
+            추천 {{ article.like_users.count }} | 댓글 {{ article.comment_set.all.count }} | 조회수 {{ article.view }}
+          </h6>
+          <h6 class="ms-auto small-display">
+            {{ article.like_users.count }} | {{ article.comment_set.all.count }} | {{ article.view }}
+          </h6>
+
+        </div>
+      </div>
+      {% if article.image %}
+      <img src="{{ article.image.url }}" alt="{{ article.image }}" class="my-5 w-auto h-auto">
+      {% endif %}
+      <p class="card-text lead my-5">{{ article.content }}</p>
+      <!-- 추천 -->
+      <div class="text-center" style="margin-top: 10rem; margin-bottom: 5rem;">
+        <form action="{% url 'articles:add-like' article.pk %}" method="POST">
+          {% csrf_token %}
+          <h3 class="{{ like_count|color_changer:like_count }}">{{ article.like_users.count }}</h3>
+          {% if article.like_users|filtering:request.user %}
+          <button class="btn btn-danger" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+              <path
+                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+            </svg>
+          </button>
+          {% else %}
+          <button class="btn btn-outline-danger" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart"
+              viewBox="0 0 16 16">
+              <path
+                d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+            </svg>
+          </button>
+          {% endif %}
+        </form>
+      </div>
+
+      <!-- 뷰포트에 따라 나뉨 -->
+      <div class="d-flex">
+        <a href="{% url 'articles:reviews' %}" class="btn btn-outline-dark big-display">목록으로</a>
+        {% if article.user == request.user %}
+        <a href="{% url 'articles:update' article.pk %}" class="btn btn-primary ms-auto big-display"
+          style="width: 5rem;">수정</a>
+        <a href="{% url 'articles:delete' article.pk %}" class="btn btn-danger ms-3 big-display"
+          style="width: 5rem;">삭제</a>
+        {% endif %}
+      </div>
+
+      <div class="d-flex">
+        <a href="{% url 'articles:reviews' %}" class="btn btn-outline-dark small-display">목록으로</a>
+        {% if article.user == request.user %}
+        <a href="{% url 'articles:update' article.pk %}" class="btn btn-primary ms-auto small-display">수정</a>
+        <a href="{% url 'articles:delete' article.pk %}" class="btn btn-danger ms-3 small-display">삭제</a>
+        {% endif %}
+      </div>
+
+      {% if request.user.is_authenticated %}
+      <div class="my-5">
+        <form action="" method="POST" class="w-100">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% bootstrap_button button_class="btn-outline-dark" button_type="submit" content="작성" style="width: 5rem;" %}
+        </form>
+      </div>
+      {% else %}
+      <div class="mt-3">
+        <p>댓글 작성은 로그인 후에 가능합니다.</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <table class="table table-borderless">
+      <tbody>
+        {% for comment in article.comment_set.all %}
+        <tr>
+          <th class="col-1 text-center">
+            <a href="{% url 'accounts:detail' comment.user.pk %}">
+              {{ comment.user }}
+            </a>
+          </th>
+          <td class="col-10">
+            <div>
+              {% if request.resolver_match.url_name == "comment_update" and comment.pk == target_comment.pk %}
+              <div>
+                <form action="" method="POST" class="form">
+                  {% csrf_token %}
+                  {% bootstrap_form comment_form %}
+                  {% bootstrap_button button_type="submit" content="수정완료" %}
+                  <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-primary">취소</a>
+                </form>
+              </div>
+              {% else %}
+              {{ comment.content }}
+              {% endif %}
+            </div>
+          </td>
+          <td class="col-1 text-center">
+            <a href="{% url 'articles:comment_update' article.pk comment.pk %}">수정</a>
+            <a href="{% url 'articles:comment_delete' article.pk comment.pk %}">삭제</a>
+          </td>
+        </tr>
+        {% empty %}
+        <div class="text-center mt-5">
+          <svg style="width: 5rem; height: 5rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            fill="currentColor" class="bi bi-emoji-frown animate__animated animate__bounceIn" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path
+              d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+          </svg>
+          <h1 class="mt-4 mb-2 display-6 animate__animated animate__bounceIn">
+            아직 댓글이 없어요!
+          </h1>
+          <p class="lead fs-6 animate__animated animate__bounceIn">첫 댓글을 작성해보세요!</p>
+        </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</div>
+{% endblock body %}

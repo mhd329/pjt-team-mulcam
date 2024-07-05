@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load range %}
+
+{% block content %}
+<div class='container'>
+    <h2 class='text-center'>{{ review.title }}</h2>
+    <hr>
+    <div class='d-flex justify-content-between'>
+        <span>{{ review.user_name }}</span>
+        <span>
+            {% for i in review.grade|range_ %}
+            <i class="bi bi-star-fill text-warning"></i>
+            {% endfor %}
+        </span>
+    </div>
+    <hr>
+    <h3 class='my-3'>
+        <{{ review.movie_name }}>
+    </h3>
+    <div class='container border p-3'>
+        <p>{{ review.content }}</p>
+    </div>
+    <p class='text-end my-3'>작성일 : {{ review.created_at|date:'y/m/d' }} 마지막 수정 : {{ review.updated_at|date:'y/m/d' }}
+    </p>
+    {% if user == review.user %}
+    <a class="btn btn-danger" href="{% url 'articles:delete' review.pk %}">삭제하기</a>
+    <a class="btn btn-primary" href="{% url 'articles:update' review.pk %}">수정하기</a>
+    {% endif %}
+</div>
+{% endblock content %}

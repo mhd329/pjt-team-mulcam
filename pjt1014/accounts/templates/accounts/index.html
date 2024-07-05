@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+  <table class="table text-center table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="col-3">가입일</th>
+        <th class="col-3">아이디</th>
+        <th class="col-3">이름</th>
+        <th class="col-3">메일</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for user in users_ %}
+      <tr>
+        <th>{{ user.date_joined|date:'y년 m월 d일 f:s' }}</th>
+        <td>
+          <a href="{% url 'accounts:detail' user.pk %}">
+            <p class="m-0 align-middle">{{ user.username }}</p>
+          </a>
+        </td>
+        <td>{{ user.full_name }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'accounts:logout' %}" class="btn btn-primary">로그아웃</a>
+    {% else %}
+    <a href="{% url 'accounts:signup' %}" class="d-block btn btn-primary">즉시 가입</a>
+    <a href="{% url 'accounts:login' %}" class="d-block btn btn-primary">로그인</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

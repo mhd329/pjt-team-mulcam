@@ -1,0 +1,23 @@
+* {
+  font-family: 'NanumSquare';
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: rgb(104, 116, 250);
+}
+
+.table-hover td a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+a:hover {
+  color: rgb(255, 251, 0);
+}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load range %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+<div class="container">
+    <h2 class='text-center my-5'>리뷰 검색결과</h2>
+    <table class="table text-center table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="col-2">작성자</th>
+                <th class="col-4">제목</th>
+                <th class="col-2">영화</th>
+                <th class="col-2">평점</th>
+                <th class="col-2">작성일</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for review in reviews %}
+            <tr>
+                <th>{{ review.user }}</th>
+                <td class="p-0 align-middle"><a href="{% url 'articles:detail' review.id %}">{{ review.title }}</a>
+                </td>
+                <td>{{ review.movie_name }}</td>
+                <td>
+                    {% for i in review.grade|range_ %}
+                    <i class="bi bi-star-fill text-warning"></i>
+                    {% endfor %}
+                </td>
+                <td>{{ review.created_at|date:'y년 m월 d일 f:s' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2 class='text-center my-5'>회원 검색결과</h2>
+    {% for user in users %}
+    <a href="{% url 'accounts:detail' user.pk %}">
+        <p>{{ user }}</p>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        {% if request.resolver_match.url_name == "search" %}
+        <div class="col-6 row">
+            <h3 class="text-center">리뷰 검색결과</h3>
+            {% for article in searched_articles %}
+            <div class="col-6">
+                <div class="card border border-0 card-hover text-bg-dark mb-4">
+                    {% if article.like_users.count %}
+                    <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="margin: 2rem 0 0rem 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill me-2" viewBox="0 0 16 16">
+                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                          </svg>{{ article.like_users.all.count }}
+                    <span class="visually-hidden">추천수</span>
+                    </span>
+                    {% endif %} {% if article.thumbnail %}
+                    <img src="{{ article.thumbnail.url }}" class="card-img-top" style="height: 15rem;"> {% else %}
+                    <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="card-img-top" style="height: 15rem;"> {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }} {% if article.comment_set.all %}
+                            <span class="align-top">[{{ article.comment_set.all.count }}]</span> {% endif %}
+                        </h5>
+                        <p class="card-text">{{ article.user.username }}</p>
+                        <div class="d-flex">
+                            <a href="{% url 'articles:detail' article.pk %}" class="ms-auto btn btn-outline-light">자세히 보기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-6">
+            <h3 class="text-center">회원 검색결과</h3>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-6">아이디</th>
+                        <th class="col-6">가입일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in searched_users %}
+                    <tr>
+                        <th>
+                            <a href="{% url 'accounts:profile' user.pk %}">{{ user.username }}</a>
+                        </th>
+                        <td>
+                            {{ user.date_joined|date:"y.m.d" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %} {% for article in articles %}
+        <div class="col-3">
+            <div class="card border border-0 card-hover text-bg-dark mb-4">
+                {% if article.like_users.count %}
+                <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="margin: 2rem 0 0rem 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill me-2" viewBox="0 0 16 16">
+                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                      </svg>{{ article.like_users.all.count }}
+            <span class="visually-hidden">추천수</span>
+                </span>
+                {% endif %} {% if article.thumbnail %}
+                <img src="{{ article.thumbnail.url }}" class="card-img-top" style="height: 15rem;"> {% else %}
+                <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="card-img-top" style="height: 15rem;"> {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }} {% if article.comment_set.all %}
+                        <span class="align-top">[{{ article.comment_set.all.count }}]</span> {% endif %}
+                    </h5>
+                    <p class="card-text">{{ article.user.username }}</p>
+                    <div class="d-flex">
+                        <a href="{% url 'articles:detail' article.pk %}" class="ms-auto btn btn-outline-light">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="my-5 text-center">
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-dark btn-lg my-5 w-50" href="{% url 'articles:create' %}">글 작성하기</a> {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

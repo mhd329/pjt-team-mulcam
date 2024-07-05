@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% load django_bootstrap5 %} {% block content %}
+
+<div class="container mb-5">
+    <div class="mt-5">
+        <div class="card align-items-center" style="width: auto;">
+            <div class="card-body">
+                <h1 class="card-title fw-bold m-3 text-center">{{ user.username }}님의 프로필</h1>
+                {% if request.user == user %}
+                <h6 class="card-subtitle my-5 text-muted text-center">
+                    Follow {{ user.followings.count }} | Follower {{ user.followers.count }}
+                </h6>
+                {% else %}
+                <div class="text-center my-5">
+                    <h6 class="card-subtitle text-muted text-center">
+                        Follow {{ user.followings.count }} | Follower {{ user.followers.count }}
+                    </h6>
+                    <a href="{% url 'accounts:follow' user.pk %}" class="text-decoration-none">
+                        {% if request.user in user.followers.all %}
+                    <button class="btn btn-outline-dark mt-2" type="button">
+                        팔로우 취소
+                    </button>
+                {% else %}
+                    <button class="btn btn-outline-dark mt-2" type="button">
+                        팔로우
+                    </button>
+                    {% endif %}
+                </a>
+                </div>
+                {% endif %}
+                <p class="card-text">name : {{ user.username }}</p>
+                <p class="card-text">email : {{ user.email}}</p>
+                <p class="card-text">가입일 : {{ user.date_joined|date:"y년 m월 d일 f:s" }}
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <!-- 사용자가 쓴 글 목록 -->
+        <h3 class="fw-blod">작성한 글</h3>
+        <p>{{ user.article_set.count }}개의 게시글을 작성하였습니다.</p>
+        {% for article in user.article_set.all %}
+        <p>
+            {{ forloop.counter }}
+            <a class="text-decoration-none" href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+        </p>
+        {% endfor %}
+    </div>
+
+    <div class="mt-5">
+        <!-- 사용자가 쓴 댓글 목록 -->
+        <h3 class="fw-blod">작성한 댓글</h3>
+        <p>{{ user.comment_set.count }}개의 댓글을 작성하였습니다.</p>
+        {% for comment in user.comment_set.all %}
+        <p>
+            {{ forloop.counter }}
+            <a class="text-decoration-none" href="{% url 'articles:detail' comment.article_id %}">{{ comment.content }}</a>
+        </p>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-dark m-2" type="button" onclick=location.href="{% url 'accounts:update' %}">
+        회원정보 수정
+      </button>
+        <button class="btn btn-dark m-2" type="button" onclick=location.href="{% url 'accounts:user-list' %}">
+          돌아가기
+      </button>
+    </div>
+</div>
+
+{% endblock content %}

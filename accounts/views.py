@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model, login as my_login, logout as my_
 from django.contrib import messages
 from articles.models import Article
 from reviews.models import Review
+from pprint import pprint
 
 # Create your views here.
 
@@ -189,24 +190,25 @@ state_token = secrets.token_urlsafe(16)
 def kakao_request(request):
     kakao_api = "https://kauth.kakao.com/oauth/authorize?response_type=code"
     redirect_uri = "http://localhost:8000/accounts/login/kakao/callback"
-    client_id = "e913455abcf98190d3d4f963e1cf9140"  # 배포시 보안적용 해야함
+    client_id = ""  # 배포시 보안적용 해야함
     return redirect(f"{kakao_api}&client_id={client_id}&redirect_uri={redirect_uri}")
 
 
 def kakao_callback(request):
     data = {
         "grant_type": "authorization_code",
-        "client_id": "e913455abcf98190d3d4f963e1cf9140",  # 배포시 보안적용 해야함
+        "client_id": "",  # 배포시 보안적용 해야함
         "redirect_uri": "http://localhost:8000/accounts/login/kakao/callback",
         "code": request.GET.get("code"),
     }
     kakao_token_api = "https://kauth.kakao.com/oauth/token"
     access_token = requests.post(kakao_token_api, data=data).json()["access_token"]
-
+    pprint(access_token)
     headers = {"Authorization": f"bearer ${access_token}"}
     kakao_user_api = "https://kapi.kakao.com/v2/user/me"
     kakao_user_information = requests.get(kakao_user_api, headers=headers).json()
 
+    pprint(kakao_user_information)
     kakao_id = kakao_user_information["id"]
     kakao_nickname = kakao_user_information["properties"]["nickname"]
     # 유저 모델에 프로필 사진 추가시 사용
@@ -230,7 +232,7 @@ def kakao_callback(request):
 
 def naver_request(request):
     naver_api = "https://nid.naver.com/oauth2.0/authorize?response_type=code"
-    client_id = "rsgA7pxw8Rg9ZuAA0NAa"  # 배포시 보안적용 해야함
+    client_id = ""  # 배포시 보안적용 해야함
     redirect_uri = "http://localhost:8000/accounts/login/naver/callback"
     state_token = secrets.token_urlsafe(16)
     return redirect(
@@ -241,8 +243,8 @@ def naver_request(request):
 def naver_callback(request):
     data = {
         "grant_type": "authorization_code",
-        "client_id": "rsgA7pxw8Rg9ZuAA0NAa",  # 배포시 보안적용 해야함
-        "client_secret": "9j7HPHbOuA",
+        "client_id": "",  # 배포시 보안적용 해야함
+        "client_secret": "",
         "code": request.GET.get("code"),
         "state": request.GET.get("state"),
         "redirect_uri": "http://localhost:8000/accounts/login/naver/callback",
@@ -279,7 +281,7 @@ def naver_callback(request):
 
 def google_request(request):
     google_api = "https://accounts.google.com/o/oauth2/v2/auth"
-    client_id = "348547675760-crcb730t7v4ql8p107rc0j81343gblt6.apps.googleusercontent.com"  # 배포시 보안적용 해야함
+    client_id = ""  # 배포시 보안적용 해야함
     redirect_uri = "http://localhost:8000/accounts/login/google/callback"
     google_base_url = "https://www.googleapis.com/auth"
     google_email = "/userinfo.email"
@@ -295,8 +297,8 @@ def google_callback(request):
         "code": request.GET.get("code"),
         "state": request.GET.get("state"),
         "grant_type": "authorization_code",
-        "client_id": "348547675760-crcb730t7v4ql8p107rc0j81343gblt6.apps.googleusercontent.com",  # 배포시 보안적용 해야함
-        "client_secret": "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",
+        "client_id": "",  # 배포시 보안적용 해야함
+        "client_secret": "",
         "redirect_uri": "http://localhost:8000/accounts/login/google/callback",
     }
     google_token_request_url = "https://oauth2.googleapis.com/token"
